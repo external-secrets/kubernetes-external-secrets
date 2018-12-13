@@ -89,6 +89,6 @@ kubectl apply -f external-secrets.yml -n=kubernetes-external-secrets
 
 Verify that the system is working correctly running:
 
-```js
+```sh
 kubectl get pods -n=kubernetes-external-secrets
 ```
