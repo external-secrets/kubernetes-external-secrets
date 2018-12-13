@@ -26,9 +26,8 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 Currently we do not support install via [Helm](https://helm.sh/) yet. To install the controller run:
 
 ```sh
-git clone git@github.com:godaddy/kubernetes-external-secrets.git && cd kubernetes-external-secrets
 kubectl create ns kubernetes-external-secrets
-kubectl apply -f deploy/ -n=kubernetes-external-secrets --record
+kubectl apply -f https://raw.githubusercontent.com/godaddy/kubernetes-external-secrets/master/external-secrets.yml
 ```
 
 This create all the necessary resources and a `Deployment` in the `kubernetes-external-secrets` namespace.
@@ -59,7 +58,7 @@ kubectl apply -f foobar-external-secret.yaml -n=foobar
 Wait few minutes and verify that the associated `Secret` has been created:
 
 ```sh
-kubectl get secrets -n=foobar
+kubectl get secret foobar-secret -o=yaml -n=foobar
 ```
 
 The `Secret` created by the controller should look like:
@@ -78,20 +77,17 @@ Currently we only support AWS Secrets Manager external provider.
 
 ## Development
 
-To run the project locally you need [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) installed on your machine.
+You can run the project locally using [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/). Minikube is a tool that makes it easy to run a Kubernetes cluster locally.
 
 ```sh
-# clone project locally
-git clone git@github.com:godaddy/kubernetes-external-secrets.git && cd kubernetes-external-secrets
-
 # start minikube
 minikube start
 
 # create kubernetes resources
-kubectl apply -f deploy/ -n=kubernetes-external-secrets
+kubectl apply -f external-secrets.yml -n=kubernetes-external-secrets
 ```
 
-To verify that the system is working correctly, run:
+Verify that the system is working correctly running:
 
 ```js
 kubectl get pods -n=kubernetes-external-secrets
