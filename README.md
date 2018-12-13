@@ -1,6 +1,6 @@
 # 💂 kubernetes external secrets
 
-Kubernetes external secrets allow you to use external providers (e.g, AWS Secrets Manager) to securely add secrets in Kubernetes.
+Kubernetes external secrets allow you to use external providers (e.g, [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)) to securely add secrets in Kubernetes.
 
 ## How it works
 
@@ -21,4 +21,66 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 
 ## How to use it
 
-TBD
+### Install
+
+Currently we do not support install via [Helm](https://helm.sh/) yet. To install the controller run:
+
+```sh
+git clone git@github.com:godaddy/kubernetes-external-secrets.git && cd kubernetes-external-secrets
+kubectl create ns kubernetes-external-secrets
+kubectl apply -f deploy --record
+```
+
+This create all the necessary resources and a `Deployment` in the `kubernetes-external-secrets` namespace.
+
+### Add a secret
+
+Add secret data in the external provider (e.g., `foobar-service/foo=bar` in AWS Secrets Manager), then create an `foobar-external-secret.yaml`:
+
+```yml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExtrenalSecret
+metadata:
+  name: foobar-service
+secretDescriptor:
+  backendType: secretManager
+  properties:
+    - key: foobar-service/foo
+      name: foo
+```
+
+Save the file and run:
+
+```sh
+create ns foobar-service
+kubectl apply -f foobar-external-secret.yaml -n=foobar-service
+```
+
+Wait few minutes and verify that the associated `Secret` has been created:
+
+```sh
+kubectl get secrets -n=foobar-service
+```
+
+Currently we only support AWS Secrets Manager external provider.
+
+## Development
+
+To run the project locally you need [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) installed on your machine.
+
+```sh
+# clone project locally
+git clone git@github.com:godaddy/kubernetes-external-secrets.git && cd kubernetes-external-secrets
+
+# start minikube
+minikube start
+
+# create kubernetes resources
+kubectl apply -f deploy
+```
+
+To verify that the system is working correctly, run:
+
+```js
+kubectl get pods -n=kubernetes-external-secrets
+```
