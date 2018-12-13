@@ -35,7 +35,7 @@ This create all the necessary resources and a `Deployment` in the `kubernetes-ex
 
 ### Add a secret
 
-Add secret data in the external provider (e.g., `foobar-service/foo=bar` in AWS Secrets Manager), then create an `foobar-external-secret.yaml`:
+Add secret data in your external provider (e.g., `foobar-service/foo=bar` in AWS Secrets Manager), then create a `foobar-external-secret.yaml` file:
 
 ```yml
 apiVersion: 'kubernetes-client.io/v1'
