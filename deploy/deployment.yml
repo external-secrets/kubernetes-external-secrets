@@ -17,6 +17,6 @@ spec:
     spec:
       serviceAccountName: kubernetes-external-secrets-service-account
       containers:
-        image: "godaddy/kubernetes-external-secrets"
-        imagePullPolicy: Always
-        name: kubernetes-external-secrets
+        - image: "godaddy/kubernetes-external-secrets"
+          imagePullPolicy: Always
+          name: kubernetes-external-secrets
