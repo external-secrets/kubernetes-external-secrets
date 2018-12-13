@@ -11,7 +11,7 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 
 ## System architecture
 
-![Architecture][architecture.png]
+![Architecture](architecture.png)
 
 1. `ExternalSecrets` are added in the cluster (e.g., `kubectly apply -f external-secret-example.yml`)
 1. Controller fetches `ExternalSecrets` using the Kubernetes API
