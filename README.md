@@ -1,4 +1,4 @@
-# kubernetes-external-secrets
+# 💂 kubernetes external secrets
 
 Kubernetes external secrets allow you to use external providers (e.g, AWS Secrets Manager) to securely add secrets in Kubernetes.
 
