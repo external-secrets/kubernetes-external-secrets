@@ -28,7 +28,7 @@ Currently we do not support install via [Helm](https://helm.sh/) yet. To install
 ```sh
 git clone git@github.com:godaddy/kubernetes-external-secrets.git && cd kubernetes-external-secrets
 kubectl create ns kubernetes-external-secrets
-kubectl apply -f deploy --record
+kubectl apply -f deploy/ -n=kubernetes-external-secrets --record
 ```
 
 This create all the necessary resources and a `Deployment` in the `kubernetes-external-secrets` namespace.
@@ -41,7 +41,7 @@ Add secret data in your external provider (e.g., `foobar-service/foo=bar` in AWS
 apiVersion: 'kubernetes-client.io/v1'
 kind: ExtrenalSecret
 metadata:
-  name: foobar-service
+  name: foobar-secret
 secretDescriptor:
   backendType: secretManager
   properties:
@@ -52,14 +52,26 @@ secretDescriptor:
 Save the file and run:
 
 ```sh
-create ns foobar-service
-kubectl apply -f foobar-external-secret.yaml -n=foobar-service
+create ns foobar
+kubectl apply -f foobar-external-secret.yaml -n=foobar
 ```
 
 Wait few minutes and verify that the associated `Secret` has been created:
 
 ```sh
-kubectl get secrets -n=foobar-service
+kubectl get secrets -n=foobar
+```
+
+The `Secret` created by the controller should look like:
+
+```yml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: foobar-secret
+type: Opaque
+data:
+  foo: YmFy
 ```
 
 Currently we only support AWS Secrets Manager external provider.
@@ -76,7 +88,7 @@ git clone git@github.com:godaddy/kubernetes-external-secrets.git && cd kubernete
 minikube start
 
 # create kubernetes resources
-kubectl apply -f deploy
+kubectl apply -f deploy/ -n=kubernetes-external-secrets
 ```
 
 To verify that the system is working correctly, run:
