@@ -23,10 +23,9 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 
 ### Install
 
-Currently we do not support install via [Helm](https://helm.sh/) yet. To install the controller run:
+To create the necessary resource and install the controller run:
 
 ```sh
-kubectl create ns kubernetes-external-secrets
 kubectl apply -f https://raw.githubusercontent.com/godaddy/kubernetes-external-secrets/master/external-secrets.yml
 ```
 
@@ -34,31 +33,30 @@ This create all the necessary resources and a `Deployment` in the `kubernetes-ex
 
 ### Add a secret
 
-Add secret data in your external provider (e.g., `foobar-service/foo=bar` in AWS Secrets Manager), then create a `foobar-external-secret.yaml` file:
+Add secret data in your external provider (e.g., `hello-service/password=1234` in AWS Secrets Manager), then create a `hello-service-external-secret.yml` file:
 
 ```yml
 apiVersion: 'kubernetes-client.io/v1'
 kind: ExtrenalSecret
 metadata:
-  name: foobar-secret
+  name: hello-service
 secretDescriptor:
   backendType: secretManager
   properties:
-    - key: foobar-service/foo
-      name: foo
+    - key: hello-service/password
+      name: password
 ```
 
 Save the file and run:
 
 ```sh
-create ns foobar
-kubectl apply -f foobar-external-secret.yaml -n=foobar
+kubectl apply -f hello-service-external-secret.yml
 ```
 
 Wait few minutes and verify that the associated `Secret` has been created:
 
 ```sh
-kubectl get secret foobar-secret -o=yaml -n=foobar
+kubectl get secret hello-service -o=yaml
 ```
 
 The `Secret` created by the controller should look like:
@@ -67,28 +65,22 @@ The `Secret` created by the controller should look like:
 apiVersion: v1
 kind: Secret
 metadata:
-  name: foobar-secret
+  name: hello-service
 type: Opaque
 data:
-  foo: YmFy
+  password: MTIzNA==
 ```
 
 Currently we only support AWS Secrets Manager external provider.
 
 ## Development
 
-You can run the project locally using [minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/). Minikube is a tool that makes it easy to run a Kubernetes cluster locally.
+[Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) is a tool that makes it easy to run a Kubernetes cluster locally.
+
+Start minikube and the daemon. This creates the CustomerResourceDefinition, and starts to process `ExternalSecrets`:
 
 ```sh
-# start minikube
 minikube start
 
-# create kubernetes resources
-kubectl apply -f external-secrets.yml -n=kubernetes-external-secrets
-```
-
-Verify that the system is working correctly running:
-
-```sh
-kubectl get pods -n=kubernetes-external-secrets
+npm start
 ```
