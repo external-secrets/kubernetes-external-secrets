@@ -77,7 +77,7 @@ Currently we only support AWS Secrets Manager external provider.
 
 [Minikube](https://kubernetes.io/docs/tasks/tools/install-minikube/) is a tool that makes it easy to run a Kubernetes cluster locally.
 
-Start minikube and the daemon. This creates the CustomerResourceDefinition, and starts to process `ExternalSecrets`:
+Start minikube and the daemon. This creates the `CustomerResourceDefinition`, and starts to process `ExternalSecrets`:
 
 ```sh
 minikube start
