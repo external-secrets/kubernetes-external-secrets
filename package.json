@@ -6,8 +6,8 @@
   "scripts": {
     "coverage": "nyc ./node_modules/mocha/bin/_mocha --recursive lib",
     "lint": "eslint-godaddy --ignore-pattern /coverage/ ./",
-    "start": "bin/daemon.js",
-    "start-development": "nodemon bin/daemon.js",
+    "start": "./bin/daemon.js",
+    "start-development": "nodemon ./bin/daemon.js",
     "test": "mocha --recursive lib"
   },
   "repository": {
