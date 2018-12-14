@@ -1,7 +1,6 @@
 FROM godaddy/node:10.5.0-alpine-3.1.1
 
 # Set ENV vars
-ENV DISABLE_NODEMON true
 ENV NODE_ENV development
 ENV NPM_CONFIG_LOGLEVEL info
 
