@@ -84,5 +84,5 @@ Start minikube and the daemon. This creates the `CustomerResourceDefinition`, an
 ```sh
 minikube start
 
-npm start
+npm start-development
 ```
