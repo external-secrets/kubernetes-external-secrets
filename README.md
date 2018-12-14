@@ -1,3 +1,5 @@
+[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/)
+
 # 💂 kubernetes external secrets
 
 Kubernetes external secrets allow you to use external providers (e.g, [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)) to securely add secrets in Kubernetes.
