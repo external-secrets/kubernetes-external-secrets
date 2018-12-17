@@ -39,7 +39,7 @@ Add secret data in your external provider (e.g., `hello-service/password=1234` i
 
 ```yml
 apiVersion: 'kubernetes-client.io/v1'
-kind: ExtrenalSecret
+kind: ExternalSecret
 metadata:
   name: hello-service
 secretDescriptor:

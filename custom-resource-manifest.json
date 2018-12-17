@@ -8,7 +8,7 @@
       "shortNames": [
         "es"
       ],
-      "kind": "ExtrenalSecret",
+      "kind": "ExternalSecret",
       "plural": "externalsecrets",
       "singular": "externalsecret"
     }
