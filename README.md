@@ -1,4 +1,4 @@
-[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/)
+[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/) [![Greenkeeper badge](https://badges.greenkeeper.io/godaddy/kubernetes-external-secrets.svg)](https://greenkeeper.io/)
 
 # 💂 kubernetes external secrets
 
