@@ -29,7 +29,7 @@
     "aws-sdk": "^2.336.0",
     "kubernetes-client": "^6.5.0",
     "lodash.clonedeep": "^4.5.0",
-    "make-promises-safe": "^1.1.0",
+    "make-promises-safe": "^4.0.0",
     "nodemon": "^1.18.8",
     "pino": "^5.9.0"
   },
@@ -37,12 +37,12 @@
     "chai": "^4.1.2",
     "dotenv": "^6.1.0",
     "eslint": "^5.3.0",
-    "eslint-config-godaddy": "^2.1.0",
+    "eslint-config-godaddy": "^3.0.0",
     "eslint-plugin-json": "^1.2.1",
     "eslint-plugin-mocha": "^5.2.0",
     "mocha": "^5.2.0",
     "nyc": "^13.1.0",
-    "sinon": "^6.3.5"
+    "sinon": "^7.2.3"
   },
   "nyc": {
     "check-coverage": true,
