@@ -35,7 +35,13 @@ This create all the necessary resources and a `Deployment` in the `kubernetes-ex
 
 ### Add a secret
 
-Add secret data in your external provider (e.g., `hello-service/password=1234` in AWS Secrets Manager), then create a `hello-service-external-secret.yml` file:
+Add your secret data to your backend. For example, AWS Secrets Manager:
+
+```
+aws secretsmanager create-secret --name hello-service/password --secret-string "1234"
+```
+
+and then create a `hello-service-external-secret.yml` file:
 
 ```yml
 apiVersion: 'kubernetes-client.io/v1'
@@ -73,7 +79,43 @@ data:
   password: MTIzNA==
 ```
 
-Currently we only support AWS Secrets Manager external provider.
+## Backends
+
+kubernetes-external-secrets support only AWS Secrets Manager.
+
+### AWS Secrets Manager
+
+kubernetes-external-secrets supports both JSON objects ("Secret
+key/value" in the AWS console) or strings ("Plaintext" in the AWS
+console). Using JSON objects is useful when you need to atomically
+update multiple values. For example, when rotating a client
+certificate and private key.
+
+When writing an ExternalSecret for a JSON object you must specify the
+properties to use. For example, if we add our hello-service
+credentials as a single JSON object:
+
+```
+aws secretsmanager create-secret --region us-west-2 --name hello-service/credentials --secret-string '{"username":"admin","password":"1234"}'
+```
+
+We can declare which properties we want from hello-service/credentials:
+
+```yml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-service
+secretDescriptor:
+  backendType: secretManager
+  properties:
+    - key: hello-service/credentials
+      name: password
+      property: password
+    - key: hello-service/credentials
+      name: username
+      property: username
+```
 
 ## Development
 
