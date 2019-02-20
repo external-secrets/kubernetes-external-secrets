@@ -41,7 +41,7 @@
     "eslint-plugin-json": "^1.2.1",
     "eslint-plugin-mocha": "^5.2.0",
     "mocha": "^6.0.0",
-    "nyc": "^13.1.0",
+    "nyc": "^13.3.0",
     "sinon": "^7.2.3"
   },
   "nyc": {
