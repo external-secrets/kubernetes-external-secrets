@@ -1,7 +1,7 @@
-FROM godaddy/node:10.5.0-alpine-3.1.1
+FROM node:10.15.1-alpine
 
 # Set ENV vars
-ENV NODE_ENV development
+ENV NODE_ENV production
 ENV NPM_CONFIG_LOGLEVEL info
 
 # Setup source directory
@@ -17,4 +17,5 @@ RUN if [ -z "$skip_install" ]; then npm ci; fi
 # Copy app to source directory
 COPY . /app
 
+USER node
 CMD ["npm", "start"]

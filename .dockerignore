@@ -1,3 +1,5 @@
 coverage
 .env
 node_modules
+architecture.png
+Dockerfile
