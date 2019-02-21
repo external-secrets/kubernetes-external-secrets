@@ -1,8 +1,12 @@
 {
+  "plugins": [
+    "security"
+  ],
   "extends": [
-    "godaddy"
+    "godaddy",
+    "plugin:security/recommended"
   ],
   "rules": {
-    "strict": 0,
+    "strict": 0
   }
 }
