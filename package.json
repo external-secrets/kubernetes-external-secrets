@@ -30,7 +30,6 @@
     "kubernetes-client": "^6.5.0",
     "lodash.clonedeep": "^4.5.0",
     "make-promises-safe": "^4.0.0",
-    "nodemon": "^1.18.8",
     "pino": "^5.9.0"
   },
   "devDependencies": {
@@ -42,6 +41,7 @@
     "eslint-plugin-mocha": "^5.2.0",
     "eslint-plugin-security": "^1.4.0",
     "mocha": "^6.0.0",
+    "nodemon": "^1.18.10",
     "nyc": "^13.3.0",
     "sinon": "^7.2.3"
   },
