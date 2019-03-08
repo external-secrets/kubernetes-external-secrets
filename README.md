@@ -49,7 +49,7 @@ kind: ExternalSecret
 metadata:
   name: hello-service
 secretDescriptor:
-  backendType: secretManager
+  backendType: secretsManager
   properties:
     - key: hello-service/password
       name: password
@@ -107,7 +107,7 @@ kind: ExternalSecret
 metadata:
   name: hello-service
 secretDescriptor:
-  backendType: secretManager
+  backendType: secretsManager
   properties:
     - key: hello-service/credentials
       name: password
