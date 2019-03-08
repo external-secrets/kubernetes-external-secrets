@@ -38,6 +38,9 @@ const backends = {
   systemManager: systemManagerBackend
 };
 
+// backwards compatibility
+backends.secretManager = secretsManagerBackend;
+
 module.exports = {
   backends,
   customResourceManager,
