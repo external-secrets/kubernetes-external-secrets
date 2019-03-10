@@ -14,6 +14,7 @@ docker build -t godaddy/kubernetes-external-secrets:$TAG .
 sed -i "s/godaddy\/kubernetes-external-secrets:[a-zA-Z0-9]*/godaddy\/kubernetes-external-secrets:$TAG/" external-secrets.yml
 git commit external-secrets.yml -m "chore(release): godaddy/kubernetes-external-secrets:$TAG"
 
+echo ""
 echo "Finishing by pushing godaddy/kubernetes-external-secrets:$TAG and external-secrets.yml:"
 echo ""
 echo "docker push godaddy/kubernetes-external-secrets:$TAG && git push origin master"
