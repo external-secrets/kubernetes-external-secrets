@@ -30,7 +30,7 @@
     "aws-sdk": "^2.336.0",
     "kubernetes-client": "^6.5.0",
     "lodash.clonedeep": "^4.5.0",
-    "make-promises-safe": "^4.0.0",
+    "make-promises-safe": "^5.0.0",
     "pino": "^5.9.0"
   },
   "devDependencies": {
