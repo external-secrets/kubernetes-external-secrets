@@ -27,25 +27,25 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.336.0",
-    "kubernetes-client": "^6.5.0",
+    "aws-sdk": "^2.433.0",
+    "kubernetes-client": "^6.12.1",
     "lodash.clonedeep": "^4.5.0",
     "make-promises-safe": "^5.0.0",
-    "pino": "^5.9.0"
+    "pino": "^5.12.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
     "dotenv": "^7.0.0",
-    "eslint": "^5.3.0",
+    "eslint": "^5.16.0",
     "eslint-config-godaddy": "^3.0.0",
-    "eslint-plugin-json": "^1.2.1",
-    "eslint-plugin-mocha": "^5.2.0",
+    "eslint-plugin-json": "^1.4.0",
+    "eslint-plugin-mocha": "^5.3.0",
     "eslint-plugin-security": "^1.4.0",
-    "mocha": "^6.0.0",
+    "mocha": "^6.0.2",
     "nodemon": "^1.18.10",
     "nyc": "^13.3.0",
-    "sinon": "^7.2.3",
-    "standard-version": "^5.0.1"
+    "sinon": "^7.3.1",
+    "standard-version": "^5.0.2"
   },
   "nyc": {
     "check-coverage": true,
