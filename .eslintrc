@@ -3,7 +3,7 @@
     "security"
   ],
   "extends": [
-    "godaddy",
+    "standard",
     "plugin:security/recommended"
   ],
   "rules": {
