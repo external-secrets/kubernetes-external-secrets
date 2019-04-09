@@ -5,11 +5,11 @@
   "main": "bin/daemon.js",
   "scripts": {
     "coverage": "nyc ./node_modules/mocha/bin/_mocha --recursive lib",
-    "lint": "eslint --ignore-pattern /coverage/ ./",
+    "lint": "eslint --fix --ignore-pattern /coverage/ ./",
     "release": "standard-version --tag-prefix='' && ./release.sh",
     "start": "./bin/daemon.js",
     "nodemon": "nodemon ./bin/daemon.js",
-    "test": "mocha --recursive lib"
+    "test": "eslint --ignore-pattern /coverage/ ./ && mocha --recursive lib"
   },
   "repository": {
     "type": "git",
