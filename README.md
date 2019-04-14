@@ -51,7 +51,7 @@ metadata:
   name: hello-service
 secretDescriptor:
   backendType: secretsManager
-  properties:
+  data:
     - key: hello-service/password
       name: password
 ```
@@ -109,7 +109,7 @@ metadata:
   name: hello-service
 secretDescriptor:
   backendType: secretsManager
-  properties:
+  data:
     - key: hello-service/credentials
       name: password
       property: password
