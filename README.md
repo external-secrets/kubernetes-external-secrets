@@ -32,7 +32,7 @@ To create the necessary resource and install the controller run:
 kubectl apply -f https://raw.githubusercontent.com/godaddy/kubernetes-external-secrets/master/external-secrets.yml
 ```
 
-This create all the necessary resources and a `Deployment` in the `kubernetes-external-secrets` namespace.
+This creates all the necessary resources and a `Deployment` in the `kubernetes-external-secrets` namespace.
 
 ### Add a secret
 
@@ -62,7 +62,7 @@ Save the file and run:
 kubectl apply -f hello-service-external-secret.yml
 ```
 
-Wait few minutes and verify that the associated `Secret` has been created:
+Wait a few minutes and verify that the associated `Secret` has been created:
 
 ```sh
 kubectl get secret hello-service -o=yaml
@@ -82,7 +82,7 @@ data:
 
 ## Backends
 
-kubernetes-external-secrets support only AWS Secrets Manager.
+kubernetes-external-secrets supports only AWS Secrets Manager.
 
 ### AWS Secrets Manager
 
