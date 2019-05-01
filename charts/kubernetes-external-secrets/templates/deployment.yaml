@@ -19,9 +19,9 @@ spec:
         app.kubernetes.io/name: {{ include "kubernetes-external-secrets.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
       annotations:
-{{- if .Values.podAnnotations }}
-{{ toYaml .Values.podAnnotations | indent 8 }}
-{{- end }}
+        {{- if .Values.podAnnotations }}
+        {{- toYaml .Values.podAnnotations | nindent 8 }}
+        {{- end }}
     spec:
       serviceAccountName: {{ template "kubernetes-external-secrets.fullname" . }}
       containers:
@@ -31,15 +31,12 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
-            - name: AWS_REGION
-              value: "{{ .Values.deployment.aws.region }}"
-            - name: EVENTS_INTERVAL_MILLISECONDS
-              value: "{{ .Values.deployment.interval.events }}"
-            - name: POLLER_INTERVAL_MILLISECONDS
-              value: "{{ .Values.deployment.interval.poller }}"
-{{- if .Values.extraEnv }}
-{{ toYaml .Values.extraEnv | indent 12 }}
-{{- end }}
+          {{- range $name, $value := .Values.env }}
+          {{- if not (empty $value) }}
+            - name: {{ $name | quote }}
+              value: {{ $value | quote }}
+          {{- end }}
+          {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

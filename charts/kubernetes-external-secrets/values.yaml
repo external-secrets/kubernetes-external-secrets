@@ -2,12 +2,11 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-deployment:
-  aws:
-    region: us-west-2
-  interval:
-    events: 60000
-    poller: 10000
+# Environment variables to set on deployment pod
+env:
+  AWS_REGION: us-west-2
+  EVENTS_INTERVAL_MILLISECONDS: 60000
+  POLLER_INTERVAL_MILLISECONDS: 10000
 
 rbac:
   # Specifies whether RBAC resources should be created
@@ -29,8 +28,6 @@ image:
 
 nameOverride: ""
 fullnameOverride: ""
-
-extraEnv: {}
 
 podAnnotations: {}
 
