@@ -24,7 +24,7 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 
 ## How to use it
 
-### Install
+### Install with kubectl
 
 To create the necessary resource and install the controller run:
 
@@ -33,6 +33,59 @@ kubectl apply -f https://raw.githubusercontent.com/godaddy/kubernetes-external-s
 ```
 
 This creates all the necessary resources and a `Deployment` in the `kubernetes-external-secrets` namespace.
+
+### Install with Helm
+
+Alternatively, the included [charts/kubernetes-external-secrets](charts/kubernetes-external-secrets) can be used to create the `kubernetes-external-secrets` resources and `Deployment` on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+
+#### Installing the Chart
+
+```bash
+helm install --name kubernetes-external-secrets \
+charts/kubernetes-external-secrets
+```
+
+> **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`'
+
+#### Uninstalling the Chart
+
+To uninstall/delete the `kubernetes-external-secrets` deployment:
+
+```bash
+helm delete kubernetes-external-secrets
+```
+
+#### Configuration
+
+The following table lists the configurable parameters of the `kubernetes-external-secrets` chart and their default values.
+
+| Parameter                            | Description                                                  | Default                                                 |
+| ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
+| `env.AWS_DEFAULT_REGION`             | Set AWS_DEFAULT_REGION in Deployment Pod                     | `us-west-2`                                             |
+| `env.EVENTS_INTERVAL_MILLISECONDS`   | Set EVENTS_INTERVAL_MILLISECONDS in Deployment Pod           | `60000`                                                 |
+| `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
+| `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
+| `image.tag`                          | kubernetes-external-secrets Image tag                        | `1.2.0`                                                 |
+| `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
+| `rbac.create`                        | Create & use RBAC resources                                  | `true`                                                  |
+| `serviceAccount.create`              | Whether a new service account name should be created.        | `true`                                                  |
+| `serviceAccount.name`                | Service account to be used. If not set and serviceAccount.create is `true` a name is generated using the fullname template. | |
+| `podAnnotations`                     | Annotations to be added to pods                              | `{}`                                                    |
+| `replicaCount`                       | Number of replicas                                           | `1`                                                     |
+| `nodeSelector`                       | node labels for pod assignment                               | `{}`                                                    |
+| `tolerations`                        | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
+| `affinity`                           | Affinity for pod assignment                                  | `{}`                                                    |
+| `resources`                          | Pod resource requests & limits                               | `{}`                                                    |
+
+Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+
+```bash
+helm install --name kubernetes-external-secrets \
+--set env.AWS_REGION='ap-southeast-2' \
+--set env.POLLER_INTERVAL_MILLISECONDS='300000' \
+--set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access' \
+charts/kubernetes-external-secrets
+```
 
 ### Add a secret
 
