@@ -61,7 +61,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 
 | Parameter                            | Description                                                  | Default                                                 |
 | ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
-| `env.AWS_DEFAULT_REGION`             | Set AWS_DEFAULT_REGION in Deployment Pod                     | `us-west-2`                                             |
+| `env.AWS_REGION`             | Set AWS_REGION in Deployment Pod                     | `us-west-2`                                             |
 | `env.EVENTS_INTERVAL_MILLISECONDS`   | Set EVENTS_INTERVAL_MILLISECONDS in Deployment Pod           | `60000`                                                 |
 | `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
