@@ -102,6 +102,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
+  namespace: default
 secretDescriptor:
   backendType: secretsManager
   data:
@@ -133,7 +134,7 @@ data:
   password: MTIzNA==
 ```
 
-The controller needs to access AWS Secrets Manager via a role. How depends on your cluster setup, [kube2iam](https://github.com/jtblin/kube2iam) and [kiam](https://github.com/uswitch/kiam) are the most common
+The controller needs to access AWS Secrets Manager via a role. How depends on your cluster setup, [kube2iam](https://github.com/jtblin/kube2iam) and [kiam](https://github.com/uswitch/kiam) are the most common IAM role plugins.
 
 ```
 {
