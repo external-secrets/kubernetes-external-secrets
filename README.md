@@ -133,6 +133,28 @@ data:
   password: MTIzNA==
 ```
 
+The controller needs to access AWS Secrets Manager via a role. How depends on your cluster setup, [kube2iam](https://github.com/jtblin/kube2iam) and [kiam](https://github.com/uswitch/kiam) are the most common
+
+```
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "secretsmanager:GetRandomPassword",
+                "secretsmanager:GetResourcePolicy",
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+                "secretsmanager:ListSecrets",
+                "secretsmanager:ListSecretVersionIds"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
 ## Backends
 
 kubernetes-external-secrets supports only AWS Secrets Manager.
