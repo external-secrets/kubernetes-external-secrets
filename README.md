@@ -61,7 +61,6 @@ The following table lists the configurable parameters of the `kubernetes-externa
 
 | Parameter                            | Description                                                  | Default                                                 |
 | ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
-| `env.AWS_DEFAULT_REGION`             | Set AWS_DEFAULT_REGION in Deployment Pod                     | `us-west-2`                                             |
 | `env.EVENTS_INTERVAL_MILLISECONDS`   | Set EVENTS_INTERVAL_MILLISECONDS in Deployment Pod           | `60000`                                                 |
 | `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
@@ -69,7 +68,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
 | `rbac.create`                        | Create & use RBAC resources                                  | `true`                                                  |
 | `serviceAccount.create`              | Whether a new service account name should be created.        | `true`                                                  |
-| `serviceAccount.name`                | Service account to be used. If not set and serviceAccount.create is `true` a name is generated using the fullname template. | |
+| `serviceAccount.name`                | Service account to be used.                                  | automatically generated
 | `podAnnotations`                     | Annotations to be added to pods                              | `{}`                                                    |
 | `replicaCount`                       | Number of replicas                                           | `1`                                                     |
 | `nodeSelector`                       | node labels for pod assignment                               | `{}`                                                    |
@@ -81,7 +80,6 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 
 ```bash
 helm install --name kubernetes-external-secrets \
---set env.AWS_REGION='ap-southeast-2' \
 --set env.POLLER_INTERVAL_MILLISECONDS='300000' \
 --set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access' \
 charts/kubernetes-external-secrets
