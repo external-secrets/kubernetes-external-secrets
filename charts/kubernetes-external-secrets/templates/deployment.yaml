@@ -19,9 +19,9 @@ spec:
         app.kubernetes.io/name: {{ include "kubernetes-external-secrets.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
       annotations:
-        {{- if .Values.podAnnotations }}
+      {{- if .Values.podAnnotations }}
         {{- toYaml .Values.podAnnotations | nindent 8 }}
-        {{- end }}
+      {{- end }}
     spec:
       serviceAccountName: {{ template "kubernetes-external-secrets.fullname" . }}
       containers:
@@ -41,11 +41,11 @@ spec:
       nodeSelector:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-    {{- with .Values.affinity }}
+      {{- with .Values.affinity }}
       affinity:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
+      {{- end }}
+      {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
-    {{- end }}
+      {{- end }}
