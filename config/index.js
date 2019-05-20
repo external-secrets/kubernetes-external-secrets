@@ -31,9 +31,9 @@ const customResourceManager = new CustomResourceManager({
   logger
 })
 
-const secretsManagerClient = new AWS.SecretsManager()
+const secretsManagerClient = new AWS.SecretsManager({ region: envConfig.awsRegion })
 const secretsManagerBackend = new SecretsManagerBackend({ client: secretsManagerClient, logger })
-const systemManagerClient = new AWS.SSM()
+const systemManagerClient = new AWS.SSM({ region: envConfig.awsRegion })
 const systemManagerBackend = new SystemManagerBackend({ client: systemManagerClient, logger })
 const backends = {
   secretsManager: secretsManagerBackend,
