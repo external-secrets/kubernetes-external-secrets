@@ -2,6 +2,7 @@
 
 const AWS = require('aws-sdk')
 const kube = require('kubernetes-client')
+const KubeRequest = require('kubernetes-client/backends/request')
 const pino = require('pino')
 
 const envConfig = require('./environment')
@@ -12,11 +13,12 @@ const SystemManagerBackend = require('../lib/backends/system-manager-backend')
 
 let kubeClientConfig
 try {
-  kubeClientConfig = kube.config.getInCluster()
+  kubeClientConfig = KubeRequest.config.getInCluster()
 } catch (err) {
-  kubeClientConfig = kube.config.fromKubeconfig()
+  kubeClientConfig = KubeRequest.config.fromKubeconfig()
 }
-const kubeClient = new kube.Client({ config: kubeClientConfig })
+const kubeBackend = new KubeRequest(kubeClientConfig)
+const kubeClient = new kube.Client({ backend: kubeBackend })
 
 const logger = pino({
   serializers: {
