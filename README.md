@@ -32,7 +32,7 @@ Alternatively, the included [charts/kubernetes-external-secrets](charts/kubernet
 
 ```bash
 helm install --name kubernetes-external-secrets \
---set env.AWS_REGION='us-west-2' \
+--set env.AWS_REGION='<aws-region>' \
 charts/kubernetes-external-secrets
 ```
 
