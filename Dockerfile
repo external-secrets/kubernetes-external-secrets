@@ -15,4 +15,4 @@ RUN npm ci --production
 COPY . /app
 
 USER node
-CMD ["npm", "start"]
+CMD ["./run.sh"]
