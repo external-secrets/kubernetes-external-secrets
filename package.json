@@ -7,7 +7,7 @@
     "coverage": "nyc ./node_modules/mocha/bin/_mocha --recursive lib",
     "lint": "eslint --fix --ignore-pattern /coverage/ ./",
     "release": "standard-version --tag-prefix='' && ./release.sh",
-    "start": "./bin/daemon.js",
+    "start": "./init.sh && ./bin/daemon.js",
     "nodemon": "nodemon ./bin/daemon.js",
     "test": "eslint --ignore-pattern /coverage/ ./ && mocha --recursive lib"
   },
