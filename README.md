@@ -24,16 +24,6 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 
 ## How to use it
 
-### Install with kubectl
-
-To create the necessary resource and install the controller run:
-
-```sh
-kubectl apply -f https://raw.githubusercontent.com/godaddy/kubernetes-external-secrets/master/external-secrets.yml
-```
-
-This creates all the necessary resources and a `Deployment` in the `kubernetes-external-secrets` namespace.
-
 ### Install with Helm
 
 Alternatively, the included [charts/kubernetes-external-secrets](charts/kubernetes-external-secrets) can be used to create the `kubernetes-external-secrets` resources and `Deployment` on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
@@ -42,6 +32,7 @@ Alternatively, the included [charts/kubernetes-external-secrets](charts/kubernet
 
 ```bash
 helm install --name kubernetes-external-secrets \
+--set env.AWS_REGION='<aws-region>' \
 charts/kubernetes-external-secrets
 ```
 
@@ -61,6 +52,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 
 | Parameter                            | Description                                                  | Default                                                 |
 | ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
+| `env.AWS_REGION`                     | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
 | `env.EVENTS_INTERVAL_MILLISECONDS`   | Set EVENTS_INTERVAL_MILLISECONDS in Deployment Pod           | `60000`                                                 |
 | `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
