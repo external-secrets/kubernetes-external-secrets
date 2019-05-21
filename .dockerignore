@@ -1,5 +1,7 @@
-coverage
 .env
-node_modules
 architecture.png
+charts
+coverage
 Dockerfile
+node_modules
+release.sh
