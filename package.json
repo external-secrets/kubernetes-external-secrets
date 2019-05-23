@@ -35,6 +35,7 @@
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.2",
     "make-promises-safe": "^5.0.0",
+    "node-vault": "^0.9.8",
     "pino": "^5.12.0",
     "prom-client": "^11.5.3"
   },
