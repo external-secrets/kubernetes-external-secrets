@@ -1,0 +1,55 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: external-secrets-reader
+rules:
+- apiGroups: ["kubernetes-client.io"]
+  resources: ["externalsecrets"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: external-secrets-reader
+subjects:
+- kind: ServiceAccount
+  name: default
+roleRef:
+  kind: Role
+  name: external-secrets-reader
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: init-container-example
+  labels:
+    app: init-container-example
+spec:
+  containers:
+  - name: init-container-example
+    image: busybox
+    command: ['sh', '-c', 'ls /external-secrets && sleep 3600']
+    volumeMounts:
+    - name: demo-service
+      mountPath: "/external-secrets"
+  initContainers:
+  - name: external-secret-init-0
+    image: "godaddy/kubernetes-external-secrets:test"
+    command: ['npm', 'run', 'poll']
+    env:
+      - name: AWS_REGION
+        value: us-west-2
+      - name: DESTINATION_PATH
+        value: "/external-secret-0"
+      - name: EXTERNAL_SECRET_NAME
+        value: demo-service
+      - name: EXTERNAL_SECRET_NAMESPACE
+        value: demo-service
+    volumeMounts:
+    - name: demo-service
+      mountPath: "/external-secret-0"
+  volumes:
+  - name: demo-service
+    emptyDir:
+      medium: "Memory"
