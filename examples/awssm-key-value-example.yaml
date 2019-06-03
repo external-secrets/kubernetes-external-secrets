@@ -1,0 +1,13 @@
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: demo-service
+secretDescriptor:
+  backendType: secretsManager
+  data:
+    - key: demo-service/credentials
+      name: password
+      property: password
+    - key: demo-service/credentials
+      name: username
+      property: username
