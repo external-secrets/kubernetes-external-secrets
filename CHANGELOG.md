@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/godaddy/kubernetes-external-secrets/compare/1.2.1...1.2.2) (2019-06-03)
+
+
+### Bug Fixes
+
+* **AWSSM:** treat value as object iff the es specifies .property ([#74](https://github.com/godaddy/kubernetes-external-secrets/issues/74)) ([1d5a9dd](https://github.com/godaddy/kubernetes-external-secrets/commit/1d5a9dd))
+
+
+
 ### [1.2.1](https://github.com/godaddy/kubernetes-external-secrets/compare/1.2.0...1.2.1) (2019-05-20)
 
 
