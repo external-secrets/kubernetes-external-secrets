@@ -16,7 +16,7 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 
 ![Architecture](architecture.png)
 
-1. `ExternalSecrets` are added in the cluster (e.g., `kubectly apply -f external-secret-example.yml`)
+1. `ExternalSecrets` are added in the cluster (e.g., `kubectl apply -f external-secret-example.yml`)
 1. Controller fetches `ExternalSecrets` using the Kubernetes API
 1. Controller uses `ExternalSecrets` to fetch secret data from external providers (e.g, AWS Secrets Manager)
 1. Controller upsert `Secrets`
@@ -171,4 +171,32 @@ Start minikube and the daemon. This creates the `CustomerResourceDefinition`, an
 minikube start
 
 npm run nodemon
+```
+
+### Development with localstack
+
+[Localstack](https://github.com/localstack/localstack) mocks AWS services locally so you can test without connecting to AWS.
+
+Run localstack in a seperate terminal window
+
+```sh
+npm run localstack
+```
+
+Start minikube as above
+
+```sh
+minikube start
+```
+
+Run the daemon with localstack
+
+```sh
+npm run local
+```
+
+Add secrets using the AWS cli (example)
+
+```sh
+ aws --endpoint-url=http://localhost:4584 secretsmanager create-secret --name hello-service/password --secret-string "1234"
 ```

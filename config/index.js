@@ -5,6 +5,7 @@ const kube = require('kubernetes-client')
 const KubeRequest = require('kubernetes-client/backends/request')
 const pino = require('pino')
 
+const awsConfig = require('./aws-config')
 const envConfig = require('./environment')
 const CustomResourceManager = require('../lib/custom-resource-manager')
 const customResourceManifest = require('../custom-resource-manifest.json')
@@ -31,9 +32,9 @@ const customResourceManager = new CustomResourceManager({
   logger
 })
 
-const secretsManagerClient = new AWS.SecretsManager()
+const secretsManagerClient = new AWS.SecretsManager(awsConfig.secretsManagerConfig)
 const secretsManagerBackend = new SecretsManagerBackend({ client: secretsManagerClient, logger })
-const systemManagerClient = new AWS.SSM()
+const systemManagerClient = new AWS.SSM(awsConfig.systemManagerConfig)
 const systemManagerBackend = new SystemManagerBackend({ client: systemManagerClient, logger })
 const backends = {
   secretsManager: secretsManagerBackend,
