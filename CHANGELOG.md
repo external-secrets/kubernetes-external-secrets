@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.3](https://github.com/godaddy/kubernetes-external-secrets/compare/1.2.2...1.2.3) (2019-06-06)
+
+
+### Bug Fixes
+
+* **logging:** show error on missing property ([#87](https://github.com/godaddy/kubernetes-external-secrets/issues/87)) ([ef8bd5f](https://github.com/godaddy/kubernetes-external-secrets/commit/ef8bd5f))
+
+
+
 ### [1.2.2](https://github.com/godaddy/kubernetes-external-secrets/compare/1.2.1...1.2.2) (2019-06-03)
 
 
