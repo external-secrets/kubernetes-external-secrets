@@ -3,8 +3,8 @@
 Kubernetes External Secrets supports several "frontends" for storing
 secret data and presenting it to applications:
 
-* [Secret driver](#secret-frontend)
-* [Volume driver](#volume-frontend)
+* [Secret frontend](#secret-frontend)
+* [Volume frontend](#volume-frontend)
 
 ## Secret frontend
 
