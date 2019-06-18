@@ -26,8 +26,8 @@ metadata:
   annotations:
     externalsecrets.kubernetes-client.io/volumes: >
       [
-        {"name": "db-secrets", "externalSecretName": "db-secrets"},
-        {"name": "client-secrets", "externalSecretName": "client-secrets"}
+        {"name": "db-secrets", "externalSecret": {"externalSecretName": "db-secrets"}},
+        {"name": "client-secrets", "externalSecret": {"externalSecretName": "client-secrets"}}
       ]
 spec:
   containers:
