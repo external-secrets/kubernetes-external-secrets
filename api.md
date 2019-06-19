@@ -13,10 +13,25 @@ TODO.
 ## Volume frontend
 
 The volume frontend writes secret data to volumes included in `Pod`
-specs. You configure which volumes the External Secret controller
-writes data to by adding the
+specs. The volume frontend implements a behavior analogous to the
+secret volume type. You specify `ExternalSecret` objects to use as
+volumes and the External Secret controller creates files containing
+secret data.
+
+To emulate an "externalSecret" volume type, you configure which
+volumes the External Secret controller writes data to by adding the
 `externalsecrets.kubernetes-client.io/volumes` annotation to a `Pod`
-manifest:
+manifest". With the manifest below, the External Secret controller
+should:
+
+* create password and username files in the db-secrets volume;
+* fetch the value of db/password from AWS Secrets Manager and write
+  that value to password file in the db-secrets volume;
+* fetch the value of db/username from AWS Secrets Manager and write
+  that value to the username file in the db-secrets volume;
+* create a key file in the client-secrets volume; and
+  fetch the value of api/key from AWS Secrets Manager and write that
+  values to the api file in the client-secrets volume.
 
 ```yaml
 apiVersion: v1
@@ -47,10 +62,32 @@ spec:
   - name: client-secrets
     emptyDir:
       medium: Memory
+---
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: db-secrets
+secretDescriptor:
+  backendType: secretsManager
+  data:
+    - key: db/password
+      name: password
+    - key: db/username
+      name: username
+---
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: client-secrets
+secretDescriptor:
+  backendType: secretsManager
+  data:
+    - key: api/key
+      name: key
 ```
 
-The value of `externalsecrets.kubernetes-client.io/volumes` is a JSON
-array of volume configuration objects:
+The value of `externalsecrets.kubernetes-client.io/volumes` is a JSON or
+YAML serizlied array of volume configuration objects:
 
 |Property|Type|Description|
 |--------|----|-----------|
