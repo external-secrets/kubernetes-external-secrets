@@ -87,7 +87,7 @@ secretDescriptor:
 ```
 
 The value of `externalsecrets.kubernetes-client.io/volumes` is a JSON or
-YAML serizlied array of volume configuration objects:
+YAML serialized array of volume configuration objects:
 
 |Property|Type|Description|
 |--------|----|-----------|
