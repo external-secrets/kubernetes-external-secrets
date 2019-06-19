@@ -30,7 +30,7 @@ should:
 * fetch the value of db/username from AWS Secrets Manager and write
   that value to the username file in the db-secrets volume;
 * create a key file in the client-secrets volume; and
-  fetch the value of api/key from AWS Secrets Manager and write that
+* fetch the value of api/key from AWS Secrets Manager and write that
   values to the api file in the client-secrets volume.
 
 ```yaml
