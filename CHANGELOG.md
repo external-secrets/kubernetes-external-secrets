@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.2.3...1.3.0) (2019-06-22)
+
+
+### Bug Fixes
+
+* remove logging of potentially secret value ([#96](https://github.com/godaddy/kubernetes-external-secrets/issues/96)) ([6063f79](https://github.com/godaddy/kubernetes-external-secrets/commit/6063f79))
+
+
+### Features
+
+* **secret:** add ownerreference to remove created secret when external secret is removed ([#95](https://github.com/godaddy/kubernetes-external-secrets/issues/95)) ([66af903](https://github.com/godaddy/kubernetes-external-secrets/commit/66af903))
+
+
+
 ### [1.2.3](https://github.com/godaddy/kubernetes-external-secrets/compare/1.2.2...1.2.3) (2019-06-06)
 
 
