@@ -53,6 +53,8 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | Parameter                            | Description                                                  | Default                                                 |
 | ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
 | `env.AWS_REGION`                     | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
+| `env.AWS_ACCESS_KEY_ID`              | Set the AWS access key associated with an IAM user or role.  | none                                                    |
+| `env.AWS_SECRET_ACCESS_KEY`          | Specifies the secret key associated with the access key.     | none                                                    |
 | `env.EVENTS_INTERVAL_MILLISECONDS`   | Set EVENTS_INTERVAL_MILLISECONDS in Deployment Pod           | `60000`                                                 |
 | `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
@@ -60,7 +62,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
 | `rbac.create`                        | Create & use RBAC resources                                  | `true`                                                  |
 | `serviceAccount.create`              | Whether a new service account name should be created.        | `true`                                                  |
-| `serviceAccount.name`                | Service account to be used.                                  | automatically generated
+| `serviceAccount.name`                | Service account to be used.                                  | automatically generated                                 |
 | `podAnnotations`                     | Annotations to be added to pods                              | `{}`                                                    |
 | `replicaCount`                       | Number of replicas                                           | `1`                                                     |
 | `nodeSelector`                       | node labels for pod assignment                               | `{}`                                                    |
