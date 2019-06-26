@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-external-secrets",
-  "version": "1.2.3",
+  "version": "1.3.0",
   "description": "Kubernetes external secrets",
   "main": "bin/daemon.js",
   "scripts": {
@@ -30,7 +30,7 @@
   },
   "dependencies": {
     "aws-sdk": "^2.433.0",
-    "kubernetes-client": "^8.2.0",
+    "kubernetes-client": "^8.3.0",
     "lodash.clonedeep": "^4.5.0",
     "make-promises-safe": "^5.0.0",
     "pino": "^5.12.0"
@@ -38,10 +38,10 @@
   "devDependencies": {
     "chai": "^4.1.2",
     "dotenv": "^8.0.0",
-    "eslint": "^5.16.0",
+    "eslint": "^6.0.0",
     "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.16.0",
-    "eslint-plugin-node": "^9.0.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-security": "^1.4.0",
     "eslint-plugin-standard": "^4.0.0",

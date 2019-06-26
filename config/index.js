@@ -12,13 +12,9 @@ const customResourceManifest = require('../custom-resource-manifest.json')
 const SecretsManagerBackend = require('../lib/backends/secrets-manager-backend')
 const SystemManagerBackend = require('../lib/backends/system-manager-backend')
 
-let kubeClientConfig
-try {
-  kubeClientConfig = KubeRequest.config.getInCluster()
-} catch (err) {
-  kubeClientConfig = KubeRequest.config.fromKubeconfig()
-}
-const kubeBackend = new KubeRequest(kubeClientConfig)
+const kubeconfig = new kube.KubeConfig()
+kubeconfig.loadFromDefault()
+const kubeBackend = new KubeRequest({ kubeconfig })
 const kubeClient = new kube.Client({ backend: kubeBackend })
 
 const logger = pino({
