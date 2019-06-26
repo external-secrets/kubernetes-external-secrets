@@ -54,7 +54,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
 | `env.AWS_REGION`                     | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
 | `env.AWS_ACCESS_KEY_ID`              | Set the AWS access key associated with an IAM user or role.  | none                                                    |
-| `env.AWS_SECRET_ACCESS_KEY`          | Specifies the secret key associated with the access key. *Note:* If neither `AWS_ACCESS_KEY_ID` or `AWS_SECRET_ACCESS_KEY` are specified, IAM roles are used by default  | none                                                    |
+| `env.AWS_SECRET_ACCESS_KEY`          | Specifies the secret key associated with the access key. If neither `AWS_ACCESS_KEY_ID` or `AWS_SECRET_ACCESS_KEY` are specified, IAM roles are used by default  | none                                                    |
 | `env.EVENTS_INTERVAL_MILLISECONDS`   | Set EVENTS_INTERVAL_MILLISECONDS in Deployment Pod           | `60000`                                                 |
 | `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
