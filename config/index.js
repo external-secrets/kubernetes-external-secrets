@@ -20,7 +20,8 @@ const kubeClient = new kube.Client({ backend: kubeBackend })
 const logger = pino({
   serializers: {
     err: pino.stdSerializers.err
-  }
+  },
+  level: envConfig.logLevel
 })
 
 const customResourceManager = new CustomResourceManager({
