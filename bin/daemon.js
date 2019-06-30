@@ -15,7 +15,6 @@ const {
   kubeClient,
   customResourceManager,
   customResourceManifest,
-  eventsIntervalMilliseconds,
   logger,
   pollerIntervalMilliseconds
 } = require('../config')
@@ -31,7 +30,6 @@ async function main () {
   const externalSecretEvents = getExternalSecretEvents({
     kubeClient,
     customResourceManifest,
-    intervalMilliseconds: eventsIntervalMilliseconds,
     logger
   })
 
