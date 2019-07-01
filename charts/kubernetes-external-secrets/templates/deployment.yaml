@@ -33,9 +33,17 @@ spec:
           env:
           {{- range $name, $value := .Values.env }}
           {{- if not (empty $value) }}
-            - name: {{ $name | quote }}
-              value: {{ $value | quote }}
+          - name: {{ $name | quote }}
+            value: {{ $value | quote }}
           {{- end }}
+          {{- end }}
+          # Params for env vars populated from k8s secrets
+          {{- range $key, $value := .Values.envVarsFromSecret }}
+          - name: {{ $key }}
+            valueFrom:
+              secretKeyRef:
+                name: {{ $value.secretKeyRef | quote }}
+                key: {{ $value.key | quote }}
           {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
