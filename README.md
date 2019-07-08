@@ -50,23 +50,25 @@ helm delete kubernetes-external-secrets
 
 The following table lists the configurable parameters of the `kubernetes-external-secrets` chart and their default values.
 
-| Parameter                            | Description                                                  | Default                                                 |
-| ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
-| `env.AWS_REGION`                     | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
-| `env.EVENTS_INTERVAL_MILLISECONDS`   | Set EVENTS_INTERVAL_MILLISECONDS in Deployment Pod           | `60000`                                                 |
-| `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
-| `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
-| `image.tag`                          | kubernetes-external-secrets Image tag                        | `1.2.0`                                                 |
-| `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
-| `rbac.create`                        | Create & use RBAC resources                                  | `true`                                                  |
-| `serviceAccount.create`              | Whether a new service account name should be created.        | `true`                                                  |
-| `serviceAccount.name`                | Service account to be used.                                  | automatically generated
-| `podAnnotations`                     | Annotations to be added to pods                              | `{}`                                                    |
-| `replicaCount`                       | Number of replicas                                           | `1`                                                     |
-| `nodeSelector`                       | node labels for pod assignment                               | `{}`                                                    |
-| `tolerations`                        | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
-| `affinity`                           | Affinity for pod assignment                                  | `{}`                                                    |
-| `resources`                          | Pod resource requests & limits                               | `{}`                                                    |
+| Parameter                                 | Description                                                  | Default                                                 |
+| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------- |
+| `env.AWS_REGION`                          | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
+| `env.EVENTS_INTERVAL_MILLISECONDS`        | Set EVENTS_INTERVAL_MILLISECONDS in Deployment Pod           | `60000`                                                 |
+| `env.POLLER_INTERVAL_MILLISECONDS`        | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
+| `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
+| `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
+| `image.repository`                        | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
+| `image.tag`                               | kubernetes-external-secrets Image tag                        | `1.2.0`                                                 |
+| `image.pullPolicy`                        | Image pull policy                                            | `IfNotPresent`                                          |
+| `rbac.create`                             | Create & use RBAC resources                                  | `true`                                                  |
+| `serviceAccount.create`                   | Whether a new service account name should be created.        | `true`                                                  |
+| `serviceAccount.name`                     | Service account to be used.                                  | automatically generated                                 |
+| `podAnnotations`                          | Annotations to be added to pods                              | `{}`                                                    |
+| `replicaCount`                            | Number of replicas                                           | `1`                                                     |
+| `nodeSelector`                            | node labels for pod assignment                               | `{}`                                                    |
+| `tolerations`                             | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
+| `affinity`                                | Affinity for pod assignment                                  | `{}`                                                    |
+| `resources`                               | Pod resource requests & limits                               | `{}`                                                    |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
@@ -76,6 +78,12 @@ helm install --name kubernetes-external-secrets \
 --set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access' \
 charts/kubernetes-external-secrets
 ```
+
+### Use IAM credentials for Secrets Manager access
+
+If not running on EKS you will have to use an IAM user (in lieu of a role).
+Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars in the session/pod.
+You can use envVarsFromSecret in the helm chart to create these env vars from existing k8s secrets
 
 ### Add a secret
 

@@ -8,6 +8,15 @@ env:
   EVENTS_INTERVAL_MILLISECONDS: 60000
   POLLER_INTERVAL_MILLISECONDS: 10000
 
+# Create environment variables from exists k8s secrets
+#envVarsFromSecret:
+#  AWS_ACCESS_KEY_ID:
+#    secretKeyRef: aws-credentials
+#    key: id
+#  AWS_SECRET_ACCESS_KEY:
+#    secretKeyRef: aws-credentials
+#    key: key
+
 rbac:
   # Specifies whether RBAC resources should be created
   create: true
