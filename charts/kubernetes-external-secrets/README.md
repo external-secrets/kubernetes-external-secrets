@@ -14,7 +14,7 @@ $ helm install stable/kubernetes-external-secrets
 
 ## Installing the Chart
 
-To install the chart with the release name `my-release`:
+To install the chart with the release named `my-release`:
 
 ```bash
 $ helm install --name my-release stable/kubernetes-external-secrets
@@ -24,10 +24,10 @@ $ helm install --name my-release stable/kubernetes-external-secrets
 
 ## Uninstalling the Chart
 
-To uninstall/delete the `kubernetes-external-secrets` deployment:
+To uninstall/delete the deployment:
 
 ```bash
-helm delete kubernetes-external-secrets
+helm delete my-release
 ```
 
 ## Configuration
