@@ -24,6 +24,10 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 
 ## How to use it
 
+### Install with kubectl
+ 
+ See [these instructions](deploy/README.md) to install via the kubectl cli,
+
 ### Install with Helm
 
 Alternatively, the included [charts/kubernetes-external-secrets](charts/kubernetes-external-secrets) can be used to create the `kubernetes-external-secrets` resources and `Deployment` on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.

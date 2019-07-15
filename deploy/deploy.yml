@@ -1,0 +1,50 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: kubernetes-external-secrets
+  labels:
+    app.kubernetes.io/name: kubernetes-external-secrets
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: kubernetes-external-secrets
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: kubernetes-external-secrets
+    spec:
+      containers:
+        - name: kubernetes-external-secrets
+          image: godaddy/kubernetes-external-secrets:1.3.0
+          envFrom:
+          - configMapRef:
+              name: external-secrets-config
+          # env:
+          #   - name: AWS_REGION
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: external-secrets-config
+          #         key: AWS_REGION
+          #   - name: EVENTS_INTERVAL_MILLISECONDS
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: external-secrets-config
+          #         key: EVENTS_INTERVAL_MILLISECONDS
+          #   - name: POLLER_INTERVAL_MILLISECONDS
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: external-secrets-config
+          #         key: POLLER_INTERVAL_MILLISECONDS
+          #   - name: NODE_ENV
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: external-secrets-config
+          #         key: NODE_ENV                  
+          #   - name: LOG_LEVEL
+          #     valueFrom:
+          #       configMapKeyRef:
+          #         name: external-secrets-config
+          #         key: LOG_LEVEL                                    
+                  
