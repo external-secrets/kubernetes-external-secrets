@@ -1,0 +1,9 @@
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: ssm-secret-key
+secretDescriptor:
+  backendType: systemManager
+  data:
+    - key: /path/variable-name
+      name: variable-name

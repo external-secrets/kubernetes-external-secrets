@@ -93,6 +93,12 @@ Add your secret data to your backend. For example, AWS Secrets Manager:
 aws secretsmanager create-secret --name hello-service/password --secret-string "1234"
 ```
 
+AWS Parameter Store:
+
+```
+aws ssm put-parameter --name "/hello-service/password" --type "String" --value "1234"
+```
+
 and then create a `hello-service-external-secret.yml` file:
 
 ```yml
@@ -104,6 +110,18 @@ secretDescriptor:
   backendType: secretsManager
   data:
     - key: hello-service/password
+      name: password
+```
+or
+```yml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-service
+secretDescriptor:
+  backendType: systemManager
+  data:
+    - key: /hello-service/password
       name: password
 ```
 
