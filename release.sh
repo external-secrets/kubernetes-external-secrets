@@ -9,7 +9,7 @@ docker build -t godaddy/kubernetes-external-secrets:$SHA .
 docker tag godaddy/kubernetes-external-secrets:$SHA godaddy/kubernetes-external-secrets:$TAG
 docker tag godaddy/kubernetes-external-secrets:$SHA godaddy/kubernetes-external-secrets:latest
 
-sed  -i'' -e "s/tag: [a-zA-Z0-9\.]*/tag: $TAG/" charts/kubernetes-external-secrets/values.yaml
+sed  -i '' -e "s/tag: [a-zA-Z0-9\.]*/tag: $TAG/" charts/kubernetes-external-secrets/values.yaml
 git commit charts/kubernetes-external-secrets/values.yaml -m "chore(release): godaddy/kubernetes-external-secrets:$TAG"
 
 echo ""
