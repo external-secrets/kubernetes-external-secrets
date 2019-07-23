@@ -46,7 +46,8 @@ async function main () {
     kubeClient,
     logger,
     metrics,
-    pollerIntervalMilliseconds
+    pollerIntervalMilliseconds,
+    customResourceManifest
   })
 
   const metricsServer = new MetricsServer({
