@@ -6,9 +6,9 @@ secretDescriptor:
   backendType: secretsManager
   type: kubernetes.io/tls
   data:
-    - key: /development/certifcate
+    - key: /development/certificate
       property: crt
       name: tls.crt
-    - key: /development/certifcate
+    - key: /development/certificate
       property: key
       name: tls.key
