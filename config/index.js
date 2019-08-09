@@ -1,6 +1,5 @@
 'use strict'
 
-const AWS = require('aws-sdk')
 const kube = require('kubernetes-client')
 const KubeRequest = require('kubernetes-client/backends/request')
 const pino = require('pino')
@@ -29,10 +28,16 @@ const customResourceManager = new CustomResourceManager({
   logger
 })
 
-const secretsManagerClient = new AWS.SecretsManager(awsConfig.secretsManagerConfig)
-const secretsManagerBackend = new SecretsManagerBackend({ client: secretsManagerClient, logger })
-const systemManagerClient = new AWS.SSM(awsConfig.systemManagerConfig)
-const systemManagerBackend = new SystemManagerBackend({ client: systemManagerClient, logger })
+const secretsManagerBackend = new SecretsManagerBackend({
+  clientFactory: awsConfig.secretsManagerFactory,
+  assumeRole: awsConfig.assumeRole,
+  logger
+})
+const systemManagerBackend = new SystemManagerBackend({
+  clientFactory: awsConfig.systemManagerFactory,
+  assumeRole: awsConfig.assumeRole,
+  logger
+})
 const backends = {
   secretsManager: secretsManagerBackend,
   systemManager: systemManagerBackend

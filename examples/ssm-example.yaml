@@ -4,6 +4,8 @@ metadata:
   name: ssm-secret-key
 secretDescriptor:
   backendType: systemManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
   data:
-    - key: /path/variable-name
+    - key: /foo/name1
       name: variable-name

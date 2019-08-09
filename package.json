@@ -7,7 +7,7 @@
     "coverage": "nyc ./node_modules/mocha/bin/_mocha --recursive lib",
     "lint": "eslint --fix --ignore-pattern /coverage/ ./",
     "local": "LOCALSTACK=1 nodemon",
-    "localstack": "docker run -it -p 4583:4583 -p 4584:4584 -p 9999:8080 -e DEBUG=1 --rm localstack/localstack:0.9.4",
+    "localstack": "docker run -it -p 4583:4583 -p 4584:4584 -p 4592:4592 -p 9999:8080 -e DEBUG=1 --rm localstack/localstack:0.10.1.2",
     "release": "standard-version --tag-prefix='' && ./release.sh",
     "start": "./bin/daemon.js",
     "nodemon": "nodemon ./bin/daemon.js",
