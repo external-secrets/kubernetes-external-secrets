@@ -53,6 +53,8 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | Parameter                                 | Description                                                  | Default                                                 |
 | ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------- |
 | `env.AWS_REGION`                          | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
+| `env.LOG_LEVEL`                           | Set the application log level                                | `info`                                                  |
+| `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server           | `3001`                                                  |
 | `env.POLLER_INTERVAL_MILLISECONDS`        | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
 | `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
@@ -185,6 +187,15 @@ secretDescriptor:
       name: username
       property: username
 ```
+
+## Metrics
+
+kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:
+
+| Metric                                    | Description                                                                     | Example                                                                       |
+| ----------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `sync_calls`                              | This metric counts the number of sync calls by backend, secret name and status  | `sync_calls{name="foo",namespace="example",backend="foo",status="success"} 1` |
+
 
 ## Development
 

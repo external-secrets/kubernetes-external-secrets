@@ -30,11 +30,13 @@
   },
   "dependencies": {
     "aws-sdk": "^2.433.0",
+    "express": "^4.17.1",
     "json-stream": "^1.0.0",
     "kubernetes-client": "^8.3.0",
     "lodash.clonedeep": "^4.5.0",
     "make-promises-safe": "^5.0.0",
-    "pino": "^5.12.0"
+    "pino": "^5.12.0",
+    "prom-client": "^11.5.3"
   },
   "devDependencies": {
     "chai": "^4.1.2",
@@ -50,7 +52,8 @@
     "nodemon": "^1.18.10",
     "nyc": "^14.0.0",
     "sinon": "^7.3.1",
-    "standard-version": "^7.0.0"
+    "standard-version": "^7.0.0",
+    "supertest": "^4.0.2"
   },
   "nyc": {
     "check-coverage": true,
