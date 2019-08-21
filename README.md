@@ -85,6 +85,16 @@ Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars in the session/pod.
 You can use envVarsFromSecret in the helm chart to create these env vars from existing k8s secrets
 
 Additionally, you can specify a `roleArn` which will be assumed before retrieving the secret.
+You can limit the range of roles which can be assumed by this particular *namespace* by using annotations on the namespace resource.
+The annotation value is evaluated as a regular expression and tries to match the `roleArn`.
+
+```yaml
+kind: Namespace
+metadata:
+  name: iam-example
+  annotations:
+    iam.amazonaws.com/permitted: "arn:aws:iam::123456789012:role/.*"
+```
 
 ### Add a secret
 
@@ -128,7 +138,7 @@ secretDescriptor:
       name: password
 ```
 
-The following IAM policy allows a user to access parameters matching `prod-*`.
+The following IAM policy allows a user or role to access parameters matching `prod-*`.
 ```json
 {
   "Version": "2012-10-17",
