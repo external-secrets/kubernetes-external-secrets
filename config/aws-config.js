@@ -23,11 +23,7 @@ module.exports = {
     return new AWS.SSM(opts)
   },
   assumeRole: (assumeRoleOpts) => {
-    let opts
-    if (localstack) {
-      opts = stsConfig
-    }
-    const sts = new AWS.STS(opts)
+    const sts = new AWS.STS(stsConfig)
     return new Promise((resolve, reject) => {
       sts.assumeRole(assumeRoleOpts, (err, res) => {
         if (err) {
