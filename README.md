@@ -152,7 +152,7 @@ The following IAM policy allows a user or role to access parameters matching `pr
 }
 ```
 
-The IAM policy for secrets Manager is similar ([see docs](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)):
+The IAM policy for Secrets Manager is similar ([see docs](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)):
 
 ```json
 {
