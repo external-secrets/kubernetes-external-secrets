@@ -16,7 +16,8 @@ const {
   customResourceManager,
   customResourceManifest,
   logger,
-  pollerIntervalMilliseconds
+  pollerIntervalMilliseconds,
+  trackSecretBackend
 } = require('../config')
 
 async function main () {
@@ -38,7 +39,8 @@ async function main () {
     externalSecretEvents,
     kubeClient,
     logger,
-    pollerIntervalMilliseconds
+    pollerIntervalMilliseconds,
+    trackSecretBackend
   })
 
   logger.info('starting app')
