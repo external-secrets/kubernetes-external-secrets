@@ -20,12 +20,13 @@ const pollerIntervalMilliseconds = process.env.POLLER_INTERVAL_MILLISECONDS
   ? Number(process.env.POLLER_INTERVAL_MILLISECONDS) : 10000
 
 const trackSecretBackend = process.env.TRACK_SECRET_BACKEND
-  ? (process.env.TRACK_SECRET_BACKEND == 'true') : true
+  ? (process.env.TRACK_SECRET_BACKEND === 'true') : true
 
 const logLevel = process.env.LOG_LEVEL || 'info'
 
 module.exports = {
   environment,
   pollerIntervalMilliseconds,
+  trackSecretBackend,
   logLevel
 }
