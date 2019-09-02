@@ -6,6 +6,7 @@
 env:
   AWS_REGION: us-west-2
   POLLER_INTERVAL_MILLISECONDS: 10000
+  TRACK_SECRET_BACKEND: true
 
 # Create environment variables from exists k8s secrets
 # envVarsFromSecret:
