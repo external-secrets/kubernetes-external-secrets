@@ -20,6 +20,10 @@ rbac:
   # Specifies whether RBAC resources should be created
   create: true
 
+istio:
+  # Specify if istio sidecar injection is required - this defaults to false
+  sidecarInjection: false
+
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
