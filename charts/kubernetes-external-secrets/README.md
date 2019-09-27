@@ -5,7 +5,7 @@
 ## TL;DR;
 
 ```bash
-$ helm install stable/kubernetes-external-secrets
+$ helm install external-secrets/kubernetes-external-secrets
 ```
 
 ## Prerequisites
@@ -17,7 +17,7 @@ $ helm install stable/kubernetes-external-secrets
 To install the chart with the release named `my-release`:
 
 ```bash
-$ helm install --name my-release stable/kubernetes-external-secrets
+$ helm install --name my-release external-secrets/kubernetes-external-secrets
 ```
 
 > **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`'
@@ -60,7 +60,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-helm install stable/kubernetes-external-secrets --name my-releases \
+helm install external-secrets/kubernetes-external-secrets --name my-releases \
 --set env.POLLER_INTERVAL_MILLISECONDS='300000' \
 --set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access'
 ```
@@ -68,10 +68,10 @@ helm install stable/kubernetes-external-secrets --name my-releases \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-helm install stable/kubernetes-external-secrets --name my-release -f values.yaml
+helm install external-secrets/kubernetes-external-secrets --name my-release -f values.yaml
 ```
 
-> **Tip**: You can use the default [values.yaml](values.yaml)
+> **Tip**: You can use the default [values.yaml](https://github.com/godaddy/kubernetes-external-secrets/blob/master/charts/kubernetes-external-secrets/values.yaml)
 
 ## Add a secret
 
