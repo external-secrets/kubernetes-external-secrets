@@ -21,7 +21,6 @@ docker tag godaddy/kubernetes-external-secrets:$SHA godaddy/kubernetes-external-
 
 perl -i -pe "s/tag: [a-zA-Z0-9\.]*/tag: $TAG/" charts/kubernetes-external-secrets/values.yaml
 perl -i -pe "s/appVersion: [a-zA-Z0-9\.]*/appVersion: $TAG/" charts/kubernetes-external-secrets/Chart.yaml
-perl -i -pe "s/appVersion: [a-zA-Z0-9\.]*/appVersion: $TAG/" docs/index.yaml
 (cd charts/kubernetes-external-secrets && helm package . && helm repo index ./ && mv *.tgz ../../docs && mv index.yaml ../../docs)
 
 echo ""
