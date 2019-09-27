@@ -86,6 +86,18 @@ If not running on EKS you will have to use an IAM user (in lieu of a role).
 Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars in the session/pod.
 You can use envVarsFromSecret in the helm chart to create these env vars from existing k8s secrets
 
+Additionally, you can specify a `roleArn` which will be assumed before retrieving the secret.
+You can limit the range of roles which can be assumed by this particular *namespace* by using annotations on the namespace resource.
+The annotation value is evaluated as a regular expression and tries to match the `roleArn`.
+
+```yaml
+kind: Namespace
+metadata:
+  name: iam-example
+  annotations:
+    iam.amazonaws.com/permitted: "arn:aws:iam::123456789012:role/.*"
+```
+
 ### Add a secret
 
 Add your secret data to your backend. For example, AWS Secrets Manager:
@@ -109,6 +121,8 @@ metadata:
   name: hello-service
 secretDescriptor:
   backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
   data:
     - key: hello-service/password
       name: password
@@ -124,6 +138,44 @@ secretDescriptor:
   data:
     - key: /hello-service/password
       name: password
+```
+
+The following IAM policy allows a user or role to access parameters matching `prod-*`.
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "ssm:GetParameter",
+      "Resource": "arn:aws:ssm:us-west-2:123456789012:parameter/prod-*"
+    }
+  ]
+}
+```
+
+The IAM policy for Secrets Manager is similar ([see docs](https://docs.aws.amazon.com/mediaconnect/latest/ug/iam-policy-examples-asm-secrets.html)):
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "secretsmanager:GetResourcePolicy",
+        "secretsmanager:GetSecretValue",
+        "secretsmanager:DescribeSecret",
+        "secretsmanager:ListSecretVersionIds"
+      ],
+      "Resource": [
+        "arn:aws:secretsmanager:us-west-2:111122223333:secret:aes128-1a2b3c",
+        "arn:aws:secretsmanager:us-west-2:111122223333:secret:aes192-4D5e6F",
+        "arn:aws:secretsmanager:us-west-2:111122223333:secret:aes256-7g8H9i"
+      ]
+    }
+  ]
+}
 ```
 
 Save the file and run:
@@ -152,7 +204,7 @@ data:
 
 ## Backends
 
-kubernetes-external-secrets supports only AWS Secrets Manager.
+kubernetes-external-secrets supports both AWS Secrets Manager and AWS System Manager.
 
 ### AWS Secrets Manager
 
@@ -179,6 +231,8 @@ metadata:
   name: hello-service
 secretDescriptor:
   backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
   data:
     - key: hello-service/credentials
       name: password
