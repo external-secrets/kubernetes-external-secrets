@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.5.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.4.0...1.5.0) (2019-09-27)
+
+
+### Features
+
+* basic metrics ([#147](https://github.com/godaddy/kubernetes-external-secrets/issues/147)) ([ded6d31](https://github.com/godaddy/kubernetes-external-secrets/commit/ded6d31))
+
 ## [1.4.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.3.0...1.4.0) (2019-09-27)
 
 
