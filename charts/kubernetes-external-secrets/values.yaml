@@ -6,6 +6,8 @@
 env:
   AWS_REGION: us-west-2
   POLLER_INTERVAL_MILLISECONDS: 10000
+  LOG_LEVEL: info
+  METRICS_PORT: 3001
 
 # Create environment variables from exists k8s secrets
 # envVarsFromSecret:
