@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.4.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.3.0...1.4.0) (2019-09-27)
+
+
+### Bug Fixes
+
+* **daemon:** Upsert secrets immediately poller added  ([a986dfb](https://github.com/godaddy/kubernetes-external-secrets/commit/a986dfb))
+* **secret:** fix SSM parameter store code ([e5e635f](https://github.com/godaddy/kubernetes-external-secrets/commit/e5e635f))
+
+
+### Features
+
+* allow setting type in external secret to support other than Opaque secrets ([#130](https://github.com/godaddy/kubernetes-external-secrets/issues/130)) ([226697a](https://github.com/godaddy/kubernetes-external-secrets/commit/226697a))
+
+
+
 ### [1.3.1](https://github.com/godaddy/kubernetes-external-secrets/compare/1.3.0...1.3.1) (2019-07-18)
 
 
