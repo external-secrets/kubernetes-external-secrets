@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-external-secrets",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "description": "Kubernetes external secrets",
   "main": "bin/daemon.js",
   "scripts": {
@@ -29,7 +29,7 @@
     "node": ">=10.0.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.433.0",
+    "aws-sdk": "^2.547.0",
     "express": "^4.17.1",
     "json-stream": "^1.0.0",
     "kubernetes-client": "^8.3.0",

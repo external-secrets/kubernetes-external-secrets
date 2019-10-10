@@ -22,6 +22,12 @@ $ helm install --name my-release external-secrets/kubernetes-external-secrets
 
 > **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`'
 
+To install the chart with AWS IRSA([IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)):
+
+```bash
+$ helm install --name my-release --set securityContext.fsGroup=65534 --set saAnnotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME' external-secrets/kubernetes-external-secrets
+```
+
 ## Uninstalling the Chart
 
 To uninstall/delete the deployment:
@@ -42,12 +48,14 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
 | `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
+| `image.imagePullSecrets`                   | Image pull secret                                            | `{}`                                          |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
 | `image.tag`                          | kubernetes-external-secrets Image tag                        | `1.3.1`                                                 |
 | `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
 | `nameOverride`                   | Override the name of app                                            | `nil`                                          |
 | `fullnameOverride`                   | Override the full name of app                                            | `nil`                                          |
 | `rbac.create`                        | Create & use RBAC resources                                  | `true`                                                  |
+| `securityContext.fsGroup`              | Security context for the container          | `{}`                                                  |
 | `serviceAccount.create`              | Whether a new service account name should be created.        | `true`                                                  |
 | `serviceAccount.name`                | Service account to be used.                                  | automatically generated
 | `podAnnotations`                     | Annotations to be added to pods                              | `{}`                                                    |

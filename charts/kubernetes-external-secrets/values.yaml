@@ -29,17 +29,25 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name:
 
+saAnnotations: {}
+  # eks.amazonaws.com/role-arn: arn:aws:iam::111111111111:role/ROLENAME
+
 replicaCount: 1
 
 image:
   repository: godaddy/kubernetes-external-secrets
-  tag: 1.5.0
+  tag: 1.6.0
   pullPolicy: IfNotPresent
+  imagePullSecrets: ""
 
 nameOverride: ""
 fullnameOverride: ""
 
 podAnnotations: {}
+
+securityContext: {}
+  # securityContext:
+  #  fsGroup: 65534
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
