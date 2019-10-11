@@ -17,6 +17,8 @@ env:
 #  AWS_SECRET_ACCESS_KEY:
 #    secretKeyRef: aws-credentials
 #    key: key
+# when AWS_IRSA is set, don't set AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY
+#  AWS_IRSA=true
 
 rbac:
   # Specifies whether RBAC resources should be created
