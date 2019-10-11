@@ -25,7 +25,7 @@ $ helm install --name my-release external-secrets/kubernetes-external-secrets
 To install the chart with AWS IRSA([IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html)):
 
 ```bash
-$ helm install --name my-release --set securityContext.fsGroup=65534 --set saAnnotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME' external-secrets/kubernetes-external-secrets
+$ helm install --name my-release --set securityContext.fsGroup=65534 --set saAnnotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME' --set env.AWS_IRSA=true external-secrets/kubernetes-external-secrets
 ```
 
 ## Uninstalling the Chart
