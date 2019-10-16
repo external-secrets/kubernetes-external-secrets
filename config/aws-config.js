@@ -16,7 +16,7 @@ module.exports = {
   secretsManagerFactory: (opts) => {
     if (localstack) {
       opts = secretsManagerConfig
-    } else if(irsa) {
+    } else if (irsa) {
       opts = webIdentityCredString
     }
     return new AWS.SecretsManager(opts)
@@ -24,7 +24,7 @@ module.exports = {
   systemManagerFactory: (opts) => {
     if (localstack) {
       opts = systemManagerConfig
-    } else if(irsa) {
+    } else if (irsa) {
       opts = webIdentityCredString
     }
     return new AWS.SSM(opts)
