@@ -23,7 +23,7 @@ spec:
         {{- toYaml .Values.podAnnotations | nindent 8 }}
       {{- end }}
     spec:
-      serviceAccountName: {{ template "kubernetes-external-secrets.fullname" . }}
+      serviceAccountName: {{ template "kubernetes-external-secrets.serviceAccountName" . }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
