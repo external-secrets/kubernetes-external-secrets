@@ -240,6 +240,11 @@ secretDescriptor:
     - key: hello-service/credentials
       name: username
       property: username
+    - key: hello-service/credentials
+      name: password
+      # Version Stage in Secrets Manager
+      version: AWSPREVIOUS
+      property: password_previous
 ```
 
 ## Metrics
