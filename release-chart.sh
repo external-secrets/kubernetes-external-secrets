@@ -19,7 +19,7 @@ if [ -z "$ALLOW_DIRTY" ]; then
 fi
 
 SHA=$(git rev-parse --short HEAD)
-TAG=1.7.0
+TAG=$(git tag | tail -1)
 
 perl -i -pe "s/kubernetes-external-secrets Image tag \| \`[a-zA-Z0-9\.]*/kubernetes-external-secrets Image tag \| \`$TAG/" charts/kubernetes-external-secrets/README.md
 perl -i -pe "s/tag: [a-zA-Z0-9\.]*/tag: $TAG/" charts/kubernetes-external-secrets/values.yaml
