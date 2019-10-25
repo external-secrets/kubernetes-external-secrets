@@ -3,7 +3,27 @@ entries:
   kubernetes-external-secrets:
   - apiVersion: v1
     appVersion: 1.6.0
-    created: "2019-10-23T10:38:37.032659-07:00"
+    created: "2019-10-25T11:42:21.630365-07:00"
+    description: Kubernetes External Secrets CustomResourceDefinition
+    digest: c9b79f54e915dc7e11058c4db94c5354e6994c7db67f6e4aa86c030352bed91d
+    home: https://github.com/godaddy/kubernetes-external-secrets
+    keywords:
+    - kubernetes-external-secrets
+    - secrets
+    maintainers:
+    - email: jxpearce@godaddy.com
+      name: jeffpearce
+    - email: klu6@godaddy.com
+      name: keweilu
+    name: kubernetes-external-secrets
+    sources:
+    - https://github.com/godaddy/kubernetes-external-secrets
+    urls:
+    - kubernetes-external-secrets-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v1
+    appVersion: 1.6.0
+    created: "2019-10-25T11:42:21.629858-07:00"
     description: Kubernetes External Secrets CustomResourceDefinition
     digest: 62316679351e6b8ce775c62205931a1dccf4abf11f7ef1d2ab04a80f3578246a
     home: https://github.com/godaddy/kubernetes-external-secrets
@@ -21,4 +41,4 @@ entries:
     urls:
     - kubernetes-external-secrets-1.0.1.tgz
     version: 1.0.1
-generated: "2019-10-23T10:38:37.031629-07:00"
+generated: "2019-10-25T11:42:21.629101-07:00"
