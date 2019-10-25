@@ -25,12 +25,12 @@ perl -i -pe "s/kubernetes-external-secrets Image tag \| \`[a-zA-Z0-9\.]*/kuberne
 perl -i -pe "s/tag: [a-zA-Z0-9\.]*/tag: $TAG/" charts/kubernetes-external-secrets/values.yaml
 perl -i -pe "s/appVersion: [a-zA-Z0-9\.]*/appVersion: $TAG/" charts/kubernetes-external-secrets/Chart.yaml
 perl -i -pe "s/version: [a-zA-Z0-9\.]*/version: $1/" charts/kubernetes-external-secrets/Chart.yaml
-(cd charts/kubernetes-external-secrets && helm package . && mv *.tgz ../../docs && cd ../../docs && helm repo index ./)
+(cd charts/kubernetes-external-secrets && helm package . && helm repo index --merge ../../docs/index.yaml ./ && mv *.tgz ../../docs && mv index.yaml ../../docs)
 
 echo ""
 echo "Do the following to publish:"
 echo ""
 echo "  1. inspect local changes (e.g., git status, git diff)"
 echo "  2. git add --all && git commit -m \"chore(chart-release): external-secrets/kubernetes-external-secrets:$1\""
-echo "  2. git push origin master"
+echo "  3. git push origin master"
 echo ""
