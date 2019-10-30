@@ -242,7 +242,7 @@ secretDescriptor:
       property: username
 ```
 
-...or we can omit both the name and property keys and _all_ properties will be loaded from hello-service/credentials.
+...or we can omit name and property when we want _all_ properties from hello-service/credentials.
 
 ```yml
 apiVersion: 'kubernetes-client.io/v1'
