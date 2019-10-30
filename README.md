@@ -214,7 +214,7 @@ console). Using JSON objects is useful when you need to atomically
 update multiple values. For example, when rotating a client
 certificate and private key.
 
-When writing an ExternalSecret for a JSON object you must specify the
+When writing an ExternalSecret for a JSON object you _may_ specify the
 properties to use. For example, if we add our hello-service
 credentials as a single JSON object:
 
@@ -240,6 +240,21 @@ secretDescriptor:
     - key: hello-service/credentials
       name: username
       property: username
+```
+
+...or we can omit both the name and property keys and _all_ properties will be loaded from hello-service/credentials.
+
+```yml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-service
+secretDescriptor:
+  backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  data:
+    - key: hello-service/credentials
 ```
 
 ## Metrics
