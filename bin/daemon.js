@@ -12,6 +12,7 @@ const Daemon = require('../lib/daemon')
 const MetricsServer = require('../lib/metrics-server')
 const Metrics = require('../lib/metrics')
 const { getExternalSecretEvents } = require('../lib/external-secret')
+const PollerFactory = require('../lib/poller-factory')
 
 const {
   backends,
@@ -40,14 +41,19 @@ async function main () {
   const registry = Prometheus.register
   const metrics = new Metrics({ registry })
 
-  const daemon = new Daemon({
+  const pollerFactory = new PollerFactory({
     backends,
-    externalSecretEvents,
     kubeClient,
-    logger,
     metrics,
     pollerIntervalMilliseconds,
-    customResourceManifest
+    customResourceManifest,
+    logger
+  })
+
+  const daemon = new Daemon({
+    externalSecretEvents,
+    logger,
+    pollerFactory
   })
 
   const metricsServer = new MetricsServer({
