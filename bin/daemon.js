@@ -23,6 +23,19 @@ const {
   pollerIntervalMilliseconds
 } = require('../config')
 
+// Make sure uncaught exceptions are logged on exit
+process.on('uncaughtException', err => {
+  logger.error(err, 'Uncaught exception')
+  process.exit(1)
+})
+
+// Log unhandled rejections
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error(reason, 'Unhandled Rejection reason')
+  logger.error(promise, 'Unhandled Rejection promise')
+  process.exit(1)
+})
+
 async function main () {
   logger.info('loading kube specs')
   await kubeClient.loadSpec()
