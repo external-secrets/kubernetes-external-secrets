@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.6.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.5.0...1.6.0) (2019-10-23)
+
+
+### Features
+
+* add option to assume role ([#144](https://github.com/godaddy/kubernetes-external-secrets/issues/144)) ([f0ce6ed](https://github.com/godaddy/kubernetes-external-secrets/commit/f0ce6ed))
+
 ## [1.5.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.4.0...1.5.0) (2019-09-27)
 
 

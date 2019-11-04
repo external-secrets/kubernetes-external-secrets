@@ -50,7 +50,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
 | `image.imagePullSecrets`                   | Image pull secret                                            | `{}`                                          |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
-| `image.tag`                          | kubernetes-external-secrets Image tag                        | `1.3.1`                                                 |
+| `image.tag`                          | kubernetes-external-secrets Image tag | `1.6.0`                                                 |
 | `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
 | `nameOverride`                   | Override the name of app                                            | `nil`                                          |
 | `fullnameOverride`                   | Override the full name of app                                            | `nil`                                          |
