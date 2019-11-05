@@ -40,7 +40,7 @@ const systemManagerBackend = new SystemManagerBackend({
   assumeRole: awsConfig.assumeRole,
   logger
 })
-const vaultClient = vault({apiVersion: 'v1', endpoint: envConfig.vaultEndpoint})
+const vaultClient = vault({ apiVersion: 'v1', endpoint: envConfig.vaultEndpoint })
 const vaultBackend = new VaultBackend({ client: vaultClient, logger })
 const backends = {
   secretsManager: secretsManagerBackend,
