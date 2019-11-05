@@ -127,6 +127,14 @@ secretDescriptor:
   data:
     - key: hello-service/password
       name: password
+  # optional: specify a template with any additional markup you would like added to the downstream Secret resource.
+  # This template will be deep merged without mutating any existing fields. For example: you cannot override metadata.name.
+  template:
+    metadata:
+      annotations:
+        cat: cheese
+      labels:
+        dog: farfel
 ```
 or
 ```yml
@@ -198,6 +206,10 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: hello-service
+  annotations:
+    cat: cheese
+  labels:
+    dog: farfel
 type: Opaque
 data:
   password: MTIzNA==
