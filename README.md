@@ -243,6 +243,40 @@ secretDescriptor:
       property: username
 ```
 
+alternatively you can use `dataFrom` and get all the values from hello-service/credentials:
+
+```yml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-service
+secretDescriptor:
+  backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  dataFrom:
+    - hello-service/credentials
+```
+
+`data` and `dataFrom` can of course be combined, any naming conflicts will use the last defined, with `data` overriding `dataFrom`
+
+```yml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-service
+secretDescriptor:
+  backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  dataFrom:
+    - hello-service/credentials
+  data:
+    - key: hello-service/migration-credentials
+      name: password
+      property: password
+```
+
 ## Metrics
 
 kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:
