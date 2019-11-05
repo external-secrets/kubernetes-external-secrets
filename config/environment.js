@@ -16,7 +16,7 @@ if (environment === 'development') {
   require('dotenv').config()
 }
 
-const vaultEndpoint = process.env.VAULT_ENDPOINT || 'http://127.0.0.1:8200'
+const vaultEndpoint = process.env.VAULT_ADDR || 'http://127.0.0.1:8200'
 const pollerIntervalMilliseconds = process.env.POLLER_INTERVAL_MILLISECONDS
   ? Number(process.env.POLLER_INTERVAL_MILLISECONDS) : 10000
 
