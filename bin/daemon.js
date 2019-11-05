@@ -21,7 +21,8 @@ const {
   customResourceManifest,
   logger,
   metricsPort,
-  pollerIntervalMilliseconds
+  pollerIntervalMilliseconds,
+  rolePermittedAnnotation
 } = require('../config')
 
 async function main () {
@@ -46,6 +47,7 @@ async function main () {
     kubeClient,
     metrics,
     pollerIntervalMilliseconds,
+    rolePermittedAnnotation,
     customResourceManifest,
     logger
   })

@@ -55,6 +55,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `env.AWS_REGION`                          | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
 | `env.LOG_LEVEL`                           | Set the application log level                                | `info`                                                  |
 | `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server           | `3001`                                                  |
+| `env.ROLE_PERMITTED_ANNOTATION`           | Specify the annotation key where to lookup the role arn permission boundaries | `iam.amazonaws.com/permitted`          |
 | `env.POLLER_INTERVAL_MILLISECONDS`        | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
 | `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
@@ -87,14 +88,14 @@ Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars in the session/pod.
 You can use envVarsFromSecret in the helm chart to create these env vars from existing k8s secrets
 
 Additionally, you can specify a `roleArn` which will be assumed before retrieving the secret.
-You can limit the range of roles which can be assumed by this particular *namespace* by using annotations on the namespace resource.
-The annotation value is evaluated as a regular expression and tries to match the `roleArn`.
+You can limit the range of roles which can be assumed by this particular *namespace* by using annotations on the namespace resource. The annotation key is configurable (see above). The annotation value is evaluated as a regular expression and tries to match the `roleArn`.
 
 ```yaml
 kind: Namespace
 metadata:
   name: iam-example
   annotations:
+    # annotation key is configurable
     iam.amazonaws.com/permitted: "arn:aws:iam::123456789012:role/.*"
 ```
 
