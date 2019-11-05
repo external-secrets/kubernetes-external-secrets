@@ -25,6 +25,9 @@ rules:
   - apiGroups: ["kubernetes-client.io"]
     resources: ["externalsecrets"]
     verbs: ["get", "watch", "list"]
+  - apiGroups: ["kubernetes-client.io"]
+    resources: ["externalsecrets/status"]
+    verbs: ["get", "update"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding

@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.6.0...2.0.0) (2019-11-05)
+
+
+### Bug Fixes
+
+* **script:** fix release scripts ([#186](https://github.com/godaddy/kubernetes-external-secrets/issues/186)) ([238ebd6](https://github.com/godaddy/kubernetes-external-secrets/commit/238ebd6))
+* add missing rbac rules to external-secrets.yml ([#195](https://github.com/godaddy/kubernetes-external-secrets/issues/195)) ([b6d8229](https://github.com/godaddy/kubernetes-external-secrets/commit/b6d8229))
+* RBAC config to access namespaces ([#177](https://github.com/godaddy/kubernetes-external-secrets/issues/177)) ([9605756](https://github.com/godaddy/kubernetes-external-secrets/commit/9605756))
+
+
+### Features
+
+* add status subresource with last sync and generation tracking ([#133](https://github.com/godaddy/kubernetes-external-secrets/issues/133)) ([8db1749](https://github.com/godaddy/kubernetes-external-secrets/commit/8db1749))
+
 ## [1.6.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.5.0...1.6.0) (2019-10-23)
 
 
