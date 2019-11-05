@@ -21,11 +21,14 @@ const pollerIntervalMilliseconds = process.env.POLLER_INTERVAL_MILLISECONDS
 
 const logLevel = process.env.LOG_LEVEL || 'info'
 
+const rolePermittedAnnotation = process.env.ROLE_PERMITTED_ANNOTATION || 'iam.amazonaws.com/permitted'
+
 const metricsPort = process.env.METRICS_PORT || 3001
 
 module.exports = {
   environment,
   pollerIntervalMilliseconds,
   metricsPort,
+  rolePermittedAnnotation,
   logLevel
 }
