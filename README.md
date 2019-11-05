@@ -217,7 +217,7 @@ data:
 
 ## Backends
 
-kubernetes-external-secrets supports both AWS Secrets Manager and AWS System Manager.
+kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, and Hashicorp Vault.
 
 ### AWS Secrets Manager
 
@@ -287,6 +287,34 @@ spec:
     - key: hello-service/migration-credentials
       name: password
       property: password
+```
+
+### Hashicorp Vault
+
+kubernetes-external-secrets supports fetching secrets from [Hashicorp Vault](https://www.vaultproject.io/), using the [Kubernetes authentication method](https://www.vaultproject.io/docs/auth/kubernetes.html).
+
+You will need to set the `VAULT_ADDR` environment variables so that kubernetes-external-secrets knows which endpoint to connect to, then create `ExternalSecret` definitions as follows:
+
+```yml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-vault-service
+secretDescriptor:
+  backendType: vault
+  # Your authentication mount point, e.g. "kubernetes"
+  vaultMountPoint: my-kubernetes-vault-mount-point
+  # The vault role that will be used to fetch the secrets
+  # This role will need to be bound to kubernetes-external-secret's ServiceAccount; see Vault's documentation:
+  # https://www.vaultproject.io/docs/auth/kubernetes.html
+  vaultRole: my-vault-role
+  properties:
+  # The full path of the secret to read, as in `vault read secret/data/hello-service/credentials`
+  - key: secret/data/hello-service/credentials
+    property: password
+  # Properties are matched individually. If you have several properties in your Vault secret, you will need to add them all separately
+  - key: secret/data/hello-service/credentials
+    property: api-key
 ```
 
 ## Metrics
