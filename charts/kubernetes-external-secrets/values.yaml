@@ -8,6 +8,7 @@ env:
   POLLER_INTERVAL_MILLISECONDS: 10000
   LOG_LEVEL: info
   METRICS_PORT: 3001
+  VAULT_ADDR: http://127.0.0.1:8200
 
 # Create environment variables from exists k8s secrets
 # envVarsFromSecret:
