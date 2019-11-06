@@ -308,7 +308,7 @@ secretDescriptor:
   # This role will need to be bound to kubernetes-external-secret's ServiceAccount; see Vault's documentation:
   # https://www.vaultproject.io/docs/auth/kubernetes.html
   vaultRole: my-vault-role
-  properties:
+  data:
   # The full path of the secret to read, as in `vault read secret/data/hello-service/credentials`
   - key: secret/data/hello-service/credentials
     property: password
