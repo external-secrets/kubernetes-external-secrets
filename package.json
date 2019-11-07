@@ -23,7 +23,6 @@
     "aws"
   ],
   "author": "GoDaddy Operating Company, LLC",
-  "maintainer": "Jacopo Daeli <jacopo.daeli@gmail.com>",
   "license": "MIT",
   "engines": {
     "node": ">=12.0.0"
