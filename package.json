@@ -18,8 +18,8 @@
     "url": "https://github.com/godaddy/kubernetes-external-secrets"
   },
   "keywords": [
-    "kubernets",
-    "scerets",
+    "kubernetes",
+    "secrets",
     "aws"
   ],
   "author": "GoDaddy Operating Company, LLC",
