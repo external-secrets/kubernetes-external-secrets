@@ -22,6 +22,7 @@ const {
   logger,
   metricsPort,
   pollerIntervalMilliseconds,
+  pollingDisabled,
   rolePermittedAnnotation
 } = require('../config')
 
@@ -49,6 +50,7 @@ async function main () {
     pollerIntervalMilliseconds,
     rolePermittedAnnotation,
     customResourceManifest,
+    pollingDisabled,
     logger
   })
 
