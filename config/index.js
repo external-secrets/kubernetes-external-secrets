@@ -39,6 +39,7 @@ const systemManagerBackend = new SystemManagerBackend({
   logger
 })
 const backends = {
+  // when adding a new backend, make sure to change the CRD property too
   secretsManager: secretsManagerBackend,
   systemManager: systemManagerBackend
 }
@@ -47,6 +48,7 @@ const backends = {
 backends.secretManager = secretsManagerBackend
 
 module.exports = {
+  awsConfig,
   backends,
   customResourceManager,
   customResourceManifest,

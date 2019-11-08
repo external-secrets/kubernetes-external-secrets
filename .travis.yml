@@ -1,5 +1,7 @@
 sudo: false
 language: node_js
+services:
+- docker
 matrix:
   fast_finish: true
   include:
@@ -9,6 +11,13 @@ before_install:
 # package-lock.json was introduced in npm@5
 - '[[ $(node -v) =~ ^v9.*$ ]] || npm install -g npm@latest' # skipped when using node 9
 - npm install -g greenkeeper-lockfile
+# kubectl, kind, helm
+- curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
+- curl -Lo kind https://github.com/kubernetes-sigs/kind/releases/download/v0.5.1/kind-linux-amd64 && chmod +x kind && sudo mv kind /usr/local/bin/
+- curl -Lo helm.tgz https://get.helm.sh/helm-v2.16.0-linux-amd64.tar.gz && tar -zxvf helm.tgz && sudo mv linux-amd64/helm /usr/local/bin/helm
 before_script: greenkeeper-lockfile-update
 after_script: greenkeeper-lockfile-upload
 install: npm install
+script:
+- npm test
+- npm run test-e2e

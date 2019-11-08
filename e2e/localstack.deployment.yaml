@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: localstack
+spec:
+  selector:
+    matchLabels:
+      app: localstack
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: localstack
+    spec:
+      containers:
+      - name: localstack
+        image: localstack/localstack:0.10.5
+        resources:
+          limits:
+            cpu: 300m
+            memory: 500Mi
+        livenessProbe:
+          tcpSocket:
+            port: 4100
+          initialDelaySeconds: 30
+          periodSeconds: 15
+        readinessProbe:
+          tcpSocket:
+            port: 4100
+          initialDelaySeconds: 30
+          periodSeconds: 15
+        ports:
+        - containerPort: 4100
+          name: ssm
+        - containerPort: 4101
+          name: secretsmanager
+        - containerPort: 4102
+          name: sts
+        - containerPort: 32000
+          name: ui
+        env:
+          - name: SERVICES
+            value: "ssm:4100,secretsmanager:4101,sts:4102"
+          - name: PORT_WEB_UI
+            value: "32000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ssm
+spec:
+  # selector tells Kubernetes what Deployment this Service
+  # belongs to
+  selector:
+    app: localstack
+  ports:
+  - port: 80
+    targetPort: ssm
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: secretsmanager
+spec:
+  # selector tells Kubernetes what Deployment this Service
+  # belongs to
+  selector:
+    app: localstack
+  ports:
+  - port: 80
+    targetPort: secretsmanager
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: sts
+spec:
+  # selector tells Kubernetes what Deployment this Service
+  # belongs to
+  selector:
+    app: localstack
+  ports:
+  - port: 80
+    targetPort: sts
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: localstack
+spec:
+  # selector tells Kubernetes what Deployment this Service
+  # belongs to
+  type: NodePort
+  selector:
+    app: localstack
+  ports:
+  - nodePort: 32000
+    port: 80
+    targetPort: ui
+
+---
