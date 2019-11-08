@@ -3,7 +3,12 @@
 
 # 💂 Kubernetes External Secrets
 
-Kubernetes External Secrets allows you to use external secret management systems (*e.g.*, [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)) to securely add secrets in Kubernetes. Read more about the design and motivation for Kubernetes External Secrets on the [GoDaddy Engineering Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
+Kubernetes External Secrets allows you to use external secret
+management systems, like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) or
+[HashiCorp Vault](https://www.vaultproject.io/), to securely add secrets in
+Kubernetes. Read more about the design and motivation for Kubernetes
+External Secrets on the [GoDaddy Engineering
+Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
 
 ## How it works
 
