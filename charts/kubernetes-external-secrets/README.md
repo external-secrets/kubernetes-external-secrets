@@ -5,6 +5,7 @@
 ## TL;DR;
 
 ```bash
+$ helm repo add external-secrets https://godaddy.github.io/kubernetes-external-secrets/
 $ helm install external-secrets/kubernetes-external-secrets
 ```
 
@@ -47,6 +48,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server           | `3001`                                                  |
 | `env.ROLE_PERMITTED_ANNOTATION`           | Specify the annotation key where to lookup the role arn permission boundaries | `iam.amazonaws.com/permitted`          |
 | `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
+| `env.VAULT_ADDR`                          | Endpoint for the Vault backend, if using Vault               | `http://127.0.0.1:8200                                  |
 | `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |

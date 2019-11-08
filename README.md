@@ -31,61 +31,15 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 
 ### Install with Helm
 
-Alternatively, the included [charts/kubernetes-external-secrets](charts/kubernetes-external-secrets) can be used to create the `kubernetes-external-secrets` resources and `Deployment` on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+The official [helm chart](charts/kubernetes-external-secrets) can be used to create the `kubernetes-external-secrets` resources and `Deployment` on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-#### Installing the Chart
-
-```bash
-helm install --name kubernetes-external-secrets \
---set env.AWS_REGION='<aws-region>' \
-charts/kubernetes-external-secrets
-```
-
-> **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`'
-
-#### Uninstalling the Chart
-
-To uninstall/delete the `kubernetes-external-secrets` deployment:
 
 ```bash
-helm delete kubernetes-external-secrets
+$ helm repo add external-secrets https://godaddy.github.io/kubernetes-external-secrets/
+$ helm install external-secrets/kubernetes-external-secrets
 ```
 
-#### Configuration
-
-The following table lists the configurable parameters of the `kubernetes-external-secrets` chart and their default values.
-
-| Parameter                                 | Description                                                  | Default                                                 |
-| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------- |
-| `env.AWS_REGION`                          | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
-| `env.LOG_LEVEL`                           | Set the application log level                                | `info`                                                  |
-| `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server           | `3001`                                                  |
-| `env.ROLE_PERMITTED_ANNOTATION`           | Specify the annotation key where to lookup the role arn permission boundaries | `iam.amazonaws.com/permitted`          |
-| `env.POLLER_INTERVAL_MILLISECONDS`        | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
-| `env.VAULT_ADDR`                          | Endpoint for the Vault backend, if using Vault               | `http://127.0.0.1:8200                                  |
-| `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
-| `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
-| `image.repository`                        | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
-| `image.tag`                               | kubernetes-external-secrets Image tag                        | `1.2.0`                                                 |
-| `image.pullPolicy`                        | Image pull policy                                            | `IfNotPresent`                                          |
-| `rbac.create`                             | Create & use RBAC resources                                  | `true`                                                  |
-| `serviceAccount.create`                   | Whether a new service account name should be created.        | `true`                                                  |
-| `serviceAccount.name`                     | Service account to be used.                                  | automatically generated                                 |
-| `podAnnotations`                          | Annotations to be added to pods                              | `{}`                                                    |
-| `replicaCount`                            | Number of replicas                                           | `1`                                                     |
-| `nodeSelector`                            | node labels for pod assignment                               | `{}`                                                    |
-| `tolerations`                             | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
-| `affinity`                                | Affinity for pod assignment                                  | `{}`                                                    |
-| `resources`                               | Pod resource requests & limits                               | `{}`                                                    |
-
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
-
-```bash
-helm install --name kubernetes-external-secrets \
---set env.POLLER_INTERVAL_MILLISECONDS='300000' \
---set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access' \
-charts/kubernetes-external-secrets
-```
+For more details about configuration see the [helm chart docs](charts/kubernetes-external-secrets/README.md)
 
 ### Use IAM credentials for Secrets Manager access
 
