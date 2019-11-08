@@ -41,6 +41,10 @@ spec:
               type: object
             backendType:
               type: string
+              enum:
+                - secretsManager
+                - systemManager
+                - vault
             dataFrom:
               type: array
               items:
