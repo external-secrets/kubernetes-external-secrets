@@ -1,7 +1,6 @@
-[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/) [![Greenkeeper badge](https://badges.greenkeeper.io/godaddy/kubernetes-external-secrets.svg)](https://greenkeeper.io/)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/)
 
-# 💂 Kubernetes External Secrets
+# Kubernetes External Secrets
 
 Kubernetes External Secrets allows you to use external secret
 management systems, like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) or
