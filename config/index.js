@@ -4,14 +4,20 @@ const vault = require('node-vault')
 const kube = require('kubernetes-client')
 const KubeRequest = require('kubernetes-client/backends/request')
 const pino = require('pino')
+const yaml = require('js-yaml')
+const fs = require('fs')
+const path = require('path')
 
 const awsConfig = require('./aws-config')
 const envConfig = require('./environment')
 const CustomResourceManager = require('../lib/custom-resource-manager')
-const customResourceManifest = require('../custom-resource-manifest.json')
 const SecretsManagerBackend = require('../lib/backends/secrets-manager-backend')
 const SystemManagerBackend = require('../lib/backends/system-manager-backend')
 const VaultBackend = require('../lib/backends/vault-backend')
+
+// Get document, or throw exception on error
+// eslint-disable-next-line security/detect-non-literal-fs-filename
+const customResourceManifest = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../crd.yaml'), 'utf8'))
 
 const kubeconfig = new kube.KubeConfig()
 kubeconfig.loadFromDefault()

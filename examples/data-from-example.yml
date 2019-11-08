@@ -1,0 +1,8 @@
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: data-from-example
+spec:
+  backendType: systemManager
+  dataFrom:
+    - /foo/name1

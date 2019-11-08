@@ -1,10 +1,11 @@
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
-  name: dockerhub-secret
+  name: dockerconfig-example
 spec:
   backendType: secretsManager
-  type: kubernetes.io/dockerconfigjson
+  template:
+    type: kubernetes.io/dockerconfigjson
   data:
     - key: /development/dockerhub
       name: .dockerconfigjson

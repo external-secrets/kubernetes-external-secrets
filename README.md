@@ -174,6 +174,17 @@ data:
   password: MTIzNA==
 ```
 
+## Deprecations
+
+A few properties has changed name overtime, we still maintain backwards compatbility with these but they will eventually be removed, and they are not validated using the CRD validation.
+
+| Old                           | New                            |
+| ----------------------------- | ------------------------------ |
+| `secretDescriptor`            | `spec`                         |
+| `spec.type`                   | `spec.template.type`           |
+| `spec.properties`             | `spec.data`                    |
+| `backendType: secretManager`  | `backendType: secretsManager`  |
+
 ## Backends
 
 kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, and Hashicorp Vault.
@@ -197,7 +208,7 @@ aws secretsmanager create-secret --region us-west-2 --name hello-service/credent
 We can declare which properties we want from hello-service/credentials:
 
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
   name: hello-service
@@ -217,7 +228,7 @@ spec:
 alternatively you can use `dataFrom` and get all the values from hello-service/credentials:
 
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
   name: hello-service
@@ -232,7 +243,7 @@ spec:
 `data` and `dataFrom` can of course be combined, any naming conflicts will use the last defined, with `data` overriding `dataFrom`
 
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
   name: hello-service

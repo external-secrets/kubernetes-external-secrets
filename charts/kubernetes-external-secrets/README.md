@@ -11,7 +11,7 @@ $ helm install external-secrets/kubernetes-external-secrets
 
 ## Prerequisites
 
-* Kubernetes 1.7+
+* Kubernetes 1.12+
 
 ## Installing the Chart
 
