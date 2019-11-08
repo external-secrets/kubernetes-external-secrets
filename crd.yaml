@@ -31,9 +31,6 @@ spec:
         spec:
           type: object
           properties:
-            type:
-              description: Deprecated! Use template.type instead
-              type: string
             template:
               description: Template which will be deep merged without mutating
                 any existing fields. into generated secret, can be used to
@@ -74,9 +71,6 @@ spec:
               - data
             - required:
               - dataFrom
-
-        secretDescriptor:
-          description: Deprecated! Use spec instead
 
   subresources:
     status: {}

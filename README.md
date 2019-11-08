@@ -215,6 +215,17 @@ data:
   password: MTIzNA==
 ```
 
+## Deprecations
+
+A few properties has changed name overtime, we still maintain backwards compatbility with these but they will eventually be removed, and they are not validated using the CRD validation.
+
+| Old                           | New                            |
+| ----------------------------- | ------------------------------ |
+| `secretDescriptor`            | `spec`                         |
+| `spec.type`                   | `spec.template.type`           |
+| `spec.properties`             | `spec.data`                    |
+| `backendType: secretManager`  | `backendType: secretsManager`  |
+
 ## Backends
 
 kubernetes-external-secrets supports both AWS Secrets Manager and AWS System Manager.
