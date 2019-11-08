@@ -97,7 +97,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: secretsManager
   data:
     - key: hello-service/password
