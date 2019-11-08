@@ -1,0 +1,78 @@
+apiVersion: apiextensions.k8s.io/v1beta1
+kind: CustomResourceDefinition
+metadata:
+  name: externalsecrets.kubernetes-client.io
+spec:
+  group: kubernetes-client.io
+  version: v1
+  scope: Namespaced
+
+  names:
+    shortNames:
+    - es
+    kind: ExternalSecret
+    plural: externalsecrets
+    singular: externalsecret
+
+  additionalPrinterColumns:
+  - JSONPath: .status.lastSync
+    name: Last Sync
+    type: date
+  - JSONPath: .status.status
+    name: status
+    type: string
+  - JSONPath: .metadata.creationTimestamp
+    name: Age
+    type: date
+
+  validation:
+    openAPIV3Schema:
+      properties:
+        spec:
+          type: object
+          properties:
+            type:
+              description: Deprecated! Use template.type instead
+              type: string
+            template:
+              description: Template which will be deep merged without mutating
+                any existing fields. into generated secret, can be used to
+                set for example annotations or type on the generated secret
+              type: object
+            backendType:
+              type: string
+            dataFrom:
+              type: array
+              items:
+                type: string
+            data:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    description: Secret key in backend
+                    type: string
+                  name:
+                    description: Name set for this key in the generated secret
+                    type: string
+                  property:
+                    description: Property to extract if secret in backend is a JSON object
+                required:
+                  - name
+                  - key
+            roleArn:
+              type: string
+          required:
+            - backendType
+          anyOf:
+            - required:
+              - data
+            - required:
+              - dataFrom
+
+        secretDescriptor:
+          description: Deprecated! Use spec instead
+
+  subresources:
+    status: {}

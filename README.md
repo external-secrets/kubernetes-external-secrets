@@ -238,7 +238,7 @@ aws secretsmanager create-secret --region us-west-2 --name hello-service/credent
 We can declare which properties we want from hello-service/credentials:
 
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
   name: hello-service
@@ -258,7 +258,7 @@ spec:
 alternatively you can use `dataFrom` and get all the values from hello-service/credentials:
 
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
   name: hello-service
@@ -273,7 +273,7 @@ spec:
 `data` and `dataFrom` can of course be combined, any naming conflicts will use the last defined, with `data` overriding `dataFrom`
 
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
   name: hello-service

@@ -30,6 +30,7 @@
   "dependencies": {
     "aws-sdk": "^2.566.0",
     "express": "^4.17.1",
+    "js-yaml": "^3.13.1",
     "json-stream": "^1.0.0",
     "kubernetes-client": "^8.3.0",
     "lodash.clonedeep": "^4.5.0",
