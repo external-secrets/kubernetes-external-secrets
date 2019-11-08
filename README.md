@@ -120,7 +120,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: secretsManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
@@ -142,7 +142,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: systemManager
   data:
     - key: /hello-service/password
@@ -242,7 +242,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: secretsManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
@@ -262,7 +262,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: secretsManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
@@ -277,7 +277,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: secretsManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role

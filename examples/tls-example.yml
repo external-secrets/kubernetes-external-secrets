@@ -2,7 +2,7 @@ apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
   name: dockerhub-secret
-secretDescriptor:
+spec:
   backendType: secretsManager
   type: kubernetes.io/tls
   data:
