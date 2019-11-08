@@ -301,7 +301,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-vault-service
-secretDescriptor:
+spec:
   backendType: vault
   # Your authentication mount point, e.g. "kubernetes"
   vaultMountPoint: my-kubernetes-vault-mount-point
@@ -310,11 +310,13 @@ secretDescriptor:
   # https://www.vaultproject.io/docs/auth/kubernetes.html
   vaultRole: my-vault-role
   data:
-  # The full path of the secret to read, as in `vault read secret/data/hello-service/credentials`
-  - key: secret/data/hello-service/credentials
+  - name: password
+    # The full path of the secret to read, as in `vault read secret/data/hello-service/credentials`
+    key: secret/data/hello-service/credentials
     property: password
-  # Properties are matched individually. If you have several properties in your Vault secret, you will need to add them all separately
-  - key: secret/data/hello-service/credentials
+  # Vault values are matched individually. If you have several keys in your Vault secret, you will need to add them all separately
+  - name: api-key
+    key: secret/data/hello-service/credentials
     property: api-key
 ```
 
