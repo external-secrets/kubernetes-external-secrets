@@ -40,6 +40,16 @@ $ helm install external-secrets/kubernetes-external-secrets
 
 For more details about configuration see the [helm chart docs](charts/kubernetes-external-secrets/README.md)
 
+### Install with kubectl
+
+If you don't want to install helm on your cluster and just want to use `kubectl` to install `kubernetes-external-secrets`, you could get the `helm` client cli first and then use the following sample command to generate kubernetes manifests:
+
+```bash
+$ helm template -f charts/kubernetes-external-secrets/values.yaml --output-dir ./output_dir ./charts/kubernetes-external-secrets/
+```
+
+The generated kubernetes manifests will be in `./output_dir` and can be applied to deploy `kubernetes-external-secrets` to the cluster.
+
 ### Use IAM credentials for Secrets Manager access
 
 If not running on EKS you will have to use an IAM user (in lieu of a role).
