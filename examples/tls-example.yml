@@ -1,10 +1,11 @@
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
-  name: dockerhub-secret
-secretDescriptor:
+  name: tls-secret
+spec:
   backendType: secretsManager
-  type: kubernetes.io/tls
+  template:
+    type: kubernetes.io/tls
   data:
     - key: /development/certificate
       property: crt

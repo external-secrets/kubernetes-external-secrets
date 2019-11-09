@@ -1,8 +1,8 @@
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
-  name: ssm-secret-key
-secretDescriptor:
+  name: ssm-example
+spec:
   backendType: systemManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role

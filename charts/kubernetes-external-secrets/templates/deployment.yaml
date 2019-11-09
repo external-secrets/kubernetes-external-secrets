@@ -24,6 +24,9 @@ spec:
       {{- end }}
     spec:
       serviceAccountName: {{ template "kubernetes-external-secrets.serviceAccountName" . }}
+      {{- if .Values.securityContext }}
+      securityContext: {{ toYaml .Values.securityContext | nindent 8 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -45,6 +48,10 @@ spec:
                 name: {{ $value.secretKeyRef | quote }}
                 key: {{ $value.key | quote }}
           {{- end }}
+      {{- with .Values.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

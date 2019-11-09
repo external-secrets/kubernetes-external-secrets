@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-external-secrets",
-  "version": "1.5.0",
+  "version": "2.1.0",
   "description": "Kubernetes external secrets",
   "main": "bin/daemon.js",
   "scripts": {
@@ -18,23 +18,25 @@
     "url": "https://github.com/godaddy/kubernetes-external-secrets"
   },
   "keywords": [
-    "kubernets",
-    "scerets",
+    "kubernetes",
+    "secrets",
     "aws"
   ],
   "author": "GoDaddy Operating Company, LLC",
-  "maintainer": "Jacopo Daeli <jacopo.daeli@gmail.com>",
   "license": "MIT",
   "engines": {
-    "node": ">=10.0.0"
+    "node": ">=12.0.0"
   },
   "dependencies": {
-    "aws-sdk": "^2.433.0",
+    "aws-sdk": "^2.566.0",
     "express": "^4.17.1",
+    "js-yaml": "^3.13.1",
     "json-stream": "^1.0.0",
     "kubernetes-client": "^8.3.0",
     "lodash.clonedeep": "^4.5.0",
+    "lodash.merge": "^4.6.2",
     "make-promises-safe": "^5.0.0",
+    "node-vault": "^0.9.8",
     "pino": "^5.12.0",
     "prom-client": "^11.5.3"
   },
