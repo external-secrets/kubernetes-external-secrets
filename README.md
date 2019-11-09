@@ -42,7 +42,7 @@ For more details about configuration see the [helm chart docs](charts/kubernetes
 
 ### Install with kubectl
 
-If you don't want to install helm on your cluster and just want to use `kubectl` to install `kubernetes-external-secrets`. You could get the `helm` client cli first and then use the following sample command to generate kubernetes manifests:
+If you don't want to install helm on your cluster and just want to use `kubectl` to install `kubernetes-external-secrets`, you could get the `helm` client cli first and then use the following sample command to generate kubernetes manifests:
 
 ```bash
 $ helm template -f charts/kubernetes-external-secrets/values.yaml --output-dir ./output_dir ./charts/kubernetes-external-secrets/
