@@ -10,7 +10,7 @@ env:
   METRICS_PORT: 3001
   VAULT_ADDR: http://127.0.0.1:8200
 
-# Create environment variables from exists k8s secrets
+# Create environment variables from existing k8s secrets
 # envVarsFromSecret:
 #  AWS_ACCESS_KEY_ID:
 #    secretKeyRef: aws-credentials
@@ -18,6 +18,12 @@ env:
 #  AWS_SECRET_ACCESS_KEY:
 #    secretKeyRef: aws-credentials
 #    key: key
+
+# Create files from existing k8s secrets
+# filesFromSecret:
+#   examplefile:
+#     secret: secretname
+#     mountPath: /a/mount/point/
 
 rbac:
   # Specifies whether RBAC resources should be created
