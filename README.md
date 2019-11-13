@@ -236,7 +236,7 @@ spec:
     - key: hello-service/credentials
       name: password
       # Version Stage in Secrets Manager
-      version: AWSPREVIOUS
+      versionStage: AWSPREVIOUS
       property: password_previous
 ```
 
