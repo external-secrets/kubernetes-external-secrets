@@ -19,8 +19,6 @@ docker build -t godaddy/kubernetes-external-secrets:$SHA .
 docker tag godaddy/kubernetes-external-secrets:$SHA godaddy/kubernetes-external-secrets:$TAG
 docker tag godaddy/kubernetes-external-secrets:$SHA godaddy/kubernetes-external-secrets:latest
 
-perl -i -pe "s/image: ([^:]*):[a-zA-Z0-9\.]*/image: \1:$TAG/" ./external-secrets.yml
-
 echo ""
 echo "Do the following to publish:"
 echo ""
