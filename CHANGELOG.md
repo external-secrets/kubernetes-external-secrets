@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/godaddy/kubernetes-external-secrets/compare/2.1.0...2.2.0) (2019-11-14)
+
+
+### Bug Fixes
+
+* add dataFrom support to vault backend (refactor kv-backend) ([#206](https://github.com/godaddy/kubernetes-external-secrets/issues/206)) ([24421b9](https://github.com/godaddy/kubernetes-external-secrets/commit/24421b9))
+* status update conflicts should not cause crash, fixes [#199](https://github.com/godaddy/kubernetes-external-secrets/issues/199) ([#215](https://github.com/godaddy/kubernetes-external-secrets/issues/215)) ([e6171c8](https://github.com/godaddy/kubernetes-external-secrets/commit/e6171c8))
+* Stringify JSON response for compatibility with KV backend ([#214](https://github.com/godaddy/kubernetes-external-secrets/issues/214)) ([5527530](https://github.com/godaddy/kubernetes-external-secrets/commit/5527530))
+* **script:** remove external-secrets.yml patching from release.sh ([#216](https://github.com/godaddy/kubernetes-external-secrets/issues/216)) ([9d871cd](https://github.com/godaddy/kubernetes-external-secrets/commit/9d871cd))
+
+
+### Features
+
+* add validation to CRD ([#208](https://github.com/godaddy/kubernetes-external-secrets/issues/208)) ([d2ebaeb](https://github.com/godaddy/kubernetes-external-secrets/commit/d2ebaeb))
+* allow disabling of interval polling ([#211](https://github.com/godaddy/kubernetes-external-secrets/issues/211)) ([9441216](https://github.com/godaddy/kubernetes-external-secrets/commit/9441216))
+* **chart:** support mounting existing secrets as files ([#213](https://github.com/godaddy/kubernetes-external-secrets/issues/213)) ([ac9b9e2](https://github.com/godaddy/kubernetes-external-secrets/commit/ac9b9e2))
+* **secrets-manager:** Added support for secrets versioning in Secrets Manager using version stage labels ([#181](https://github.com/godaddy/kubernetes-external-secrets/issues/181)) ([9d6c2f9](https://github.com/godaddy/kubernetes-external-secrets/commit/9d6c2f9))
+* implement basic e2e tests ([#207](https://github.com/godaddy/kubernetes-external-secrets/issues/207)) ([dfa210b](https://github.com/godaddy/kubernetes-external-secrets/commit/dfa210b))
+
 ## [2.1.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.5.0...2.1.0) (2019-11-08)
 
 
