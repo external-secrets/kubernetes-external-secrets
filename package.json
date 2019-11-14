@@ -11,7 +11,8 @@
     "release": "standard-version --tag-prefix='' && ./release.sh",
     "start": "./bin/daemon.js",
     "nodemon": "nodemon ./bin/daemon.js",
-    "test": "eslint --ignore-pattern /coverage/ ./ && mocha --recursive lib"
+    "test": "eslint --ignore-pattern /coverage/ ./ && mocha --recursive lib",
+    "test-e2e": "./e2e/run-e2e-suite.sh"
   },
   "repository": {
     "type": "git",

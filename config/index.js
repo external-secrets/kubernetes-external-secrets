@@ -49,6 +49,7 @@ const systemManagerBackend = new SystemManagerBackend({
 const vaultClient = vault({ apiVersion: 'v1', endpoint: envConfig.vaultEndpoint })
 const vaultBackend = new VaultBackend({ client: vaultClient, logger })
 const backends = {
+  // when adding a new backend, make sure to change the CRD property too
   secretsManager: secretsManagerBackend,
   systemManager: systemManagerBackend,
   vault: vaultBackend
@@ -58,6 +59,7 @@ const backends = {
 backends.secretManager = secretsManagerBackend
 
 module.exports = {
+  awsConfig,
   backends,
   customResourceManager,
   customResourceManifest,
