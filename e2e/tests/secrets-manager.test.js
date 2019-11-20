@@ -31,28 +31,30 @@ describe('secretsmanager', async () => {
     result = await kubeClient
       .apis[customResourceManifest.spec.group]
       .v1.namespaces('default')[customResourceManifest.spec.names.plural]
-      .post({ body: {
-        apiVersion: 'kubernetes-client.io/v1',
-        kind: 'ExternalSecret',
-        metadata: {
-          name: `e2e-secretmanager-${uuid}`
-        },
-        spec: {
-          backendType: 'secretsManager',
-          data: [
-            {
-              key: `e2e/${uuid}/credentials`,
-              property: 'password',
-              name: 'password'
-            },
-            {
-              key: `e2e/${uuid}/credentials`,
-              property: 'username',
-              name: 'username'
-            }
-          ]
+      .post({
+        body: {
+          apiVersion: 'kubernetes-client.io/v1',
+          kind: 'ExternalSecret',
+          metadata: {
+            name: `e2e-secretmanager-${uuid}`
+          },
+          spec: {
+            backendType: 'secretsManager',
+            data: [
+              {
+                key: `e2e/${uuid}/credentials`,
+                property: 'password',
+                name: 'password'
+              },
+              {
+                key: `e2e/${uuid}/credentials`,
+                property: 'username',
+                name: 'username'
+              }
+            ]
+          }
         }
-      } })
+      })
 
     expect(result).to.not.equal(undefined)
     expect(result.statusCode).to.equal(201)
@@ -86,29 +88,31 @@ describe('secretsmanager', async () => {
     result = await kubeClient
       .apis[customResourceManifest.spec.group]
       .v1.namespaces('default')[customResourceManifest.spec.names.plural]
-      .post({ body: {
-        apiVersion: 'kubernetes-client.io/v1',
-        kind: 'ExternalSecret',
-        metadata: {
-          name: `e2e-secretmanager-tls-${uuid}`
-        },
-        spec: {
-          backendType: 'secretsManager',
-          type: 'kubernetes.io/tls',
-          data: [
-            {
-              key: `e2e/${uuid}/tls/cert`,
-              property: 'crt',
-              name: 'tls.crt'
-            },
-            {
-              key: `e2e/${uuid}/tls/cert`,
-              property: 'key',
-              name: 'tls.key'
-            }
-          ]
+      .post({
+        body: {
+          apiVersion: 'kubernetes-client.io/v1',
+          kind: 'ExternalSecret',
+          metadata: {
+            name: `e2e-secretmanager-tls-${uuid}`
+          },
+          spec: {
+            backendType: 'secretsManager',
+            type: 'kubernetes.io/tls',
+            data: [
+              {
+                key: `e2e/${uuid}/tls/cert`,
+                property: 'crt',
+                name: 'tls.crt'
+              },
+              {
+                key: `e2e/${uuid}/tls/cert`,
+                property: 'key',
+                name: 'tls.key'
+              }
+            ]
+          }
         }
-      } })
+      })
 
     expect(result).to.not.equal(undefined)
     expect(result.statusCode).to.equal(201)
@@ -156,31 +160,33 @@ describe('secretsmanager', async () => {
       result = await kubeClient
         .apis[customResourceManifest.spec.group]
         .v1.namespaces('default')[customResourceManifest.spec.names.plural]
-        .post({ body: {
-          apiVersion: 'kubernetes-client.io/v1',
-          kind: 'ExternalSecret',
-          metadata: {
-            name: `e2e-secretmanager-permitted-tls-${uuid}`
-          },
-          spec: {
-            backendType: 'secretsManager',
-            type: 'kubernetes.io/tls',
-            // this should not be allowed
-            roleArn: 'let-me-be-root',
-            data: [
-              {
-                key: `e2e/${uuid}/tls/permitted`,
-                property: 'crt',
-                name: 'tls.crt'
-              },
-              {
-                key: `e2e/${uuid}/tls/permitted`,
-                property: 'key',
-                name: 'tls.key'
-              }
-            ]
+        .post({
+          body: {
+            apiVersion: 'kubernetes-client.io/v1',
+            kind: 'ExternalSecret',
+            metadata: {
+              name: `e2e-secretmanager-permitted-tls-${uuid}`
+            },
+            spec: {
+              backendType: 'secretsManager',
+              type: 'kubernetes.io/tls',
+              // this should not be allowed
+              roleArn: 'let-me-be-root',
+              data: [
+                {
+                  key: `e2e/${uuid}/tls/permitted`,
+                  property: 'crt',
+                  name: 'tls.crt'
+                },
+                {
+                  key: `e2e/${uuid}/tls/permitted`,
+                  property: 'key',
+                  name: 'tls.key'
+                }
+              ]
+            }
           }
-        } })
+        })
 
       expect(result).to.not.equal(undefined)
       expect(result.statusCode).to.equal(201)

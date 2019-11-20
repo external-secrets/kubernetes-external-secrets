@@ -27,22 +27,24 @@ describe('ssm', async () => {
     result = await kubeClient
       .apis[customResourceManifest.spec.group]
       .v1.namespaces('default')[customResourceManifest.spec.names.plural]
-      .post({ body: {
-        apiVersion: 'kubernetes-client.io/v1',
-        kind: 'ExternalSecret',
-        metadata: {
-          name: `e2e-ssm-${uuid}`
-        },
-        spec: {
-          backendType: 'systemManager',
-          data: [
-            {
-              key: `/e2e/${uuid}/name`,
-              name: 'name'
-            }
-          ]
+      .post({
+        body: {
+          apiVersion: 'kubernetes-client.io/v1',
+          kind: 'ExternalSecret',
+          metadata: {
+            name: `e2e-ssm-${uuid}`
+          },
+          spec: {
+            backendType: 'systemManager',
+            data: [
+              {
+                key: `/e2e/${uuid}/name`,
+                name: 'name'
+              }
+            ]
+          }
         }
-      } })
+      })
 
     expect(result).to.not.equal(undefined)
     expect(result.statusCode).to.equal(201)
@@ -88,23 +90,25 @@ describe('ssm', async () => {
       result = await kubeClient
         .apis[customResourceManifest.spec.group]
         .v1.namespaces('default')[customResourceManifest.spec.names.plural]
-        .post({ body: {
-          apiVersion: 'kubernetes-client.io/v1',
-          kind: 'ExternalSecret',
-          metadata: {
-            name: `e2e-ssm-permitted-${uuid}`
-          },
-          spec: {
-            backendType: 'systemManager',
-            roleArn: 'let-me-be-root',
-            data: [
-              {
-                key: `/e2e/permitted/${uuid}`,
-                name: 'name'
-              }
-            ]
+        .post({
+          body: {
+            apiVersion: 'kubernetes-client.io/v1',
+            kind: 'ExternalSecret',
+            metadata: {
+              name: `e2e-ssm-permitted-${uuid}`
+            },
+            spec: {
+              backendType: 'systemManager',
+              roleArn: 'let-me-be-root',
+              data: [
+                {
+                  key: `/e2e/permitted/${uuid}`,
+                  name: 'name'
+                }
+              ]
+            }
           }
-        } })
+        })
 
       expect(result).to.not.equal(undefined)
       expect(result.statusCode).to.equal(201)
