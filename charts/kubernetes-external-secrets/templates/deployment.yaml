@@ -18,6 +18,9 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "kubernetes-external-secrets.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- if .Values.podLabels }}
+          {{- toYaml .Values.podLabels | nindent 8 }}
+      {{- end }}
       annotations:
       {{- if .Values.podAnnotations }}
         {{- toYaml .Values.podAnnotations | nindent 8 }}

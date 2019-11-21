@@ -49,6 +49,7 @@ nameOverride: ""
 fullnameOverride: ""
 
 podAnnotations: {}
+podLabels: {}
 
 securityContext: {}
   # fsGroup: 65534
