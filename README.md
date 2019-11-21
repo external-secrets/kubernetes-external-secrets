@@ -1,9 +1,13 @@
-[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/) [![Greenkeeper badge](https://badges.greenkeeper.io/godaddy/kubernetes-external-secrets.svg)](https://greenkeeper.io/)
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com)
+[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/)
 
-# 💂 Kubernetes External Secrets
+# Kubernetes External Secrets
 
-Kubernetes External Secrets allows you to use external secret management systems (*e.g.*, [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)) to securely add secrets in Kubernetes. Read more about the design and motivation for Kubernetes External Secrets on the [GoDaddy Engineering Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
+Kubernetes External Secrets allows you to use external secret
+management systems, like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) or
+[HashiCorp Vault](https://www.vaultproject.io/), to securely add secrets in
+Kubernetes. Read more about the design and motivation for Kubernetes
+External Secrets on the [GoDaddy Engineering
+Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
 
 ## How it works
 
@@ -26,59 +30,25 @@ The conversion is completely transparent to `Pods` that can access `Secrets` nor
 
 ### Install with Helm
 
-Alternatively, the included [charts/kubernetes-external-secrets](charts/kubernetes-external-secrets) can be used to create the `kubernetes-external-secrets` resources and `Deployment` on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
+The official [helm chart](charts/kubernetes-external-secrets) can be used to create the `kubernetes-external-secrets` resources and `Deployment` on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-#### Installing the Chart
-
-```bash
-helm install --name kubernetes-external-secrets \
---set env.AWS_REGION='<aws-region>' \
-charts/kubernetes-external-secrets
-```
-
-> **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`'
-
-#### Uninstalling the Chart
-
-To uninstall/delete the `kubernetes-external-secrets` deployment:
 
 ```bash
-helm delete kubernetes-external-secrets
+$ helm repo add external-secrets https://godaddy.github.io/kubernetes-external-secrets/
+$ helm install external-secrets/kubernetes-external-secrets
 ```
 
-#### Configuration
+For more details about configuration see the [helm chart docs](charts/kubernetes-external-secrets/README.md)
 
-The following table lists the configurable parameters of the `kubernetes-external-secrets` chart and their default values.
+### Install with kubectl
 
-| Parameter                                 | Description                                                  | Default                                                 |
-| ----------------------------------------- | ------------------------------------------------------------ | ------------------------------------------------------- |
-| `env.AWS_REGION`                          | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
-| `env.LOG_LEVEL`                           | Set the application log level                                | `info`                                                  |
-| `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server           | `3001`                                                  |
-| `env.POLLER_INTERVAL_MILLISECONDS`        | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
-| `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
-| `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
-| `image.repository`                        | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
-| `image.tag`                               | kubernetes-external-secrets Image tag                        | `1.2.0`                                                 |
-| `image.pullPolicy`                        | Image pull policy                                            | `IfNotPresent`                                          |
-| `rbac.create`                             | Create & use RBAC resources                                  | `true`                                                  |
-| `serviceAccount.create`                   | Whether a new service account name should be created.        | `true`                                                  |
-| `serviceAccount.name`                     | Service account to be used.                                  | automatically generated                                 |
-| `podAnnotations`                          | Annotations to be added to pods                              | `{}`                                                    |
-| `replicaCount`                            | Number of replicas                                           | `1`                                                     |
-| `nodeSelector`                            | node labels for pod assignment                               | `{}`                                                    |
-| `tolerations`                             | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
-| `affinity`                                | Affinity for pod assignment                                  | `{}`                                                    |
-| `resources`                               | Pod resource requests & limits                               | `{}`                                                    |
-
-Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
+If you don't want to install helm on your cluster and just want to use `kubectl` to install `kubernetes-external-secrets`, you could get the `helm` client cli first and then use the following sample command to generate kubernetes manifests:
 
 ```bash
-helm install --name kubernetes-external-secrets \
---set env.POLLER_INTERVAL_MILLISECONDS='300000' \
---set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access' \
-charts/kubernetes-external-secrets
+$ helm template -f charts/kubernetes-external-secrets/values.yaml --output-dir ./output_dir ./charts/kubernetes-external-secrets/
 ```
+
+The generated kubernetes manifests will be in `./output_dir` and can be applied to deploy `kubernetes-external-secrets` to the cluster.
 
 ### Use IAM credentials for Secrets Manager access
 
@@ -87,14 +57,14 @@ Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars in the session/pod.
 You can use envVarsFromSecret in the helm chart to create these env vars from existing k8s secrets
 
 Additionally, you can specify a `roleArn` which will be assumed before retrieving the secret.
-You can limit the range of roles which can be assumed by this particular *namespace* by using annotations on the namespace resource.
-The annotation value is evaluated as a regular expression and tries to match the `roleArn`.
+You can limit the range of roles which can be assumed by this particular *namespace* by using annotations on the namespace resource. The annotation key is configurable (see above). The annotation value is evaluated as a regular expression and tries to match the `roleArn`.
 
 ```yaml
 kind: Namespace
 metadata:
   name: iam-example
   annotations:
+    # annotation key is configurable
     iam.amazonaws.com/permitted: "arn:aws:iam::123456789012:role/.*"
 ```
 
@@ -119,13 +89,21 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: secretsManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
   data:
     - key: hello-service/password
       name: password
+  # optional: specify a template with any additional markup you would like added to the downstream Secret resource.
+  # This template will be deep merged without mutating any existing fields. For example: you cannot override metadata.name.
+  template:
+    metadata:
+      annotations:
+        cat: cheese
+      labels:
+        dog: farfel
 ```
 or
 ```yml
@@ -133,7 +111,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: systemManager
   data:
     - key: /hello-service/password
@@ -197,14 +175,29 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: hello-service
+  annotations:
+    cat: cheese
+  labels:
+    dog: farfel
 type: Opaque
 data:
   password: MTIzNA==
 ```
 
+## Deprecations
+
+A few properties has changed name overtime, we still maintain backwards compatbility with these but they will eventually be removed, and they are not validated using the CRD validation.
+
+| Old                           | New                            |
+| ----------------------------- | ------------------------------ |
+| `secretDescriptor`            | `spec`                         |
+| `spec.type`                   | `spec.template.type`           |
+| `spec.properties`             | `spec.data`                    |
+| `backendType: secretManager`  | `backendType: secretsManager`  |
+
 ## Backends
 
-kubernetes-external-secrets supports both AWS Secrets Manager and AWS System Manager.
+kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, and Hashicorp Vault.
 
 ### AWS Secrets Manager
 
@@ -225,11 +218,11 @@ aws secretsmanager create-secret --region us-west-2 --name hello-service/credent
 We can declare which properties we want from hello-service/credentials:
 
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: secretsManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
@@ -240,6 +233,75 @@ secretDescriptor:
     - key: hello-service/credentials
       name: username
       property: username
+    - key: hello-service/credentials
+      name: password
+      # Version Stage in Secrets Manager
+      versionStage: AWSPREVIOUS
+      property: password_previous
+```
+
+alternatively you can use `dataFrom` and get all the values from hello-service/credentials:
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  dataFrom:
+    - hello-service/credentials
+```
+
+`data` and `dataFrom` can of course be combined, any naming conflicts will use the last defined, with `data` overriding `dataFrom`
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  dataFrom:
+    - hello-service/credentials
+  data:
+    - key: hello-service/migration-credentials
+      name: password
+      property: password
+```
+
+### Hashicorp Vault
+
+kubernetes-external-secrets supports fetching secrets from [Hashicorp Vault](https://www.vaultproject.io/), using the [Kubernetes authentication method](https://www.vaultproject.io/docs/auth/kubernetes.html).
+
+You will need to set the `VAULT_ADDR` environment variables so that kubernetes-external-secrets knows which endpoint to connect to, then create `ExternalSecret` definitions as follows:
+
+```yml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-vault-service
+spec:
+  backendType: vault
+  # Your authentication mount point, e.g. "kubernetes"
+  vaultMountPoint: my-kubernetes-vault-mount-point
+  # The vault role that will be used to fetch the secrets
+  # This role will need to be bound to kubernetes-external-secret's ServiceAccount; see Vault's documentation:
+  # https://www.vaultproject.io/docs/auth/kubernetes.html
+  vaultRole: my-vault-role
+  data:
+  - name: password
+    # The full path of the secret to read, as in `vault read secret/data/hello-service/credentials`
+    key: secret/data/hello-service/credentials
+    property: password
+  # Vault values are matched individually. If you have several keys in your Vault secret, you will need to add them all separately
+  - name: api-key
+    key: secret/data/hello-service/credentials
+    property: api-key
 ```
 
 ## Metrics

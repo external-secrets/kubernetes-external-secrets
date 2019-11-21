@@ -2,6 +2,61 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.2.0](https://github.com/godaddy/kubernetes-external-secrets/compare/2.1.0...2.2.0) (2019-11-14)
+
+
+### Bug Fixes
+
+* add dataFrom support to vault backend (refactor kv-backend) ([#206](https://github.com/godaddy/kubernetes-external-secrets/issues/206)) ([24421b9](https://github.com/godaddy/kubernetes-external-secrets/commit/24421b9))
+* status update conflicts should not cause crash, fixes [#199](https://github.com/godaddy/kubernetes-external-secrets/issues/199) ([#215](https://github.com/godaddy/kubernetes-external-secrets/issues/215)) ([e6171c8](https://github.com/godaddy/kubernetes-external-secrets/commit/e6171c8))
+* Stringify JSON response for compatibility with KV backend ([#214](https://github.com/godaddy/kubernetes-external-secrets/issues/214)) ([5527530](https://github.com/godaddy/kubernetes-external-secrets/commit/5527530))
+* **script:** remove external-secrets.yml patching from release.sh ([#216](https://github.com/godaddy/kubernetes-external-secrets/issues/216)) ([9d871cd](https://github.com/godaddy/kubernetes-external-secrets/commit/9d871cd))
+
+
+### Features
+
+* add validation to CRD ([#208](https://github.com/godaddy/kubernetes-external-secrets/issues/208)) ([d2ebaeb](https://github.com/godaddy/kubernetes-external-secrets/commit/d2ebaeb))
+* allow disabling of interval polling ([#211](https://github.com/godaddy/kubernetes-external-secrets/issues/211)) ([9441216](https://github.com/godaddy/kubernetes-external-secrets/commit/9441216))
+* **chart:** support mounting existing secrets as files ([#213](https://github.com/godaddy/kubernetes-external-secrets/issues/213)) ([ac9b9e2](https://github.com/godaddy/kubernetes-external-secrets/commit/ac9b9e2))
+* **secrets-manager:** Added support for secrets versioning in Secrets Manager using version stage labels ([#181](https://github.com/godaddy/kubernetes-external-secrets/issues/181)) ([9d6c2f9](https://github.com/godaddy/kubernetes-external-secrets/commit/9d6c2f9))
+* implement basic e2e tests ([#207](https://github.com/godaddy/kubernetes-external-secrets/issues/207)) ([dfa210b](https://github.com/godaddy/kubernetes-external-secrets/commit/dfa210b))
+
+## [2.1.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.5.0...2.1.0) (2019-11-08)
+
+
+### Bug Fixes
+
+* **script:** fix release scripts ([#186](https://github.com/godaddy/kubernetes-external-secrets/issues/186)) ([238ebd6](https://github.com/godaddy/kubernetes-external-secrets/commit/238ebd6))
+* add missing rbac rules to external-secrets.yml ([#195](https://github.com/godaddy/kubernetes-external-secrets/issues/195)) ([b6d8229](https://github.com/godaddy/kubernetes-external-secrets/commit/b6d8229))
+* RBAC config to access namespaces ([#177](https://github.com/godaddy/kubernetes-external-secrets/issues/177)) ([9605756](https://github.com/godaddy/kubernetes-external-secrets/commit/9605756))
+
+
+### Features
+
+* add option to assume role ([#144](https://github.com/godaddy/kubernetes-external-secrets/issues/144)) ([f0ce6ed](https://github.com/godaddy/kubernetes-external-secrets/commit/f0ce6ed))
+* add status subresource with last sync and generation tracking ([#133](https://github.com/godaddy/kubernetes-external-secrets/issues/133)) ([8db1749](https://github.com/godaddy/kubernetes-external-secrets/commit/8db1749))
+* add support for dataFrom & fix: encoding of non-string values ([#196](https://github.com/godaddy/kubernetes-external-secrets/issues/196)) ([90f01c5](https://github.com/godaddy/kubernetes-external-secrets/commit/90f01c5))
+* allow setting additional markup on generated secret resource using template ([#192](https://github.com/godaddy/kubernetes-external-secrets/issues/192)) ([25e2f74](https://github.com/godaddy/kubernetes-external-secrets/commit/25e2f74))
+* make role-scope annotation configurable &  fix: allow missing roleArn even if annotations are set  ([#179](https://github.com/godaddy/kubernetes-external-secrets/issues/179)) ([8c17819](https://github.com/godaddy/kubernetes-external-secrets/commit/8c17819)), closes [#174](https://github.com/godaddy/kubernetes-external-secrets/issues/174) [#174](https://github.com/godaddy/kubernetes-external-secrets/issues/174)
+* support Secret Binary from AWS Secrets Manager ([#197](https://github.com/godaddy/kubernetes-external-secrets/issues/197)) ([731edb1](https://github.com/godaddy/kubernetes-external-secrets/commit/731edb1))
+* Update aws-sdk to enable IRSA (AWS IAM Roles for ServiceAccounts) support, add securityContext to helm chart  ([#200](https://github.com/godaddy/kubernetes-external-secrets/issues/200)) ([165662c](https://github.com/godaddy/kubernetes-external-secrets/commit/165662c))
+* use spec in external secret resource, keeping secretDescriptor for backwards compat ([#204](https://github.com/godaddy/kubernetes-external-secrets/issues/204)) ([a2a9dff](https://github.com/godaddy/kubernetes-external-secrets/commit/a2a9dff))
+* **vault:** Support for Hashicorp Vault ([#198](https://github.com/godaddy/kubernetes-external-secrets/issues/198)) ([d61312c](https://github.com/godaddy/kubernetes-external-secrets/commit/d61312c))
+
+## [2.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.6.0...2.0.0) (2019-11-05)
+
+
+### Bug Fixes
+
+* **script:** fix release scripts ([#186](https://github.com/godaddy/kubernetes-external-secrets/issues/186)) ([238ebd6](https://github.com/godaddy/kubernetes-external-secrets/commit/238ebd6))
+* add missing rbac rules to external-secrets.yml ([#195](https://github.com/godaddy/kubernetes-external-secrets/issues/195)) ([b6d8229](https://github.com/godaddy/kubernetes-external-secrets/commit/b6d8229))
+* RBAC config to access namespaces ([#177](https://github.com/godaddy/kubernetes-external-secrets/issues/177)) ([9605756](https://github.com/godaddy/kubernetes-external-secrets/commit/9605756))
+
+
+### Features
+
+* add status subresource with last sync and generation tracking ([#133](https://github.com/godaddy/kubernetes-external-secrets/issues/133)) ([8db1749](https://github.com/godaddy/kubernetes-external-secrets/commit/8db1749))
+
 ## [1.6.0](https://github.com/godaddy/kubernetes-external-secrets/compare/1.5.0...1.6.0) (2019-10-23)
 
 

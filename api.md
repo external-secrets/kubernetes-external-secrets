@@ -67,7 +67,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: db-secrets
-secretDescriptor:
+spec:
   backendType: secretsManager
   data:
     - key: db/password
@@ -79,7 +79,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: client-secrets
-secretDescriptor:
+spec:
   backendType: secretsManager
   data:
     - key: api/key

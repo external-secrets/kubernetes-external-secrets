@@ -18,6 +18,9 @@ spec:
       labels:
         app.kubernetes.io/name: {{ include "kubernetes-external-secrets.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
+      {{- if .Values.podLabels }}
+          {{- toYaml .Values.podLabels | nindent 8 }}
+      {{- end }}
       annotations:
       {{- if .Values.podAnnotations }}
         {{- toYaml .Values.podAnnotations | nindent 8 }}
@@ -45,6 +48,18 @@ spec:
                 name: {{ $value.secretKeyRef | quote }}
                 key: {{ $value.key | quote }}
           {{- end }}
+          {{- with .Values.filesFromSecret }}
+          volumeMounts:
+          {{- range $key, $value := . }}
+          - name: {{ $key }}
+            mountPath: {{ $value.mountPath }}
+            readOnly: true
+          {{- end }}
+          {{- end }}
+      {{- with .Values.securityContext }}
+      securityContext:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}
@@ -56,4 +71,12 @@ spec:
       {{- with .Values.tolerations }}
       tolerations:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.filesFromSecret }}
+      volumes:
+      {{- range $key, $value := . }}
+      - name: {{ $key }}
+        secret:
+          secretName: {{ $value.secret }}
+      {{- end }}
       {{- end }}

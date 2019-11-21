@@ -5,12 +5,13 @@
 ## TL;DR;
 
 ```bash
+$ helm repo add external-secrets https://godaddy.github.io/kubernetes-external-secrets/
 $ helm install external-secrets/kubernetes-external-secrets
 ```
 
 ## Prerequisites
 
-* Kubernetes 1.7+
+* Kubernetes 1.12+
 
 ## Installing the Chart
 
@@ -21,6 +22,12 @@ $ helm install --name my-release external-secrets/kubernetes-external-secrets
 ```
 
 > **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`'
+
+To install the chart with [AWS IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html):
+
+```bash
+$ helm install --name my-release --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME' external-secrets/kubernetes-external-secrets
+```
 
 ## Uninstalling the Chart
 
@@ -39,18 +46,24 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `env.AWS_REGION`                     | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
 | `env.LOG_LEVEL`                           | Set the application log level                                | `info`                                                  |
 | `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server           | `3001`                                                  |
+| `env.ROLE_PERMITTED_ANNOTATION`           | Specify the annotation key where to lookup the role arn permission boundaries | `iam.amazonaws.com/permitted`          |
 | `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
+| `env.VAULT_ADDR`                          | Endpoint for the Vault backend, if using Vault               | `http://127.0.0.1:8200                                  |
+| `env.DISABLE_POLLING`                          | Disables backend polling and only updates secrets when ExternalSecret is modified, setting this to any value will disable polling               | `nil`                                  |
 | `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
-| `image.tag`                          | kubernetes-external-secrets Image tag | `1.6.0`                                                 |
+| `image.tag`                          | kubernetes-external-secrets Image tag | `2.1.0`                                                 |
 | `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
 | `nameOverride`                   | Override the name of app                                            | `nil`                                          |
 | `fullnameOverride`                   | Override the full name of app                                            | `nil`                                          |
 | `rbac.create`                        | Create & use RBAC resources                                  | `true`                                                  |
+| `securityContext.fsGroup`            | Security context for the container                           | `{}`                                                    |
 | `serviceAccount.create`              | Whether a new service account name should be created.        | `true`                                                  |
-| `serviceAccount.name`                | Service account to be used.                                  | automatically generated
+| `serviceAccount.name`                | Service account to be used.                                  | automatically generated                                 |
+| `serviceAccount.annotations`         | Annotations to be added to service account                   | `nil`                                                   |
 | `podAnnotations`                     | Annotations to be added to pods                              | `{}`                                                    |
+| `podLabels`                          | Additional labels to be added to pods                        | `{}`                                                    |
 | `replicaCount`                       | Number of replicas                                           | `1`                                                     |
 | `nodeSelector`                       | node labels for pod assignment                               | `{}`                                                    |
 | `tolerations`                        | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
@@ -88,7 +101,7 @@ apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
   name: hello-service
-secretDescriptor:
+spec:
   backendType: secretsManager
   data:
     - key: hello-service/password
