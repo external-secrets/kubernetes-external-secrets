@@ -33,7 +33,7 @@
     "express": "^4.17.1",
     "js-yaml": "^3.13.1",
     "json-stream": "^1.0.0",
-    "kubernetes-client": "8.3.0",
+    "kubernetes-client": "^8.3.6",
     "lodash.clonedeep": "^4.5.0",
     "lodash.merge": "^4.6.2",
     "make-promises-safe": "^5.1.0",
