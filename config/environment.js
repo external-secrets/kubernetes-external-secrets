@@ -34,7 +34,6 @@ module.exports = {
   environment,
   pollerIntervalMilliseconds,
   metricsPort,
-  logLevel,
   scopeNamespace,
   rolePermittedAnnotation,
   pollingDisabled,
