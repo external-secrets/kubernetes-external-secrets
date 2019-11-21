@@ -63,6 +63,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `serviceAccount.name`                | Service account to be used.                                  | automatically generated                                 |
 | `serviceAccount.annotations`         | Annotations to be added to service account                   | `nil`                                                   |
 | `podAnnotations`                     | Annotations to be added to pods                              | `{}`                                                    |
+| `podLabels`                          | Additional labels to be added to pods                        | `{}`                                                    |
 | `replicaCount`                       | Number of replicas                                           | `1`                                                     |
 | `nodeSelector`                       | node labels for pod assignment                               | `{}`                                                    |
 | `tolerations`                        | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
