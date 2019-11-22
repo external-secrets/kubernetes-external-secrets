@@ -200,7 +200,7 @@ describe('secretsmanager', async () => {
         .externalsecrets(`e2e-secretmanager-permitted-tls-${uuid}`)
         .get()
       expect(result).to.not.equal(undefined)
-      expect(result.body.status.status).to.contain('namspace does not allow to assume role let-me-be-root')
+      expect(result.body.status.status).to.contain('namespace does not allow to assume role let-me-be-root')
     })
   })
 })
