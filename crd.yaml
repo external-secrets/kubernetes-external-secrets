@@ -42,6 +42,12 @@ spec:
                 - secretsManager
                 - systemManager
                 - vault
+            vaultRole:
+              type: string
+            vaultMountPoint:
+              type: string
+            key:
+              type: string
             dataFrom:
               type: array
               items:
@@ -64,8 +70,20 @@ spec:
                   - key
             roleArn:
               type: string
-          required:
-            - backendType
+          oneOf:
+            - properties:
+                backendType:
+                  enum:
+                    - secretsManager
+                    - systemManager
+            - properties:
+                backendType:
+                  enum:
+                    - vault
+              required:
+                - vaultRole
+                - vaultMountPoint
+                - key
           anyOf:
             - required:
               - data
