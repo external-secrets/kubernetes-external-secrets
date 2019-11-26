@@ -24,7 +24,7 @@ const logLevel = process.env.LOG_LEVEL || 'info'
 const pollingDisabled = 'DISABLE_POLLING' in process.env
 
 const rolePermittedAnnotation = process.env.ROLE_PERMITTED_ANNOTATION || 'iam.amazonaws.com/permitted'
-const namingPermittedAnnotation = process.env.NAMING_PERMITTED_ANNOTATION || 'iam.amazonaws.com/naming'
+const namingPermittedAnnotation = process.env.NAMING_PERMITTED_ANNOTATION || 'externalsecrets.kubernetes-client.io/permitted-key-name'
 
 const metricsPort = process.env.METRICS_PORT || 3001
 
