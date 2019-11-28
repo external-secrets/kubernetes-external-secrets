@@ -1,0 +1,10 @@
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: ssm-example-by-path
+spec:
+  backendType: systemManagerbyPath
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  dataFromPath:
+    - /foo/name1
