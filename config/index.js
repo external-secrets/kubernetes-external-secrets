@@ -13,6 +13,7 @@ const envConfig = require('./environment')
 const CustomResourceManager = require('../lib/custom-resource-manager')
 const SecretsManagerBackend = require('../lib/backends/secrets-manager-backend')
 const SystemManagerBackend = require('../lib/backends/system-manager-backend')
+const SystemManagerBackendbyPath = require('../lib/backends/system-manager-backend-bypath')
 const VaultBackend = require('../lib/backends/vault-backend')
 
 // Get document, or throw exception on error
@@ -46,12 +47,18 @@ const systemManagerBackend = new SystemManagerBackend({
   assumeRole: awsConfig.assumeRole,
   logger
 })
+const systemManagerBackendbyPath = new SystemManagerBackendbyPath({
+  clientFactory: awsConfig.systemManagerFactory,
+  assumeRole: awsConfig.assumeRole,
+  logger
+})
 const vaultClient = vault({ apiVersion: 'v1', endpoint: envConfig.vaultEndpoint })
 const vaultBackend = new VaultBackend({ client: vaultClient, logger })
 const backends = {
   // when adding a new backend, make sure to change the CRD property too
   secretsManager: secretsManagerBackend,
   systemManager: systemManagerBackend,
+  systemManagerbyPath: systemManagerBackendbyPath,
   vault: vaultBackend
 }
 
