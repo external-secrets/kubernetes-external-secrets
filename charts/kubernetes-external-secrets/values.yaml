@@ -11,7 +11,7 @@ env:
   VAULT_ADDR: http://127.0.0.1:8200
 
 # Create environment variables from existing k8s secrets
-envVarsFromSecret: {}
+# envVarsFromSecret:
 #  AWS_ACCESS_KEY_ID:
 #    secretKeyRef: aws-credentials
 #    key: id
@@ -20,7 +20,7 @@ envVarsFromSecret: {}
 #    key: key
 
 # Create files from existing k8s secrets
-filesFromSecret: {}
+# filesFromSecret:
 #   examplefile:
 #     secret: secretname
 #     mountPath: /a/mount/point/
