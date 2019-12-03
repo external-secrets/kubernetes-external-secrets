@@ -304,6 +304,25 @@ spec:
     property: api-key
 ```
 
+If Vault uses a certificate issued by a self-signed CA you will need to provide that certificate:
+
+```sh
+# Create secret with CA
+kubectl create secret generic vault-ca --from-file=./ca.pem
+```
+
+```yml
+# vaules.yaml
+env:
+  VAULT_ADDR: https://vault.domain.tld
+  NODE_EXTRA_CA_CERTS: "/usr/local/share/ca-certificates/ca.pem"
+
+filesFromSecret:
+  certificate-authority:
+    secret: vault-ca
+    mountPath: /usr/local/share/ca-certificates
+ ```
+
 ## Metrics
 
 kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:
