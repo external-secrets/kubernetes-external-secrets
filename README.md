@@ -312,7 +312,7 @@ kubectl create secret generic vault-ca --from-file=./ca.pem
 ```
 
 ```yml
-# vaules.yaml
+# values.yaml
 env:
   VAULT_ADDR: https://vault.domain.tld
   NODE_EXTRA_CA_CERTS: "/usr/local/share/ca-certificates/ca.pem"
