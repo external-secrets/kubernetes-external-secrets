@@ -38,6 +38,12 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name:
 
+istio:
+  metrics:
+    enabled: false
+    port: 3001
+    path: /metrics
+
 replicaCount: 1
 
 image:

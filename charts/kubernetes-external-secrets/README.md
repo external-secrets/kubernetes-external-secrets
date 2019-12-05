@@ -69,6 +69,9 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `tolerations`                        | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
 | `affinity`                           | Affinity for pod assignment                                  | `{}`                                                    |
 | `resources`                          | Pod resource requests & limits                               | `{}`                                                    |
+| `istio.metrics.enabled`                          | Enable Istio metrics                               | `false`                                                    |
+| `istio.metrics.port`                          | Default metrics port                               | `3001`                                                    |
+| `istio.metrics.path`                          | Default metrics path                               | `/metrics`                                                    |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

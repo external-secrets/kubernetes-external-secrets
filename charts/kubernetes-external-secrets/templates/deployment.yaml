@@ -25,6 +25,11 @@ spec:
       {{- if .Values.podAnnotations }}
         {{- toYaml .Values.podAnnotations | nindent 8 }}
       {{- end }}
+      {{- if .Values.istio.metrics.enabled }}
+        prometheus.io/scrape: "true"
+        prometheus.io/path: {{ .Values.istio.metrics.path | quote }}
+        prometheus.io/port: {{ .Values.istio.metrics.port | quote }}
+      {{- end }}
     spec:
       serviceAccountName: {{ template "kubernetes-external-secrets.serviceAccountName" . }}
       containers:
@@ -33,6 +38,12 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- if .Values.istio.metrics.enabled }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.istio.metrics.port }}
+              protocol: TCP
+          {{- end }}
           env:
           {{- range $name, $value := .Values.env }}
           {{- if not (empty $value) }}

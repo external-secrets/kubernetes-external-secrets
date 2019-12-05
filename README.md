@@ -331,6 +331,7 @@ kubernetes-external-secrets exposes the following metrics over a prometheus endp
 | ----------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `sync_calls`                              | This metric counts the number of sync calls by backend, secret name and status  | `sync_calls{name="foo",namespace="example",backend="foo",status="success"} 1` |
 
+If you are using Istio you can enable metrics to be gathered automatically by setting the helm value `istio.metrics.enabled` to `true`.
 
 ## Development
 
