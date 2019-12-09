@@ -184,6 +184,32 @@ data:
   password: MTIzNA==
 ```
 
+## Enforcing naming conventions for backend keys
+
+by default an `ExternalSecret` may access arbitrary keys from the backend e.g.
+
+```yml
+  data:
+    - key: /dev/cluster1/core-namespace/hello-service/password
+      name: password
+```
+
+An enforced naming convention helps to keep the structure tidy and limits the access according 
+to your naming schema. 
+
+Configure the schema as regular expression in the namespace using an annotation. 
+This allows `ExternalSecrets` in `core-namespace` just to access secrets that start with 
+`/dev/cluster1/core-namespace/`:
+
+```yaml
+kind: Namespace
+metadata:
+  name: core-namespace
+  annotations:
+    # annotation key is configurable
+    externalsecrets.kubernetes-client.io/permitted-key-name: "/dev/cluster1/core-namespace/.*"
+```
+
 ## Deprecations
 
 A few properties has changed name overtime, we still maintain backwards compatbility with these but they will eventually be removed, and they are not validated using the CRD validation.
