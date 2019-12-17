@@ -83,7 +83,6 @@ spec:
               required:
                 - vaultRole
                 - vaultMountPoint
-                - key
           anyOf:
             - required:
               - data
