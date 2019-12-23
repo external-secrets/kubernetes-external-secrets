@@ -52,6 +52,9 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `env.DISABLE_POLLING`                          | Disables backend polling and only updates secrets when ExternalSecret is modified, setting this to any value will disable polling               | `nil`                                  |
 | `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
+| `envVarsFromSecret.AZURE_TENANT_ID`     | Set AZURE_TENANT_ID (from a secret) in Deployment Pod      |                                                         |
+| `envVarsFromSecret.AZURE_CLIENT_ID` | Set AZURE_CLIENT_ID (from a secret) in Deployment Pod  |                                                         |
+| `envVarsFromSecret.AZURE_CLIENT_SECRET` | Set AZURE_CLIENT_SECRET (from a secret) in Deployment Pod  |                                                         |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
 | `image.tag`                          | kubernetes-external-secrets Image tag | `2.1.0`                                                 |
 | `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
