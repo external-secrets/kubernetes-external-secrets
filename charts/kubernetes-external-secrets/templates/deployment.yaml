@@ -27,6 +27,10 @@ spec:
       {{- end }}
     spec:
       serviceAccountName: {{ template "kubernetes-external-secrets.serviceAccountName" . }}
+      {{- if .Values.image.imagePullSecrets }}
+      imagePullSecrets:
+        - name: {{ .Values.image.imagePullSecrets }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
