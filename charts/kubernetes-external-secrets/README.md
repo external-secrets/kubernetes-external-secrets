@@ -69,7 +69,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `tolerations`                        | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
 | `affinity`                           | Affinity for pod assignment                                  | `{}`                                                    |
 | `resources`                          | Pod resource requests & limits                               | `{}`                                                    |
-| `imagePullSecrets`                   | Credentials to pull docker images from registry              | `[]`                                                    |
+| `imagePullSecrets`                   | Name of the secret with the credentials to pull docker images from registry              | `[]`                                                    |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
