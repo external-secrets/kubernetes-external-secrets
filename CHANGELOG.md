@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/2.2.1...3.0.0) (2020-01-09)
+
+
+### Bug Fixes
+
+* default service account annotation value ([#252](https://github.com/godaddy/kubernetes-external-secrets/issues/252)) ([b163a69](https://github.com/godaddy/kubernetes-external-secrets/commit/b163a69))
+* remove required top level key from vault backend validation ([#255](https://github.com/godaddy/kubernetes-external-secrets/issues/255)) ([e567117](https://github.com/godaddy/kubernetes-external-secrets/commit/e567117))
+
+
+### Features
+
+* allow enforcing naming conventions for key names, limiting which keys can be fetched from backends ([#230](https://github.com/godaddy/kubernetes-external-secrets/issues/230)) ([c4fdea6](https://github.com/godaddy/kubernetes-external-secrets/commit/c4fdea6)), closes [#178](https://github.com/godaddy/kubernetes-external-secrets/issues/178) [#178](https://github.com/godaddy/kubernetes-external-secrets/issues/178) [#178](https://github.com/godaddy/kubernetes-external-secrets/issues/178)
+* **release:** use same version for app and chart release ([#242](https://github.com/godaddy/kubernetes-external-secrets/issues/242)) ([2000864](https://github.com/godaddy/kubernetes-external-secrets/commit/2000864))
+
 ### [2.2.1](https://github.com/godaddy/kubernetes-external-secrets/compare/2.2.0...2.2.1) (2019-12-06)
 
 
