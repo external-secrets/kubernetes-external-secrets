@@ -44,6 +44,7 @@ image:
   repository: godaddy/kubernetes-external-secrets
   tag: 3.0.0
   pullPolicy: IfNotPresent
+  imagePullSecrets: []
 
 nameOverride: ""
 fullnameOverride: ""
