@@ -51,7 +51,7 @@ const systemManagerBackend = new SystemManagerBackend({
 const vaultClient = vault({ apiVersion: 'v1', endpoint: envConfig.vaultEndpoint })
 const vaultBackend = new VaultBackend({ client: vaultClient, logger })
 const azureKeyVaultBackend = new AzureKeyVaultBackend({
-  credential: azureConfig.azureKeyVault,
+  credential: azureConfig.azureKeyVault(),
   logger
 })
 const backends = {
