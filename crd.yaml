@@ -86,7 +86,6 @@ spec:
               required:
                 - vaultRole
                 - vaultMountPoint
-                - key
             - properties:
                 backendType:
                   enum:

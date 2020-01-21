@@ -1,7 +1,7 @@
 apiVersion: v1
 name: kubernetes-external-secrets
-version: 2.2.0
-appVersion: 2.1.0
+version: 3.0.0
+appVersion: 3.0.0
 description: Kubernetes External Secrets CustomResourceDefinition
 keywords:
   - kubernetes-external-secrets
