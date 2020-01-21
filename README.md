@@ -238,7 +238,7 @@ A few properties has changed name overtime, we still maintain backwards compatbi
 
 ## Backends
 
-kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, and Hashicorp Vault.
+kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault and Azure Key Vault.
 
 ### AWS Secrets Manager
 
@@ -363,6 +363,31 @@ filesFromSecret:
     secret: vault-ca
     mountPath: /usr/local/share/ca-certificates
  ```
+
+### Azure Key Vault
+
+kubernetes-external-secrets supports fetching secrets from [Azure Key vault](https://azure.microsoft.com/en-ca/services/key-vault/)
+
+You will need to set these env vars in the deployment of kubernetes-external-secrets:
+- AZURE_TENANT_ID
+- AZURE_CLIENT_ID
+- AZURE_CLIENT_SECRET
+
+The SP configured will require get and list access policies on the AZURE_KEYVAULT_NAME.
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-keyvault-service
+spec:
+  backendType: azureKeyVault
+  keyVaultName: hello-world
+  data:
+    - key: hello-service/credentials
+      name: password
+      property: value
+```
 
 ## Metrics
 
