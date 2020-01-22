@@ -73,6 +73,9 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `affinity`                           | Affinity for pod assignment                                  | `{}`                                                    |
 | `resources`                          | Pod resource requests & limits                               | `{}`                                                    |
 | `imagePullSecrets`                   | Reference to one or more secrets to be used when pulling images              | `[]`                                                    |
+| `serviceMonitor.enabled`             | Enable the creation of a serviceMonitor object for the Prometheus operator              | `false`                                    |
+| `serviceMonitor.interval`            | The interval the Prometheus endpoint is scraped              | `30s`                                    |
+| `serviceMonitor.namespace`           | The namespace where the serviceMonitor object has to be created           | `nil`                                    |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
