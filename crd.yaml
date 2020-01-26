@@ -42,9 +42,12 @@ spec:
                 - secretsManager
                 - systemManager
                 - vault
+                - azureKeyVault
             vaultRole:
               type: string
             vaultMountPoint:
+              type: string
+            keyVaultName:
               type: string
             key:
               type: string
@@ -83,7 +86,12 @@ spec:
               required:
                 - vaultRole
                 - vaultMountPoint
-                - key
+            - properties:
+                backendType:
+                  enum:
+                    - azureKeyVault
+              required:
+                - keyVaultName
           anyOf:
             - required:
               - data

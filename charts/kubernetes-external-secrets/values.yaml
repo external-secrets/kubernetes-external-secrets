@@ -18,6 +18,15 @@ env:
 #  AWS_SECRET_ACCESS_KEY:
 #    secretKeyRef: aws-credentials
 #    key: key
+#  AZURE_TENANT_ID:
+#    secretKeyRef: azure-credentials
+#    key: tenantid
+#  AZURE_CLIENT_ID:
+#    secretKeyRef: azure-credentials
+#    key: clientid
+#  AZURE_CLIENT_SECRET:
+#    secretKeyRef: azure-credentials
+#    key: clientsecret
 
 # Create files from existing k8s secrets
 # filesFromSecret:
@@ -42,8 +51,9 @@ replicaCount: 1
 
 image:
   repository: godaddy/kubernetes-external-secrets
-  tag: 2.2.1
+  tag: 3.0.0
   pullPolicy: IfNotPresent
+  imagePullSecrets: []
 
 nameOverride: ""
 fullnameOverride: ""

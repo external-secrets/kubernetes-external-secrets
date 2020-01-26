@@ -50,11 +50,26 @@ $ helm template -f charts/kubernetes-external-secrets/values.yaml --output-dir .
 
 The generated kubernetes manifests will be in `./output_dir` and can be applied to deploy `kubernetes-external-secrets` to the cluster.
 
-### Use IAM credentials for Secrets Manager access
+### Secrets Manager access
 
-If not running on EKS you will have to use an IAM user (in lieu of a role).
-Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars in the session/pod.
-You can use envVarsFromSecret in the helm chart to create these env vars from existing k8s secrets
+For `kubernetes-external-secrets` to be able to retrieve your secrets it will need access to your secret backend.
+
+#### AWS based backends
+
+Access to AWS secrets backends (SSM & secrets manager) can be granted in various ways:
+
+1. Granting your nodes explicit access to your secrets using the [node instance role](https://docs.aws.amazon.com/eks/latest/userguide/worker_node_IAM_role.html) (easy for experimentation, not recommended)
+
+2. [IAM roles for service accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html).
+
+3. Per pod IAM authentication: [kiam](https://github.com/uswitch/kiam) or [kube2iam](https://github.com/jtblin/kube2iam).
+
+4. Directly provide AWS access credentials to the `kubernetes-external-secrets` pod by environmental variables.
+
+##### Using AWS access credentials
+
+Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars in the `kubernetes-external-secrets` session/pod.
+You can use envVarsFromSecret in the helm chart to create these env vars from existing k8s secrets.
 
 Additionally, you can specify a `roleArn` which will be assumed before retrieving the secret.
 You can limit the range of roles which can be assumed by this particular *namespace* by using annotations on the namespace resource. The annotation key is configurable (see above). The annotation value is evaluated as a regular expression and tries to match the `roleArn`.
@@ -223,7 +238,7 @@ A few properties has changed name overtime, we still maintain backwards compatbi
 
 ## Backends
 
-kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, and Hashicorp Vault.
+kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault and Azure Key Vault.
 
 ### AWS Secrets Manager
 
@@ -348,6 +363,31 @@ filesFromSecret:
     secret: vault-ca
     mountPath: /usr/local/share/ca-certificates
  ```
+
+### Azure Key Vault
+
+kubernetes-external-secrets supports fetching secrets from [Azure Key vault](https://azure.microsoft.com/en-ca/services/key-vault/)
+
+You will need to set these env vars in the deployment of kubernetes-external-secrets:
+- AZURE_TENANT_ID
+- AZURE_CLIENT_ID
+- AZURE_CLIENT_SECRET
+
+The SP configured will require get and list access policies on the AZURE_KEYVAULT_NAME.
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-keyvault-service
+spec:
+  backendType: azureKeyVault
+  keyVaultName: hello-world
+  data:
+    - key: hello-service/credentials
+      name: password
+      property: value
+```
 
 ## Metrics
 

@@ -52,8 +52,11 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `env.DISABLE_POLLING`                          | Disables backend polling and only updates secrets when ExternalSecret is modified, setting this to any value will disable polling               | `nil`                                  |
 | `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
+| `envVarsFromSecret.AZURE_TENANT_ID`     | Set AZURE_TENANT_ID (from a secret) in Deployment Pod      |                                                         |
+| `envVarsFromSecret.AZURE_CLIENT_ID` | Set AZURE_CLIENT_ID (from a secret) in Deployment Pod  |                                                         |
+| `envVarsFromSecret.AZURE_CLIENT_SECRET` | Set AZURE_CLIENT_SECRET (from a secret) in Deployment Pod  |                                                         |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
-| `image.tag`                          | kubernetes-external-secrets Image tag | `2.2.1`                                                 |
+| `image.tag`                          | kubernetes-external-secrets Image tag | `3.0.0`                                                 |
 | `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
 | `nameOverride`                   | Override the name of app                                            | `nil`                                          |
 | `fullnameOverride`                   | Override the full name of app                                            | `nil`                                          |
@@ -69,6 +72,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `tolerations`                        | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
 | `affinity`                           | Affinity for pod assignment                                  | `{}`                                                    |
 | `resources`                          | Pod resource requests & limits                               | `{}`                                                    |
+| `imagePullSecrets`                   | Reference to one or more secrets to be used when pulling images              | `[]`                                                    |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
