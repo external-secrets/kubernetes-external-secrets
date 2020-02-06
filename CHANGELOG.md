@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.1.0](https://github.com/godaddy/kubernetes-external-secrets/compare/2.1.0...3.1.0) (2020-02-06)
+
+
+### Features
+
+* add validation to CRD ([#208](https://github.com/godaddy/kubernetes-external-secrets/issues/208)) ([d2ebaeb](https://github.com/godaddy/kubernetes-external-secrets/commit/d2ebaeba6ea40d1167944923c835942d550d0e3d))
+* allow disabling of interval polling ([#211](https://github.com/godaddy/kubernetes-external-secrets/issues/211)) ([9441216](https://github.com/godaddy/kubernetes-external-secrets/commit/944121605bc93661ad3934026383e738660085b4))
+* **chart:** support mounting existing secrets as files ([#213](https://github.com/godaddy/kubernetes-external-secrets/issues/213)) ([ac9b9e2](https://github.com/godaddy/kubernetes-external-secrets/commit/ac9b9e2a1cc2d69fed87b725b4ccd25f7ad5df97))
+* allow enforcing naming conventions for key names, limiting which keys can be fetched from backends ([#230](https://github.com/godaddy/kubernetes-external-secrets/issues/230)) ([c4fdea6](https://github.com/godaddy/kubernetes-external-secrets/commit/c4fdea666fc75eabdcdbf1a863902f295864b740)), closes [#178](https://github.com/godaddy/kubernetes-external-secrets/issues/178) [#178](https://github.com/godaddy/kubernetes-external-secrets/issues/178) [#178](https://github.com/godaddy/kubernetes-external-secrets/issues/178)
+* implement basic e2e tests ([#207](https://github.com/godaddy/kubernetes-external-secrets/issues/207)) ([dfa210b](https://github.com/godaddy/kubernetes-external-secrets/commit/dfa210b955bd5d67790f6f99a08d812574e5ecd9))
+* **release:** use same version for app and chart release ([#242](https://github.com/godaddy/kubernetes-external-secrets/issues/242)) ([2000864](https://github.com/godaddy/kubernetes-external-secrets/commit/20008648857296b5a91e67c9e0197712a3a2eb19))
+* **secrets-manager:** Added support for secrets versioning in Secrets Manager using version stage labels ([#181](https://github.com/godaddy/kubernetes-external-secrets/issues/181)) ([9d6c2f9](https://github.com/godaddy/kubernetes-external-secrets/commit/9d6c2f9aefedc0a8b9f6db9f0a43592e6280e93d))
+
+
+### Bug Fixes
+
+* add dataFrom support to vault backend (refactor kv-backend) ([#206](https://github.com/godaddy/kubernetes-external-secrets/issues/206)) ([24421b9](https://github.com/godaddy/kubernetes-external-secrets/commit/24421b925e52a3930097a14b8727bb54560d2632))
+* bump pino and sub dependency flatstr, fixes [#218](https://github.com/godaddy/kubernetes-external-secrets/issues/218) ([#219](https://github.com/godaddy/kubernetes-external-secrets/issues/219)) ([db3491b](https://github.com/godaddy/kubernetes-external-secrets/commit/db3491bea7ad67a592b8c0bea3956d79ef9cb561))
+* **chart:** remove one of the duplicate securityContext ([#222](https://github.com/godaddy/kubernetes-external-secrets/issues/222)) ([2b54f34](https://github.com/godaddy/kubernetes-external-secrets/commit/2b54f34ce8b8c962657b8b7a7fb6da9aa82dba7e))
+* **kv-backend:** Add empty keyOptions for dataFrom case. ([#221](https://github.com/godaddy/kubernetes-external-secrets/issues/221)) ([8e838ee](https://github.com/godaddy/kubernetes-external-secrets/commit/8e838eef04f654510aed957c914e128e2fdcd690))
+* **script:** remove external-secrets.yml patching from release.sh ([#216](https://github.com/godaddy/kubernetes-external-secrets/issues/216)) ([9d871cd](https://github.com/godaddy/kubernetes-external-secrets/commit/9d871cda830d39ed37c95f425a26ff92821bb30d))
+* default service account annotation value ([#252](https://github.com/godaddy/kubernetes-external-secrets/issues/252)) ([b163a69](https://github.com/godaddy/kubernetes-external-secrets/commit/b163a6908d1de0ca956acbbdbd38de798bbcf784))
+* do not skew binary data ([#244](https://github.com/godaddy/kubernetes-external-secrets/issues/244)) ([01e0ca2](https://github.com/godaddy/kubernetes-external-secrets/commit/01e0ca21556a7281c9affb0b2d48e1a413e04b12))
+* remove required top level key from vault backend validation ([#255](https://github.com/godaddy/kubernetes-external-secrets/issues/255)) ([e567117](https://github.com/godaddy/kubernetes-external-secrets/commit/e5671179934d1cb97ff31772ba0b804047448161))
+* status update conflicts should not cause crash, fixes [#199](https://github.com/godaddy/kubernetes-external-secrets/issues/199) ([#215](https://github.com/godaddy/kubernetes-external-secrets/issues/215)) ([e6171c8](https://github.com/godaddy/kubernetes-external-secrets/commit/e6171c89fab703c14341e015cabc10a2cf6c66f4))
+* Stringify JSON response for compatibility with KV backend ([#214](https://github.com/godaddy/kubernetes-external-secrets/issues/214)) ([5527530](https://github.com/godaddy/kubernetes-external-secrets/commit/552753062e7b6357bd4bf918d3181fab79d59795))
+
 ## [3.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/2.2.1...3.0.0) (2020-01-09)
 
 
