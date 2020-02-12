@@ -4,13 +4,12 @@ ENV NODE_ENV production
 ENV NPM_CONFIG_LOGLEVEL info
 
 # Setup source directory
-RUN mkdir /app
 WORKDIR /app
-COPY package.json package-lock.json /app/
+COPY package*.json ./
 RUN npm ci --production
 
 # Copy app to source directory
-COPY . /app
+COPY . .
 
 USER node
 CMD ["npm", "start"]
