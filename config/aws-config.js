@@ -39,7 +39,7 @@ module.exports = {
     }
     return new AWS.SSM(opts)
   },
-  assumeRole: (assumeRoleOpts) => {
+  assumeRole: (assumeRoleOpts, stsConfig) => {
     const sts = new AWS.STS(stsConfig)
     return new Promise((resolve, reject) => {
       sts.assumeRole(assumeRoleOpts, (err, res) => {
