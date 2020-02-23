@@ -43,6 +43,7 @@ spec:
                 - systemManager
                 - vault
                 - azureKeyVault
+                - gcpSecretManager
             vaultRole:
               type: string
             vaultMountPoint:
@@ -79,6 +80,10 @@ spec:
                   enum:
                     - secretsManager
                     - systemManager
+            - properties:
+                backendType:
+                  enum:
+                    - gcpSecretManager
             - properties:
                 backendType:
                   enum:

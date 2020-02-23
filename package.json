@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-external-secrets",
-  "version": "3.1.0",
+  "version": "3.0.0",
   "description": "Kubernetes external secrets",
   "main": "bin/daemon.js",
   "scripts": {
@@ -41,7 +41,8 @@
     "make-promises-safe": "^5.1.0",
     "node-vault": "^0.9.8",
     "pino": "^5.13.6",
-    "prom-client": "^11.5.3"
+    "prom-client": "^11.5.3",
+    "@google-cloud/secret-manager": "^1.1.2"
   },
   "devDependencies": {
     "chai": "^4.1.2",
