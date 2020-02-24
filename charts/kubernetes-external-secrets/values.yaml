@@ -11,7 +11,10 @@ env:
   VAULT_ADDR: http://127.0.0.1:8200
 
 # Create environment variables from existing k8s secrets
-# envVarsFromSecret:
+envVarsFromSecret:
+   GCP_SERVICE_ACCOUNT_JSON:
+     secretKeyRef: gcp-credentials
+     key: sa-credentials.json
 #  AWS_ACCESS_KEY_ID:
 #    secretKeyRef: aws-credentials
 #    key: id
@@ -50,8 +53,10 @@ serviceAccount:
 replicaCount: 1
 
 image:
-  repository: godaddy/kubernetes-external-secrets
-  tag: 3.1.0
+  #repository: godaddy/kubernetes-external-secrets
+  repository: external-secrets
+  #tag: 3.1.0
+  tag: latest
   pullPolicy: IfNotPresent
   imagePullSecrets: []
 
