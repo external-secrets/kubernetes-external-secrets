@@ -17,7 +17,7 @@ module.exports = {
 		projectId: serviceAccountDetails.project_id
 	}
 
-    const gcpClient = new SecretManagerServiceClient(options);
-    return gcpClient
+	const gcpClient = new SecretManagerServiceClient(options);
+	return gcpClient
   }
 }
