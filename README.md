@@ -389,6 +389,27 @@ spec:
       property: value
 ```
 
+### GCP Secret Manager
+
+kubernetes-external-secrets supports fetching secrets from [GCP Secret Manager](https://cloud.google.com/solutions/secrets-management)
+
+A service account is required to grant the controller access to pull secrets. Instructions are her: [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable_workload_identity_on_a_new_cluster)
+
+Alternatively you can create and mount a kubernetes secret containing google service account credentials and set the GOOGLE_APPLICATION_CREDENTIALS env variable.
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: gcp-secrets-manager-example
+spec:
+  backendType: gcpSecretsManager
+  data:
+    - key: projects/111122223333/secrets/my-secret/versions/latest
+      name: password
+      property: value
+```
+
 ## Metrics
 
 kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:

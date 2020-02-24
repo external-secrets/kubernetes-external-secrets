@@ -43,6 +43,7 @@ spec:
                 - systemManager
                 - vault
                 - azureKeyVault
+                - gcpSecretsManager
             vaultRole:
               type: string
             vaultMountPoint:
@@ -92,6 +93,10 @@ spec:
                     - azureKeyVault
               required:
                 - keyVaultName
+            - properties:
+                backendType:
+                  enum:
+                    - gcpSecretsManager
           anyOf:
             - required:
               - data
