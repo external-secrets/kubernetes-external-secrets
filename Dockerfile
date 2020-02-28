@@ -1,18 +1,15 @@
-FROM node:12.13.0-alpine
+FROM node:12.16.1-alpine
 
 ENV NODE_ENV production
 ENV NPM_CONFIG_LOGLEVEL info
 
-RUN npm install npm@6.4.1 -g
-
 # Setup source directory
-RUN mkdir /app
 WORKDIR /app
-COPY package.json package-lock.json /app/
+COPY package*.json ./
 RUN npm ci --production
 
 # Copy app to source directory
-COPY . /app
+COPY . .
 
 USER node
 CMD ["npm", "start"]
