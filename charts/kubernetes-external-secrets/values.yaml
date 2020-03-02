@@ -9,12 +9,10 @@ env:
   LOG_LEVEL: info
   METRICS_PORT: 3001
   VAULT_ADDR: http://127.0.0.1:8200
+  GOOGLE_APPLICATION_CREDENTIALS: /secrets/google/sa-credentials.json
 
 # Create environment variables from existing k8s secrets
-envVarsFromSecret:
-   GCP_SERVICE_ACCOUNT_JSON:
-     secretKeyRef: gcp-credentials
-     key: sa-credentials.json
+#envVarsFromSecret:
 #  AWS_ACCESS_KEY_ID:
 #    secretKeyRef: aws-credentials
 #    key: id
@@ -32,10 +30,10 @@ envVarsFromSecret:
 #    key: clientsecret
 
 # Create files from existing k8s secrets
-# filesFromSecret:
-#   examplefile:
-#     secret: secretname
-#     mountPath: /a/mount/point/
+filesFromSecret:
+   google-credentials:
+     secret: gcp-credentials
+     mountPath: /secrets/google
 
 rbac:
   # Specifies whether RBAC resources should be created
