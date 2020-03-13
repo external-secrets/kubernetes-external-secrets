@@ -54,10 +54,10 @@ const systemManagerBackend = new SystemManagerBackend({
   logger
 })
 
-//GCP Support
+// GCP Support
 const gcpSecretManagerBackend = new GCPSecretManagerBackend({
-	client: gcpConfig.gcpSecretManager(),
-	logger
+  client: gcpConfig.gcpSecretManager(),
+  logger
 })
 
 const vaultClient = vault({ apiVersion: 'v1', endpoint: envConfig.vaultEndpoint })
