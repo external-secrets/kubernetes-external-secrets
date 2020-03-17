@@ -389,6 +389,27 @@ spec:
       property: value
 ```
 
+### GCP Secret Manager
+
+kubernetes-external-secrets supports fetching secrets from [GCP Secret Manager](https://cloud.google.com/secret-manager/)
+
+You will need to set these env vars in the deployment of kubernetes-external-secrets:
+- GOOGLE_APPLICATION_CREDENTIALS
+
+Additionally you will need to create K8s secret (having service account key) and then mount that to the container. Refer 'filesFromSecret' section in values.yaml
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: gcpSecretManager
+  data:
+    - key: hello-service-password
+      name: password
+```
+
 ## Metrics
 
 kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:
