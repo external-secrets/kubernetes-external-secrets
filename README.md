@@ -238,7 +238,7 @@ A few properties has changed name overtime, we still maintain backwards compatbi
 
 ## Backends
 
-kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault and Azure Key Vault.
+kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault, Azure Key Vault and GCP Secret Manager.
 
 ### AWS Secrets Manager
 
@@ -396,7 +396,7 @@ kubernetes-external-secrets supports fetching secrets from [GCP Secret Manager](
 You will need to set these env vars in the deployment of kubernetes-external-secrets:
 - GOOGLE_APPLICATION_CREDENTIALS
 
-Additionally you will need to create K8s secret (having service account key) and then mount that to the container. Refer 'filesFromSecret' section in values.yaml
+Additionally you will need to create K8s secret (having service account key) and then mount that to the container. Refer 'filesFromSecret' section in values.yaml. The service account must have permissions to read secrets from GCP Secret Manager. The GCP secret manager backend currently fetches only the latest version of the requested secret.
 
 ```yml
 apiVersion: kubernetes-client.io/v1
