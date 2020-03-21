@@ -31,7 +31,7 @@
   "dependencies": {
     "@azure/identity": "^1.0.2",
     "@azure/keyvault-secrets": "^4.0.2",
-    "aws-sdk": "^2.575.0",
+    "aws-sdk": "^2.628.0",
     "express": "^4.17.1",
     "js-yaml": "^3.13.1",
     "json-stream": "^1.0.0",
