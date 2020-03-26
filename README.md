@@ -424,7 +424,7 @@ spec:
   data:
     - key: hello-service/credentials
       name: password
-      isBinary: "true"
+      isBinary: true
 ```
 
 
