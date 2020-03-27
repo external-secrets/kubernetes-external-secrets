@@ -56,7 +56,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `envVarsFromSecret.AZURE_CLIENT_ID` | Set AZURE_CLIENT_ID (from a secret) in Deployment Pod  |                                                         |
 | `envVarsFromSecret.AZURE_CLIENT_SECRET` | Set AZURE_CLIENT_SECRET (from a secret) in Deployment Pod  |                                                         |
 | `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
-| `image.tag`                          | kubernetes-external-secrets Image tag | `3.1.0`                                                 |
+| `image.tag`                          | kubernetes-external-secrets Image tag | `3.2.0`                                                 |
 | `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
 | `nameOverride`                   | Override the name of app                                            | `nil`                                          |
 | `fullnameOverride`                   | Override the full name of app                                            | `nil`                                          |
