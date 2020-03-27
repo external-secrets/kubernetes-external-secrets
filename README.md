@@ -410,6 +410,24 @@ spec:
       property: value
 ```
 
+Due to the way Azure handles binary files, you need to explicitly let the ExternalSecret know that the secret is binary.
+You can do that with the `isBinary` field on the key. This is necessary for certificates and other secret binary files.
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-keyvault-service
+spec:
+  backendType: azureKeyVault
+  keyVaultName: hello-world
+  data:
+    - key: hello-service/credentials
+      name: password
+      isBinary: true
+```
+
+
 ## Metrics
 
 kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:
