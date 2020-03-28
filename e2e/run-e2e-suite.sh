@@ -14,11 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-KIND_LOG_LEVEL="info"
-
+KIND_LOGGING="--quiet"
 if ! [ -z "$DEBUG" ]; then
-	set -x
-  KIND_LOG_LEVEL="debug"
+    set -x
+    KIND_LOGGING="--verbosity=4"
 fi
 
 set -o errexit
@@ -33,16 +32,16 @@ K8S_VERSION=${K8S_VERSION:-v1.15.3}
 KIND_CLUSTER_NAME="external-secrets-dev"
 REGISTRY=external-secrets
 
+export KUBECONFIG="$(pwd)/e2e/.kubeconfig"
+
 kind --version || $(echo -e "${RED}Please install kind before running e2e tests${NC}";exit 1)
 echo -e "${BGREEN}[dev-env] creating Kubernetes cluster with kind${NC}"
 
 kind create cluster \
-  --loglevel=${KIND_LOG_LEVEL} \
+  ${KIND_LOGGING} \
   --name ${KIND_CLUSTER_NAME} \
   --config ${DIR}/kind.yaml \
   --image "kindest/node:${K8S_VERSION}"
-
-export KUBECONFIG="$(kind get kubeconfig-path --name="${KIND_CLUSTER_NAME}")"
 
 echo -e "${BGREEN}building external-secrets images${NC}"
 docker build -t external-secrets:test -f $DIR/../Dockerfile $DIR/../
@@ -56,7 +55,7 @@ function cleanup {
   kubectl delete crd/externalsecrets.kubernetes-client.io 2>/dev/null
   kubectl delete -f ${DIR}/localstack.deployment.yaml 2>/dev/null
   kind delete cluster \
-    --loglevel=${KIND_LOG_LEVEL} \
+    ${KIND_LOGGING} \
     --name ${KIND_CLUSTER_NAME}
 
 }
