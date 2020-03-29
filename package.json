@@ -41,7 +41,7 @@
     "lodash.merge": "^4.6.2",
     "make-promises-safe": "^5.1.0",
     "node-vault": "^0.9.8",
-    "pino": "^5.16.0",
+    "pino": "^6.0.0",
     "prom-client": "^11.5.3"
   },
   "devDependencies": {
