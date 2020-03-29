@@ -18,6 +18,9 @@ KIND_LOGGING="--quiet"
 if ! [ -z "$DEBUG" ]; then
     set -x
     KIND_LOGGING="--verbosity=4"
+    kind version
+    kubectl version --client
+    helm version --client
 fi
 
 set -o errexit
@@ -63,8 +66,7 @@ trap cleanup EXIT
 
 kubectl apply -f ${DIR}/localstack.deployment.yaml
 
-helm template $DIR/../charts/kubernetes-external-secrets \
-  --name e2e \
+helm template e2e $DIR/../charts/kubernetes-external-secrets \
   --set image.repository=external-secrets \
   --set image.tag=test \
   --set env.LOG_LEVEL=debug \
