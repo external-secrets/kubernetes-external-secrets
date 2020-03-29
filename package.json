@@ -57,7 +57,7 @@
     "mocha": "7.0.1",
     "nodemon": "2.0.1",
     "nyc": "15.0.0",
-    "sinon": "8.0.0",
+    "sinon": "8.1.1",
     "standard-version": "7.0.1",
     "supertest": "4.0.2"
   },
