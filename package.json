@@ -58,7 +58,7 @@
     "nodemon": "2.0.2",
     "nyc": "15.0.0",
     "sinon": "8.1.1",
-    "standard-version": "7.0.1",
+    "standard-version": "7.1.0",
     "supertest": "4.0.2"
   },
   "nyc": {
