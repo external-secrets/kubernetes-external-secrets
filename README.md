@@ -238,7 +238,7 @@ A few properties has changed name overtime, we still maintain backwards compatbi
 
 ## Backends
 
-kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault, Azure Key Vault and GCP Secret Manager.
+kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault and Azure Key Vault.
 
 ### AWS Secrets Manager
 
@@ -391,26 +391,42 @@ spec:
 
 ### GCP Secret Manager
 
-kubernetes-external-secrets supports fetching secrets from [GCP Secret Manager](https://cloud.google.com/secret-manager/)
+kubernetes-external-secrets supports fetching secrets from [GCP Secret Manager](https://cloud.google.com/solutions/secrets-management)
 
-You will need to set these env vars in the deployment of kubernetes-external-secrets:
-- GOOGLE_APPLICATION_CREDENTIALS
+A service account is required to grant the controller access to pull secrets. Instructions are her: [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable_workload_identity_on_a_new_cluster)
 
-Additionally you will need to create K8s secret (having service account key) and then mount that to the container. Refer 'filesFromSecret' section in values.yaml. 
-
-The service account must have permissions to read secrets from GCP Secret Manager. The GCP secret manager backend currently fetches only the latest version of the requested secret.
+Alternatively you can create and mount a kubernetes secret containing google service account credentials and set the GOOGLE_APPLICATION_CREDENTIALS env variable.
 
 ```yml
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
-  name: hello-service
+  name: gcp-secrets-manager-example
 spec:
-  backendType: gcpSecretManager
+  backendType: gcpSecretsManager
   data:
-    - key: hello-service-password
+    - key: projects/111122223333/secrets/my-secret/versions/latest
       name: password
+      property: value
 ```
+
+Due to the way Azure handles binary files, you need to explicitly let the ExternalSecret know that the secret is binary.
+You can do that with the `isBinary` field on the key. This is necessary for certificates and other secret binary files.
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-keyvault-service
+spec:
+  backendType: azureKeyVault
+  keyVaultName: hello-world
+  data:
+    - key: hello-service/credentials
+      name: password
+      isBinary: true
+```
+
 
 ## Metrics
 
