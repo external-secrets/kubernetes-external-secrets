@@ -9,7 +9,7 @@ const { SecretManagerServiceClient } = require('@google-cloud/secret-manager')
 
 module.exports = {
   gcpSecretsManager: () => {
-    const client = new SecretManagerServiceClient()
+	const client = new SecretManagerServiceClient()
     return client
   }
 }

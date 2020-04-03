@@ -9,7 +9,7 @@ env:
   LOG_LEVEL: info
   METRICS_PORT: 3001
   VAULT_ADDR: http://127.0.0.1:8200
-# GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds.json
+  GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds.json/gcp-creds.json
 
 # Create environment variables from existing k8s secrets
 # envVarsFromSecret:
@@ -30,10 +30,10 @@ env:
 #    key: clientsecret
 
 # Create files from existing k8s secrets
-# filesFromSecret:
-#   gcp-creds:
-#     secret: gcp-creds
-#     mountPath: /app/gcp-creds.json
+filesFromSecret:
+   gcp-creds:
+     secret: gcp-creds
+     mountPath: /app/gcp-creds.json
 
 rbac:
   # Specifies whether RBAC resources should be created
@@ -52,7 +52,7 @@ replicaCount: 1
 
 image:
   repository: godaddy/kubernetes-external-secrets
-  tag: 3.2.0
+  tag: 3.2.1
   pullPolicy: IfNotPresent
   imagePullSecrets: []
 
