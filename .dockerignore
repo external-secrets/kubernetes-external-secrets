@@ -5,3 +5,4 @@ coverage
 Dockerfile
 node_modules
 release.sh
+.git

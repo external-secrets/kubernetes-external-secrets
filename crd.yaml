@@ -43,7 +43,7 @@ spec:
                 - systemManager
                 - vault
                 - azureKeyVault
-                - gcpSecretManager
+                - gcpSecretsManager
             vaultRole:
               type: string
             vaultMountPoint:
@@ -69,6 +69,12 @@ spec:
                     type: string
                   property:
                     description: Property to extract if secret in backend is a JSON object
+                  isBinary:
+                    description: >-
+                      You must set this to true if configuring an item for a binary file stored in Azure KeyVault.
+                      Azure automatically base64 encodes binary files and setting this to true ensures External Secrets
+                      does not base64 encode the base64 encoded binary files.
+                    type: boolean
                 required:
                   - name
                   - key
@@ -83,10 +89,6 @@ spec:
             - properties:
                 backendType:
                   enum:
-                    - gcpSecretManager
-            - properties:
-                backendType:
-                  enum:
                     - vault
               required:
                 - vaultRole
@@ -97,6 +99,10 @@ spec:
                     - azureKeyVault
               required:
                 - keyVaultName
+            - properties:
+                backendType:
+                  enum:
+                    - gcpSecretsManager
           anyOf:
             - required:
               - data

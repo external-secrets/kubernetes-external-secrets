@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.2.0](https://github.com/godaddy/kubernetes-external-secrets/compare/3.1.0...3.2.0) (2020-03-27)
+
+
+### Features
+
+* add GCP support ([#312](https://github.com/godaddy/kubernetes-external-secrets/issues/312)) ([5b41ad0](https://github.com/godaddy/kubernetes-external-secrets/commit/5b41ad0e8af02d081d984ede77e67e8578581b92))
+
+
+### Bug Fixes
+
+* stringify json object based secrets ([#247](https://github.com/godaddy/kubernetes-external-secrets/issues/247)) ([828d0ce](https://github.com/godaddy/kubernetes-external-secrets/commit/828d0ced9ed1d8c65457be256b946272719e9067))
+* upgrade aws-sdk from 2.575.0 to 2.628.0 ([#305](https://github.com/godaddy/kubernetes-external-secrets/issues/305)) ([149e33a](https://github.com/godaddy/kubernetes-external-secrets/commit/149e33afcc51801df4df1694a07e855efe0b12b8))
+* upgrade pino from 5.13.6 to 5.16.0 ([#306](https://github.com/godaddy/kubernetes-external-secrets/issues/306)) ([be74814](https://github.com/godaddy/kubernetes-external-secrets/commit/be74814ef743632f6ba099cfbc7a7b7c451cc66e))
+* verify dataFrom property in naming convention verification ([#292](https://github.com/godaddy/kubernetes-external-secrets/issues/292)) ([f26bf2b](https://github.com/godaddy/kubernetes-external-secrets/commit/f26bf2bb14cfc7f6827e53550c8474b89133bc45))
+* **azure-registry:** handle binary files ([#311](https://github.com/godaddy/kubernetes-external-secrets/issues/311)) ([9727d48](https://github.com/godaddy/kubernetes-external-secrets/commit/9727d48740b4056cfd4788a6344e0961c5c228c0))
+
 ## [3.1.0](https://github.com/godaddy/kubernetes-external-secrets/compare/2.1.0...3.1.0) (2020-02-06)
 
 
