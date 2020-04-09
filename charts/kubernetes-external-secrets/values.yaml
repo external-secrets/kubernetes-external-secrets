@@ -30,10 +30,10 @@ env:
 #    key: clientsecret
 
 # Create files from existing k8s secrets
-filesFromSecret:
-   gcp-creds:
-     secret: gcp-creds
-     mountPath: /app/gcp-creds.json
+# filesFromSecret:
+#   gcp-creds:
+#     secret: gcp-creds
+#     mountPath: /app/gcp-creds.json
 
 rbac:
   # Specifies whether RBAC resources should be created
