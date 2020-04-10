@@ -21,7 +21,8 @@ const GCPSecretsManagerBackend = require('../lib/backends/gcp-secrets-manager-ba
 
 // Get document, or throw exception on error
 // eslint-disable-next-line security/detect-non-literal-fs-filename
-const customResourceManifest = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../crd.yaml'), 'utf8'))
+const customResourceManifest = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../charts/kubernetes-external-secrets/crds/kubernetes-client.io_externalsecrets_crd.yaml'), 'utf8'))
+customResourceManifest.metadata.annotations['app.kubernetes.io/managed-by'] = 'custom-resource-manager'
 
 const kubeconfig = new kube.KubeConfig()
 kubeconfig.loadFromDefault()
@@ -37,7 +38,8 @@ const logger = pino({
 
 const customResourceManager = new CustomResourceManager({
   kubeClient,
-  logger
+  logger,
+  disabled: envConfig.customResourceManagerDisabled
 })
 
 const secretsManagerBackend = new SecretsManagerBackend({

@@ -5,6 +5,7 @@
 # Environment variables to set on deployment pod
 env:
   AWS_REGION: us-west-2
+  AWS_DEFAULT_REGION: us-west-2
   POLLER_INTERVAL_MILLISECONDS: 10000
   LOG_LEVEL: info
   METRICS_PORT: 3001
@@ -86,4 +87,10 @@ affinity: {}
 serviceMonitor:
   enabled: false
   interval: "30s"
-  namespace: 
+  namespace:
+
+customResourceManagerDisabled: false
+
+crds:
+  # only needed for helm v2, leave this disabled for helm v3
+  create: false

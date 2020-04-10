@@ -6,7 +6,7 @@
 
 ```bash
 $ helm repo add external-secrets https://godaddy.github.io/kubernetes-external-secrets/
-$ helm install external-secrets/kubernetes-external-secrets
+$ helm install --skip-crds external-secrets/kubernetes-external-secrets
 ```
 
 ## Prerequisites
@@ -15,18 +15,26 @@ $ helm install external-secrets/kubernetes-external-secrets
 
 ## Installing the Chart
 
-To install the chart with the release named `my-release`:
+To install the chart with the release named `my-release` (assuming Helm V3):
 
 ```bash
-$ helm install --name my-release external-secrets/kubernetes-external-secrets
+$ helm install --name my-release --skip-crds external-secrets/kubernetes-external-secrets
 ```
 
 > **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`'
 
+To install the `ExternalSecret` CRD via the chart and disable the custom resource manager:
+
+```bash
+$ helm install --name my-release --set customResourceManagerDisabled=true external-secrets/kubernetes-external-secrets
+```
+
+**Note**: for Helm V2 `--set crds.create=true` will also be needed.
+
 To install the chart with [AWS IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html):
 
 ```bash
-$ helm install --name my-release --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME' external-secrets/kubernetes-external-secrets
+$ helm install --name my-release --set customResourceManagerDisabled=true --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME' external-secrets/kubernetes-external-secrets
 ```
 
 ## Uninstalling the Chart
@@ -43,6 +51,8 @@ The following table lists the configurable parameters of the `kubernetes-externa
 
 | Parameter                            | Description                                                  | Default                                                 |
 | ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
+| `crds.create`                     | For Helm V2 installations of the chart to install the CRD, for V3 installations use `--skip-crds` appropriately                             | `false`                                             |
+| `customResourceManagedDisabled`                     | Disables the custom resource manager, requiring the CRD be installed via the chart or other means                           | `false`                                             |
 | `env.AWS_REGION`                     | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
 | `env.LOG_LEVEL`                           | Set the application log level                                | `info`                                                  |
 | `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server           | `3001`                                                  |
@@ -81,6 +91,7 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 
 ```bash
 helm install external-secrets/kubernetes-external-secrets --name my-releases \
+--set customResourceManagerDisabled=true
 --set env.POLLER_INTERVAL_MILLISECONDS='300000' \
 --set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access'
 ```

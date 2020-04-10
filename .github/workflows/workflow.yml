@@ -17,11 +17,23 @@ jobs:
   test-e2e:
     runs-on: ubuntu-latest
     name: E2E
+    strategy:
+      matrix:
+        disableCustomResourceManager: ['true', 'false']
+        helmVersion: ['V2', 'V3']
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: 12
+      - uses: azure/setup-helm@v1
+        with:
+          version: v2.16.1
+        if: matrix.helmVersion == 'V2'
+      - name: configure helm v2
+        run: |
+          helm init --client-only
+        if: matrix.helmVersion == 'V2'
       - run: npm install
-      - run: npm run test-e2e
+      - run: npm run test-e2e -- ${{ matrix.disableCustomResourceManager }} ${{ matrix.helmVersion }}
