@@ -317,7 +317,7 @@ spec:
 
 ### Hashicorp Vault
 
-kubernetes-external-secrets supports fetching secrets from [Hashicorp Vault](https://www.vaultproject.io/), using the [Kubernetes authentication method](https://www.vaultproject.io/docs/auth/kubernetes.html).
+kubernetes-external-secrets supports fetching secrets from [Hashicorp Vault](https://www.vaultproject.io/), using the [Kubernetes authentication method](https://www.vaultproject.io/docs/auth/kubernetes).
 
 You will need to set the `VAULT_ADDR` environment variables so that kubernetes-external-secrets knows which endpoint to connect to, then create `ExternalSecret` definitions as follows:
 
