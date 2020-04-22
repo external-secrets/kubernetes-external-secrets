@@ -44,6 +44,7 @@ spec:
                 - vault
                 - azureKeyVault
                 - gcpSecretsManager
+                - alicloudSecretsManager
             vaultRole:
               type: string
             vaultMountPoint:
@@ -103,6 +104,10 @@ spec:
                 backendType:
                   enum:
                     - gcpSecretsManager
+            - properties:
+                backendType:
+                  enum:
+                    - alicloudSecretsManager
           anyOf:
             - required:
               - data

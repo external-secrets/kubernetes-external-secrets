@@ -21,7 +21,9 @@
   "keywords": [
     "kubernetes",
     "secrets",
-    "aws"
+    "aws",
+    "alicloud",
+    "aliyun"
   ],
   "author": "GoDaddy Operating Company, LLC",
   "license": "MIT",
@@ -29,6 +31,7 @@
     "node": ">=12.0.0"
   },
   "dependencies": {
+    "@alicloud/kms20160120": "^1.1.0",
     "@azure/identity": "^1.0.2",
     "@azure/keyvault-secrets": "^4.0.2",
     "aws-sdk": "^2.628.0",
