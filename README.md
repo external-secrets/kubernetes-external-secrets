@@ -435,6 +435,7 @@ kubernetes-external-secrets exposes the following metrics over a prometheus endp
 | Metric                                    | Description                                                                     | Example                                                                       |
 | ----------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `sync_calls`                              | This metric counts the number of sync calls by backend, secret name and status  | `sync_calls{name="foo",namespace="example",backend="foo",status="success"} 1` |
+| `last_state`                              | A value of -1 or 1 where -1 means the last sync_call was an error and 1 means the last sync_call was a success  | `last_state{name="foo",namespace="example",backend="foo"} 1` |
 
 
 ## Development
