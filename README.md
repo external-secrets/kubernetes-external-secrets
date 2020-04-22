@@ -427,6 +427,33 @@ spec:
       isBinary: true
 ```
 
+### AliCloud KMS
+
+kubernetes-external-secrets supports fetching secrets from [Alibaba Cloud Key Management Service (KMS)](https://www.alibabacloud.com/products/kms).
+
+You will need to set these env vars in the deployment of kubernetes-external-secrets:
+- ALICLOUD_ACCESS_KEY
+- ALICLOUD_SECRET_KEY
+- ALICLOUD_REGION
+
+Example:
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-kms-service
+spec:
+  backendType: alicloudKMS
+  data:
+    - key: hello-kms-service-password
+      name: hello-password
+      property: value
+    - key: hello-kms-service-user
+      name: hello-user
+      property: value
+      versionStage: ACSCurrent # version stage in KMS
+```
 
 ## Metrics
 
