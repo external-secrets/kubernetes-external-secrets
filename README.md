@@ -397,7 +397,6 @@ You will need to set these env vars in the deployment of kubernetes-external-sec
 
 - ALICLOUD_ACCESS_KEY_ID
 - ALICLOUD_ACCESS_KEY_SECRET
-- ALICLOUD_API_VERSION
 
 ```yml
 apiVersion: kubernetes-client.io/v1
