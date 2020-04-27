@@ -41,41 +41,41 @@ helm delete my-release
 
 The following table lists the configurable parameters of the `kubernetes-external-secrets` chart and their default values.
 
-| Parameter                            | Description                                                  | Default                                                 |
-| ------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
-| `env.AWS_REGION`                     | Set AWS_REGION in Deployment Pod                             | `us-west-2`                                             |
-| `env.LOG_LEVEL`                           | Set the application log level                                | `info`                                                  |
-| `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server           | `3001`                                                  |
-| `env.ROLE_PERMITTED_ANNOTATION`           | Specify the annotation key where to lookup the role arn permission boundaries | `iam.amazonaws.com/permitted`          |
-| `env.POLLER_INTERVAL_MILLISECONDS`   | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod           | `10000`                                                 |
-| `env.VAULT_ADDR`                          | Endpoint for the Vault backend, if using Vault               | `http://127.0.0.1:8200                                  |
-| `env.DISABLE_POLLING`                          | Disables backend polling and only updates secrets when ExternalSecret is modified, setting this to any value will disable polling               | `nil`                                  |
-| `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod      |                                                         |
-| `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod  |                                                         |
-| `envVarsFromSecret.AZURE_TENANT_ID`     | Set AZURE_TENANT_ID (from a secret) in Deployment Pod      |                                                         |
-| `envVarsFromSecret.AZURE_CLIENT_ID` | Set AZURE_CLIENT_ID (from a secret) in Deployment Pod  |                                                         |
-| `envVarsFromSecret.AZURE_CLIENT_SECRET` | Set AZURE_CLIENT_SECRET (from a secret) in Deployment Pod  |                                                         |
-| `image.repository`                   | kubernetes-external-secrets Image name                       | `godaddy/kubernetes-external-secrets`                   |
-| `image.tag`                          | kubernetes-external-secrets Image tag | `3.2.0`                                                 |
-| `image.pullPolicy`                   | Image pull policy                                            | `IfNotPresent`                                          |
-| `nameOverride`                   | Override the name of app                                            | `nil`                                          |
-| `fullnameOverride`                   | Override the full name of app                                            | `nil`                                          |
-| `rbac.create`                        | Create & use RBAC resources                                  | `true`                                                  |
-| `securityContext.fsGroup`            | Security context for the container                           | `{}`                                                    |
-| `serviceAccount.create`              | Whether a new service account name should be created.        | `true`                                                  |
-| `serviceAccount.name`                | Service account to be used.                                  | automatically generated                                 |
-| `serviceAccount.annotations`         | Annotations to be added to service account                   | `nil`                                                   |
-| `podAnnotations`                     | Annotations to be added to pods                              | `{}`                                                    |
-| `podLabels`                          | Additional labels to be added to pods                        | `{}`                                                    |
-| `replicaCount`                       | Number of replicas                                           | `1`                                                     |
-| `nodeSelector`                       | node labels for pod assignment                               | `{}`                                                    |
-| `tolerations`                        | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]`                                                    |
-| `affinity`                           | Affinity for pod assignment                                  | `{}`                                                    |
-| `resources`                          | Pod resource requests & limits                               | `{}`                                                    |
-| `imagePullSecrets`                   | Reference to one or more secrets to be used when pulling images              | `[]`                                                    |
-| `serviceMonitor.enabled`             | Enable the creation of a serviceMonitor object for the Prometheus operator              | `false`                                    |
-| `serviceMonitor.interval`            | The interval the Prometheus endpoint is scraped              | `30s`                                    |
-| `serviceMonitor.namespace`           | The namespace where the serviceMonitor object has to be created           | `nil`                                    |
+| Parameter                                 | Description                                                                                                                       | Default                               |
+| ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
+| `env.AWS_REGION`                          | Set AWS_REGION in Deployment Pod                                                                                                  | `us-west-2`                           |
+| `env.LOG_LEVEL`                           | Set the application log level                                                                                                     | `info`                                |
+| `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server                                                                                | `3001`                                |
+| `env.ROLE_PERMITTED_ANNOTATION`           | Specify the annotation key where to lookup the role arn permission boundaries                                                     | `iam.amazonaws.com/permitted`         |
+| `env.POLLER_INTERVAL_MILLISECONDS`        | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod                                                                                | `10000`                               |
+| `env.VAULT_ADDR`                          | Endpoint for the Vault backend, if using Vault                                                                                    | `http://127.0.0.1:8200                |
+| `env.DISABLE_POLLING`                     | Disables backend polling and only updates secrets when ExternalSecret is modified, setting this to any value will disable polling | `nil`                                 |
+| `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod                                                                           |                                       |
+| `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod                                                                       |                                       |
+| `envVarsFromSecret.AZURE_TENANT_ID`       | Set AZURE_TENANT_ID (from a secret) in Deployment Pod                                                                             |                                       |
+| `envVarsFromSecret.AZURE_CLIENT_ID`       | Set AZURE_CLIENT_ID (from a secret) in Deployment Pod                                                                             |                                       |
+| `envVarsFromSecret.AZURE_CLIENT_SECRET`   | Set AZURE_CLIENT_SECRET (from a secret) in Deployment Pod                                                                         |                                       |
+| `image.repository`                        | kubernetes-external-secrets Image name                                                                                            | `godaddy/kubernetes-external-secrets` |
+| `image.tag`                               | kubernetes-external-secrets Image tag                                                                                             | `3.2.0`                               |
+| `image.pullPolicy`                        | Image pull policy                                                                                                                 | `IfNotPresent`                        |
+| `nameOverride`                            | Override the name of app                                                                                                          | `nil`                                 |
+| `fullnameOverride`                        | Override the full name of app                                                                                                     | `nil`                                 |
+| `rbac.create`                             | Create & use RBAC resources                                                                                                       | `true`                                |
+| `securityContext`                         | Pod-wide security context                                                                                                         | `{ runAsNonRoot: true }`              |
+| `serviceAccount.create`                   | Whether a new service account name should be created.                                                                             | `true`                                |
+| `serviceAccount.name`                     | Service account to be used.                                                                                                       | automatically generated               |
+| `serviceAccount.annotations`              | Annotations to be added to service account                                                                                        | `nil`                                 |
+| `podAnnotations`                          | Annotations to be added to pods                                                                                                   | `{}`                                  |
+| `podLabels`                               | Additional labels to be added to pods                                                                                             | `{}`                                  |
+| `replicaCount`                            | Number of replicas                                                                                                                | `1`                                   |
+| `nodeSelector`                            | node labels for pod assignment                                                                                                    | `{}`                                  |
+| `tolerations`                             | List of node taints to tolerate (requires Kubernetes >= 1.6)                                                                      | `[]`                                  |
+| `affinity`                                | Affinity for pod assignment                                                                                                       | `{}`                                  |
+| `resources`                               | Pod resource requests & limits                                                                                                    | `{}`                                  |
+| `imagePullSecrets`                        | Reference to one or more secrets to be used when pulling images                                                                   | `[]`                                  |
+| `serviceMonitor.enabled`                  | Enable the creation of a serviceMonitor object for the Prometheus operator                                                        | `false`                               |
+| `serviceMonitor.interval`                 | The interval the Prometheus endpoint is scraped                                                                                   | `30s`                                 |
+| `serviceMonitor.namespace`                | The namespace where the serviceMonitor object has to be created                                                                   | `nil`                                 |
 
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 

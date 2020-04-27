@@ -11,5 +11,6 @@ RUN npm ci --production
 # Copy app to source directory
 COPY . .
 
-USER node
+# Change back to the "node" user; using its UID for PodSecurityPolicy "non-root" compatibility
+USER 1000
 CMD ["npm", "start"]
