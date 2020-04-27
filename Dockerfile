@@ -1,4 +1,4 @@
-FROM node:12.16.1-alpine
+FROM node:12.16.2-alpine
 
 ENV NODE_ENV production
 ENV NPM_CONFIG_LOGLEVEL info
@@ -11,5 +11,6 @@ RUN npm ci --production
 # Copy app to source directory
 COPY . .
 
-USER node
+# Change back to the "node" user; using its UID for PodSecurityPolicy "non-root" compatibility
+USER 1000
 CMD ["npm", "start"]

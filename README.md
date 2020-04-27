@@ -388,7 +388,22 @@ spec:
       name: password
       property: value
 ```
+Due to the way Azure handles binary files, you need to explicitly let the ExternalSecret know that the secret is binary.
+You can do that with the `isBinary` field on the key. This is necessary for certificates and other secret binary files.
 
+```
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-keyvault-service
+spec:
+  backendType: azureKeyVault
+  keyVaultName: hello-world
+  data:
+    - key: hello-service/credentials
+      name: password
+      isBinary: true
+```
 ### Alibaba Cloud KMS Secret Manager
 
 kubernetes-external-secrets supports fetching secrets from [Alibaba Cloud KMS Secret Manager](https://www.alibabacloud.com/help/doc-detail/152001.htm)
@@ -398,6 +413,7 @@ You will need to set these env vars in the deployment of kubernetes-external-sec
 - ALICLOUD_ACCESS_KEY_ID
 - ALICLOUD_ACCESS_KEY_SECRET
 - ALICLOUD_ENDPOINT
+
 
 ```yml
 apiVersion: kubernetes-client.io/v1
@@ -416,7 +432,6 @@ spec:
       # Version Stage in Alibaba Cloud KMS Secrets Manager. Optional, default value is ACSCurrent
       versionStage: ACSCurrent
 ```
-
 
 ### GCP Secret Manager
 
@@ -439,24 +454,6 @@ spec:
       property: value
 ```
 
-Due to the way Azure handles binary files, you need to explicitly let the ExternalSecret know that the secret is binary.
-You can do that with the `isBinary` field on the key. This is necessary for certificates and other secret binary files.
-
-```yml
-apiVersion: kubernetes-client.io/v1
-kind: ExternalSecret
-metadata:
-  name: hello-keyvault-service
-spec:
-  backendType: azureKeyVault
-  keyVaultName: hello-world
-  data:
-    - key: hello-service/credentials
-      name: password
-      isBinary: true
-```
-
-
 ## Metrics
 
 kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:
@@ -464,6 +461,7 @@ kubernetes-external-secrets exposes the following metrics over a prometheus endp
 | Metric                                    | Description                                                                     | Example                                                                       |
 | ----------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
 | `sync_calls`                              | This metric counts the number of sync calls by backend, secret name and status  | `sync_calls{name="foo",namespace="example",backend="foo",status="success"} 1` |
+| `last_state`                              | A value of -1 or 1 where -1 means the last sync_call was an error and 1 means the last sync_call was a success  | `last_state{name="foo",namespace="example",backend="foo"} 1` |
 
 
 ## Development

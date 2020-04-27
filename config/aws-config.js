@@ -9,7 +9,10 @@ const localstack = process.env.LOCALSTACK || 0
 
 let secretsManagerConfig = {}
 let systemManagerConfig = {}
-let stsConfig = {}
+let stsConfig = {
+  region: process.env.AWS_REGION || 'us-west-2',
+  stsRegionalEndpoints: process.env.AWS_STS_ENDPOINT_TYPE || 'regional'
+}
 
 if (localstack) {
   secretsManagerConfig = {
