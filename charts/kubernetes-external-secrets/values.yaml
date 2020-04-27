@@ -9,7 +9,7 @@ env:
   LOG_LEVEL: info
   METRICS_PORT: 3001
   VAULT_ADDR: http://127.0.0.1:8200
-# GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds.json
+  GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
 
 # Create environment variables from existing k8s secrets
 # envVarsFromSecret:
@@ -33,7 +33,7 @@ env:
 # filesFromSecret:
 #   gcp-creds:
 #     secret: gcp-creds
-#     mountPath: /app/gcp-creds.json
+#     mountPath: /app/gcp-creds
 
 rbac:
   # Specifies whether RBAC resources should be created
