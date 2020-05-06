@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.3.0](https://github.com/godaddy/kubernetes-external-secrets/compare/3.2.0...3.3.0) (2020-05-01)
+
+
+### Features
+
+* add last_state metric ([#357](https://github.com/godaddy/kubernetes-external-secrets/issues/357)) ([1d9d237](https://github.com/godaddy/kubernetes-external-secrets/commit/1d9d237618cf6b027ef16d0d201a3b06723a1a6e))
+* enable use of AWS STS regional endpoints ([#348](https://github.com/godaddy/kubernetes-external-secrets/issues/348)) ([9a46773](https://github.com/godaddy/kubernetes-external-secrets/commit/9a467737a88b186a2791595aed0a5712592026c3))
+* improve out-of-the-box compatibility with clusters running locked down PodSecurityPolicy enabling runAsNonRoot by default ([#361](https://github.com/godaddy/kubernetes-external-secrets/issues/361)) ([27ba7e1](https://github.com/godaddy/kubernetes-external-secrets/commit/27ba7e1551c3a34091301dad6d31c8854397837d))
+* support isBinary for GCP ([#353](https://github.com/godaddy/kubernetes-external-secrets/issues/353)) ([de20a1b](https://github.com/godaddy/kubernetes-external-secrets/commit/de20a1bf471562ac530e10239665961189026c33)), closes [#352](https://github.com/godaddy/kubernetes-external-secrets/issues/352)
+
+
+### Bug Fixes
+
+* **deps:** update dependency kubernetes-client to v9 ([#367](https://github.com/godaddy/kubernetes-external-secrets/issues/367)) ([f06bd59](https://github.com/godaddy/kubernetes-external-secrets/commit/f06bd595d3957c25d392ba70d90410eb17f5f4c8))
+* **deps:** update dependency pino to v6 ([#322](https://github.com/godaddy/kubernetes-external-secrets/issues/322)) ([3664540](https://github.com/godaddy/kubernetes-external-secrets/commit/36645402c24b446ff232b8ec6930593c5131756c))
+* **deps:** update dependency prom-client to v12 ([#323](https://github.com/godaddy/kubernetes-external-secrets/issues/323)) ([504ed6c](https://github.com/godaddy/kubernetes-external-secrets/commit/504ed6cfbbcdcbdd1b91cb6baf01e5cb6ceabc66))
+
 ## [3.2.0](https://github.com/godaddy/kubernetes-external-secrets/compare/3.1.0...3.2.0) (2020-03-27)
 
 

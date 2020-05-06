@@ -5,11 +5,11 @@
 # Environment variables to set on deployment pod
 env:
   AWS_REGION: us-west-2
-  POLLER_INTERVAL_MILLISECONDS: 10000
+  POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
   LOG_LEVEL: info
   METRICS_PORT: 3001
   VAULT_ADDR: http://127.0.0.1:8200
-  GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
+#  GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
 
 # Create environment variables from existing k8s secrets
 # envVarsFromSecret:
@@ -61,7 +61,7 @@ replicaCount: 1
 
 image:
   repository: godaddy/kubernetes-external-secrets
-  tag: 3.2.0
+  tag: 3.3.0
   pullPolicy: IfNotPresent
   imagePullSecrets: []
 
@@ -97,4 +97,4 @@ affinity: {}
 serviceMonitor:
   enabled: false
   interval: "30s"
-  namespace: 
+  namespace:

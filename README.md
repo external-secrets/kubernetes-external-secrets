@@ -238,7 +238,7 @@ A few properties has changed name overtime, we still maintain backwards compatbi
 
 ## Backends
 
-kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault, Azure Key Vault and Alibaba Cloud KMS Secret Manager.
+kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault, Azure Key Vault, Google Secret Manager and Alibaba Cloud KMS Secret Manager.
 
 ### AWS Secrets Manager
 
@@ -445,9 +445,85 @@ spec:
 
 kubernetes-external-secrets supports fetching secrets from [GCP Secret Manager](https://cloud.google.com/solutions/secrets-management)
 
-A service account is required to grant the controller access to pull secrets. Instructions are her: [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable_workload_identity_on_a_new_cluster)
+The external secret will poll for changes to the secret according to the value set for POLLER_INTERVAL_MILLISECONDS in env.  Depending on the time interval this is set to you may incur additional charges as Google Secret Manager [charges](https://cloud.google.com/secret-manager/pricing) per a set number of API calls.
+
+A service account is required to grant the controller access to pull secrets. 
+
+#### Workload Identity
+
+Instructions are here: [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable_workload_identity_on_a_new_cluster).  To enable workload identity on an existing cluster (which is not covered in that document), first enable it on the cluster like so:
+
+    gcloud container clusters update $CLUSTER_NAME --workload-pool=$PROJECT_NAME.svc.id.goog
+    
+Next enable workload metadata config on the node pool in which the pod will run:
+
+    gcloud beta container node-pools update $POOL --cluster $CLUSTER_NAME --workload-metadata-from-node=GKE_METADATA_SERVER
+
+If enabling it only for a particular pool, make sure to add any relevant tolerations or affinities:
+
+    tolerations:
+      - key: "name"
+        operator: "Equal"
+        effect: "NoExecute"
+        value: "node-pool-taint"
+      - key: "name"
+        operator: "Equal"
+        effect: "NoSchedule"
+        value: "node-pool-taint"
+    
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: cloud.google.com/gke-nodepool
+                  operator: In
+                  values:
+                    - node-pool
+    
+You can add an annotation which is needed for workload identity by passing it in via Helm:
+
+    serviceAccount:
+      annotations: 
+        iam.gke.io/gcp-service-account: my-secrets-sa@$PROJECT.iam.gserviceaccount.com
+
+Create the policy binding:
+
+    gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$CLUSTER_PROJECT.svc.id.goog[$SECRETS_NAMESPACE/kubernetes-external-secrets]" my-secrets-sa@$PROJECT.iam.gserviceaccount.com
+
+#### Loading from a Service Account Key
 
 Alternatively you can create and mount a kubernetes secret containing google service account credentials and set the GOOGLE_APPLICATION_CREDENTIALS env variable.
+
+Create a Kubernetes secret called gcp-creds with a JSON keyfile from a service account with necessary credentials to access the secrets:
+
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: mysecret
+    type: Opaque
+    stringData:
+      gcp-creds.json: |-
+        $KEYFILE_CONTENT
+
+Uncomment GOOGLE_APPLICATION_CREDENTIALS in the values file as well as the following section:
+
+    env:
+      AWS_REGION: us-west-2
+      POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
+      LOG_LEVEL: info
+      METRICS_PORT: 3001
+      VAULT_ADDR: http://127.0.0.1:8200
+      GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
+
+     filesFromSecret:
+       gcp-creds:
+         secret: gcp-creds
+         mountPath: /app/gcp-creds
+         
+This will mount the secret at /app/gcp-creds/gcp-creds.json and make it available via the GOOGLE_APPLICATION_CREDENTIALS environment variable.
+
+Once you have this installed, you can create an external secret with YAML like the following:
 
 ```yml
 apiVersion: kubernetes-client.io/v1
@@ -456,11 +532,29 @@ metadata:
   name: gcp-secrets-manager-example
 spec:
   backendType: gcpSecretsManager
+  projectId: my-gsm-secret-project
   data:
-    - key: projects/111122223333/secrets/my-secret/versions/latest
-      name: password
+    - key: my-gsm-secret-name
+      name: my-kubernetes-secret-name
+      version: latest
       property: value
 ```
+
+The field "key" is the name of the secret in Google Secret Manager.  The field "name" is the name of the Kubernetes secret this external secret will generate.  The metadata "name" field is the name of the external secret in Kubernetes.
+
+To retrieve external secrets, you can use the following command:
+
+    kubectl get externalsecrets -n $NAMESPACE
+    
+To retrieve the secrets themselves, you can use the regular:
+
+    kubectl get secrets -n $NAMESPACE
+    
+To retrieve an individual secret's content, use the following where "mysecret" is the key to the secret content under the "data" field:
+
+    kubectl get secret my-secret -o 'go-template={{index .data "mysecret"}}' | base64 -D
+
+The secrets will persist even if the helm installation is removed, although they will no longer sync to Google Secret Manager.
 
 ## Metrics
 
