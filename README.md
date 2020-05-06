@@ -388,10 +388,11 @@ spec:
       name: password
       property: value
 ```
+
 Due to the way Azure handles binary files, you need to explicitly let the ExternalSecret know that the secret is binary.
 You can do that with the `isBinary` field on the key. This is necessary for certificates and other secret binary files.
 
-```
+```yml
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
@@ -404,16 +405,23 @@ spec:
       name: password
       isBinary: true
 ```
+
 ### Alibaba Cloud KMS Secret Manager
 
 kubernetes-external-secrets supports fetching secrets from [Alibaba Cloud KMS Secret Manager](https://www.alibabacloud.com/help/doc-detail/152001.htm)
+
+create secret by using the [aliyun-cli](https://github.com/aliyun/aliyun-cli) command below:
+
+```bash
+# you need to configure aliyun-cli with a valid RAM user and proper permission
+aliyun kms CreateSecret --SecretName my_secret --SecretData P@ssw0rd --VersionId 001
+```
 
 You will need to set these env vars in the deployment of kubernetes-external-secrets:
 
 - ALICLOUD_ACCESS_KEY_ID
 - ALICLOUD_ACCESS_KEY_SECRET
 - ALICLOUD_ENDPOINT
-
 
 ```yml
 apiVersion: kubernetes-client.io/v1
