@@ -2,7 +2,7 @@
 env:
   AWS_REGION: us-east-1
 
- envVarsFromSecret:
+envVarsFromSecret:
   AWS_ACCESS_KEY_ID:
     secretKeyRef: aws-iam-credentials
     key: accessKeyId
