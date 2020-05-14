@@ -1,0 +1,20 @@
+
+env:
+  AWS_REGION: us-east-1
+
+ envVarsFromSecret:
+  AWS_ACCESS_KEY_ID:
+    secretKeyRef: aws-iam-credentials
+    key: accessKeyId
+  AWS_SECRET_ACCESS_KEY:
+    secretKeyRef: aws-iam-credentials
+    key: secretAccessKey
+
+image:
+  repository: brix4dayz/external-secrets
+  tag: test
+
+customResourceManagerDisabled: true
+
+crds:
+  create: true
