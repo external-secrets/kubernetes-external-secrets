@@ -55,6 +55,9 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `envVarsFromSecret.AZURE_TENANT_ID`       | Set AZURE_TENANT_ID (from a secret) in Deployment Pod                                                                             |                                       |
 | `envVarsFromSecret.AZURE_CLIENT_ID`       | Set AZURE_CLIENT_ID (from a secret) in Deployment Pod                                                                             |                                       |
 | `envVarsFromSecret.AZURE_CLIENT_SECRET`   | Set AZURE_CLIENT_SECRET (from a secret) in Deployment Pod                                                                         |                                       |
+| `envVarsFromSecret.ALICLOUD_ENDPOINT`     | Set ALICLOUD_ENDPOINT for KMS Service in Deployment Pod      |                                                         |
+| `envVarsFromSecret.ALICLOUD_ACCESS_KEY_ID`     | Set ALICLOUD_ACCESS_KEY_ID (from a secret) in Deployment Pod |                                                    |
+| `envVarsFromSecret.ALICLOUD_ACCESS_KEY_SECRET` | Set ALICLOUD_ACCESS_KEY_SECRET (from a secret) in Deployment Pod  |                                               |
 | `image.repository`                        | kubernetes-external-secrets Image name                                                                                            | `godaddy/kubernetes-external-secrets` |
 | `image.tag`                               | kubernetes-external-secrets Image tag                                                                                             | `3.2.0`                               |
 | `image.pullPolicy`                        | Image pull policy                                                                                                                 | `IfNotPresent`                        |
