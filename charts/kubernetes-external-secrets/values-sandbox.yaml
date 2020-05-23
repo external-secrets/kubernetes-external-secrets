@@ -1,6 +1,8 @@
 
 env:
   AWS_REGION: us-east-1
+  # once per min
+  POLLER_INTERVAL_MILLISECONDS: 60000
 
 envVarsFromSecret:
   AWS_ACCESS_KEY_ID:

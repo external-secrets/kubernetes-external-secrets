@@ -10,6 +10,7 @@ const path = require('path')
 
 const awsConfig = require('./aws-config')
 const azureConfig = require('./azure-config')
+const alicloudConfig = require('./alicloud-config')
 const gcpConfig = require('./gcp-config')
 const envConfig = require('./environment')
 const CustomResourceManager = require('../lib/custom-resource-manager')
@@ -18,6 +19,7 @@ const SystemManagerBackend = require('../lib/backends/system-manager-backend')
 const VaultBackend = require('../lib/backends/vault-backend')
 const AzureKeyVaultBackend = require('../lib/backends/azure-keyvault-backend')
 const GCPSecretsManagerBackend = require('../lib/backends/gcp-secrets-manager-backend')
+const AliCloudSecretsManagerBackend = require('../lib/backends/alicloud-secrets-manager-backend')
 
 // Get document, or throw exception on error
 // eslint-disable-next-line security/detect-non-literal-fs-filename
@@ -62,13 +64,19 @@ const gcpSecretsManagerBackend = new GCPSecretsManagerBackend({
   client: gcpConfig.gcpSecretsManager(),
   logger
 })
+const alicloudSecretsManagerBackend = new AliCloudSecretsManagerBackend({
+  credential: alicloudConfig.credential,
+  logger
+})
 const backends = {
   // when adding a new backend, make sure to change the CRD property too
   secretsManager: secretsManagerBackend,
   systemManager: systemManagerBackend,
   vault: vaultBackend,
   azureKeyVault: azureKeyVaultBackend,
-  gcpSecretsManager: gcpSecretsManagerBackend
+  gcpSecretsManager: gcpSecretsManagerBackend,
+  alicloudSecretsManager: alicloudSecretsManagerBackend
+
 }
 
 // backwards compatibility
