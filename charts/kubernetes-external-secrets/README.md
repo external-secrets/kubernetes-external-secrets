@@ -4,10 +4,14 @@
 
 ## TL;DR;
 
+Assumes you are using Helm V3:
+
 ```bash
 $ helm repo add external-secrets https://godaddy.github.io/kubernetes-external-secrets/
-$ helm install --skip-crds external-secrets/kubernetes-external-secrets
+$ helm install kubernetes-external-secrets external-secrets/kubernetes-external-secrets --skip-crds
 ```
+
+See below for [Helm V2 considerations](#helm-v2-considerations) when installing the chart.
 
 ## Prerequisites
 
@@ -15,26 +19,42 @@ $ helm install --skip-crds external-secrets/kubernetes-external-secrets
 
 ## Installing the Chart
 
-To install the chart with the release named `my-release` (assuming Helm V3):
+To install the chart with the release named `my-release`:
 
 ```bash
-$ helm install --name my-release --skip-crds external-secrets/kubernetes-external-secrets
+$ helm install my-release external-secrets/kubernetes-external-secrets --skip-crds
 ```
 
-> **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`'
+> **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`', however know this will not [autocreate a namespace](https://helm.sh/docs/faq/#automatically-creating-namespaces) like in Helm V2. To do that, also add the `--create-namespace` flag.
 
-To install the `ExternalSecret` CRD via the chart and disable the custom resource manager:
-
-```bash
-$ helm install --name my-release --set customResourceManagerDisabled=true external-secrets/kubernetes-external-secrets
-```
-
-**Note**: for Helm V2 `--set crds.create=true` will also be needed.
+> **Note**: `--skip-crds` is required in order to ensure the custom resource manager is used and will work for backwards compatibility. In future 4.x releases, this will not be required. See below for how to [disable the custom resource manager](#installing-the-crd) via the chart.
 
 To install the chart with [AWS IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html):
 
 ```bash
-$ helm install --name my-release --set customResourceManagerDisabled=true --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME' external-secrets/kubernetes-external-secrets
+$ helm install my-release external-secrets/kubernetes-external-secrets --skip-crds --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME'
+```
+
+### Installing the CRD
+
+To install the `ExternalSecret` CRD via the chart and disable the custom resource manager, you can omit `--skip-crds` and set `customResourceManagerDisabled`:
+
+```bash
+$ helm install external-secrets/kubernetes-external-secrets --name my-release --set customResourceManagerDisabled=true
+```
+
+### Helm V2 Considerations
+
+For Helm V2, `--skip-crds` is not needed, but `--name` is in order to set the release name:
+
+```bash
+$ helm install external-secrets/kubernetes-external-secrets --name my-release
+```
+
+If you wish to disable the custom resource manager and install the CRD via Helm V2, then `crds.create` must also be set:
+
+```bash
+$ helm install external-secrets/kubernetes-external-secrets --name my-release --set customResourceManagerDisabled=true --set crds.create=true
 ```
 
 ## Uninstalling the Chart
@@ -93,7 +113,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 Specify each parameter using the `--set key=value[,key=value]` argument to `helm install`. For example,
 
 ```bash
-helm install external-secrets/kubernetes-external-secrets --name my-releases \
+helm install my-release external-secrets/kubernetes-external-secrets \
 --set customResourceManagerDisabled=true
 --set env.POLLER_INTERVAL_MILLISECONDS='300000' \
 --set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access'
@@ -102,7 +122,7 @@ helm install external-secrets/kubernetes-external-secrets --name my-releases \
 Alternatively, a YAML file that specifies the values for the parameters can be provided while installing the chart. For example,
 
 ```bash
-helm install external-secrets/kubernetes-external-secrets --name my-release -f values.yaml
+helm install my-release external-secrets/kubernetes-external-secrets -f values.yaml
 ```
 
 > **Tip**: You can use the default [values.yaml](https://github.com/godaddy/kubernetes-external-secrets/blob/master/charts/kubernetes-external-secrets/values.yaml)
