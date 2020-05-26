@@ -28,6 +28,9 @@ const namingPermittedAnnotation = process.env.NAMING_PERMITTED_ANNOTATION || 'ex
 
 const metricsPort = process.env.METRICS_PORT || 3001
 
+const backendCacheDurationSeconds = process.env.BACKEND_CACHE_DURATION_SECONDS
+  ? Number(process.env.BACKEND_CACHE_DURATION_SECONDS) : 9
+
 module.exports = {
   vaultEndpoint,
   environment,
@@ -36,5 +39,6 @@ module.exports = {
   rolePermittedAnnotation,
   namingPermittedAnnotation,
   pollingDisabled,
-  logLevel
+  logLevel,
+  backendCacheDurationSeconds
 }

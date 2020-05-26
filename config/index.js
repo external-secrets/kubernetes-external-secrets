@@ -21,6 +21,8 @@ const AzureKeyVaultBackend = require('../lib/backends/azure-keyvault-backend')
 const GCPSecretsManagerBackend = require('../lib/backends/gcp-secrets-manager-backend')
 const AliCloudSecretsManagerBackend = require('../lib/backends/alicloud-secrets-manager-backend')
 
+const ObjectCache = require('../lib/object-cache');
+
 // Get document, or throw exception on error
 // eslint-disable-next-line security/detect-non-literal-fs-filename
 const customResourceManifest = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../crd.yaml'), 'utf8'))
@@ -37,6 +39,7 @@ const logger = pino({
   level: envConfig.logLevel
 })
 
+
 const customResourceManager = new CustomResourceManager({
   kubeClient,
   logger
@@ -45,25 +48,30 @@ const customResourceManager = new CustomResourceManager({
 const secretsManagerBackend = new SecretsManagerBackend({
   clientFactory: awsConfig.secretsManagerFactory,
   assumeRole: awsConfig.assumeRole,
+  objectCache: new ObjectCache(envConfig.backendCacheDurationSeconds),
   logger
 })
 const systemManagerBackend = new SystemManagerBackend({
   clientFactory: awsConfig.systemManagerFactory,
   assumeRole: awsConfig.assumeRole,
+  objectCache: new ObjectCache(envConfig.backendCacheDurationSeconds),
   logger
 })
 const vaultClient = vault({ apiVersion: 'v1', endpoint: envConfig.vaultEndpoint })
 const vaultBackend = new VaultBackend({ client: vaultClient, logger })
 const azureKeyVaultBackend = new AzureKeyVaultBackend({
   credential: azureConfig.azureKeyVault(),
+  objectCache: new ObjectCache(envConfig.backendCacheDurationSeconds),
   logger
 })
 const gcpSecretsManagerBackend = new GCPSecretsManagerBackend({
   client: gcpConfig.gcpSecretsManager(),
+  objectCache: new ObjectCache(envConfig.backendCacheDurationSeconds),
   logger
 })
 const alicloudSecretsManagerBackend = new AliCloudSecretsManagerBackend({
   credential: alicloudConfig.credential,
+  objectCache: new ObjectCache(envConfig.backendCacheDurationSeconds),
   logger
 })
 const backends = {
