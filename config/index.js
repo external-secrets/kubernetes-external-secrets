@@ -21,7 +21,7 @@ const AzureKeyVaultBackend = require('../lib/backends/azure-keyvault-backend')
 const GCPSecretsManagerBackend = require('../lib/backends/gcp-secrets-manager-backend')
 const AliCloudSecretsManagerBackend = require('../lib/backends/alicloud-secrets-manager-backend')
 
-const ObjectCache = require('../lib/object-cache');
+const ObjectCache = require('../lib/object-cache')
 
 // Get document, or throw exception on error
 // eslint-disable-next-line security/detect-non-literal-fs-filename
@@ -38,7 +38,6 @@ const logger = pino({
   },
   level: envConfig.logLevel
 })
-
 
 const customResourceManager = new CustomResourceManager({
   kubeClient,
