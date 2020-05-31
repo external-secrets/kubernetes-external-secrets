@@ -52,7 +52,15 @@ const systemManagerBackend = new SystemManagerBackend({
   assumeRole: awsConfig.assumeRole,
   logger
 })
-const vaultClient = vault({ apiVersion: 'v1', endpoint: envConfig.vaultEndpoint })
+const vaultClient = vault({
+  apiVersion: 'v1',
+  endpoint: envConfig.vaultEndpoint,
+  requestOptions: {
+    // When running vault in HA mode, you must follow redirects on PUT/POST/DELETE
+    // See: https://github.com/kr1sp1n/node-vault/issues/23
+    followAllRedirects: true
+  }
+})
 const vaultBackend = new VaultBackend({ client: vaultClient, logger })
 const azureKeyVaultBackend = new AzureKeyVaultBackend({
   credential: azureConfig.azureKeyVault(),
