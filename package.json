@@ -58,7 +58,7 @@
     "eslint-plugin-security": "1.4.0",
     "eslint-plugin-standard": "4.0.1",
     "mocha": "7.1.2",
-    "nodemon": "2.0.3",
+    "nodemon": "2.0.4",
     "nyc": "15.0.1",
     "sinon": "9.0.2",
     "standard-version": "7.1.0",
