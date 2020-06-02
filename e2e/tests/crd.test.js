@@ -5,7 +5,8 @@ const { expect } = require('chai')
 
 const {
   kubeClient,
-  customResourceManifest
+  customResourceManifest,
+  customResourceManagerDisabled
 } = require('../../config')
 
 const {
@@ -13,14 +14,21 @@ const {
 } = require('./framework.js')
 
 describe('CRD', () => {
-  it('should register the CRD on startup', async () => {
+  it('ensure CRD is managed correctly', async () => {
     const res = await kubeClient
       .apis['apiextensions.k8s.io']
       .v1beta1
       .customresourcedefinitions(customResourceManifest.metadata.name)
       .get()
+
+    let managedBy = 'custom-resource-manager'
+    if (customResourceManagerDisabled) {
+      managedBy = 'helm'
+    }
+
     expect(res).to.not.equal(undefined)
     expect(res.statusCode).to.equal(200)
+    expect(res.body.metadata.annotations['app.kubernetes.io/managed-by']).to.equal(managedBy)
   })
 
   it('should reject invalid ExternalSecret manifests', async () => {

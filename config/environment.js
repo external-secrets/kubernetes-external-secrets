@@ -28,6 +28,8 @@ const namingPermittedAnnotation = process.env.NAMING_PERMITTED_ANNOTATION || 'ex
 
 const metricsPort = process.env.METRICS_PORT || 3001
 
+const customResourceManagerDisabled = 'DISABLE_CUSTOM_RESOURCE_MANAGER' in process.env
+
 module.exports = {
   vaultEndpoint,
   environment,
@@ -36,5 +38,6 @@ module.exports = {
   rolePermittedAnnotation,
   namingPermittedAnnotation,
   pollingDisabled,
-  logLevel
+  logLevel,
+  customResourceManagerDisabled
 }

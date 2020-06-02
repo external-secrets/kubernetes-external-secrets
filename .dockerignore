@@ -1,6 +1,10 @@
 .env
 architecture.png
-charts
+charts/**/.helmignore
+charts/**/Chart.yaml
+charts/**/README.md
+charts/**/templates/
+charts/**/values.yaml
 coverage
 Dockerfile
 node_modules

@@ -2,9 +2,18 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
+# Determines whether the Helm chart or kubernetes-external-secrets
+# will handle the ExternalSecret CRD
+customResourceManagerDisabled: false
+
+crds:
+  # only needed for helm v2, leave this disabled for helm v3
+  create: false
+
 # Environment variables to set on deployment pod
 env:
   AWS_REGION: us-west-2
+  AWS_DEFAULT_REGION: us-west-2
   POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
   LOG_LEVEL: info
   METRICS_PORT: 3001
