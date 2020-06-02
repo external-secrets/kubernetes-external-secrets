@@ -59,7 +59,7 @@
     "eslint-plugin-standard": "4.0.1",
     "mocha": "7.1.2",
     "nodemon": "2.0.4",
-    "nyc": "15.0.1",
+    "nyc": "15.1.0",
     "sinon": "9.0.2",
     "standard-version": "8.0.0",
     "supertest": "4.0.2"
