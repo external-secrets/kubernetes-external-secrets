@@ -65,7 +65,7 @@ const vaultOptions = {
 }
 // Include the Vault Namespace header if we have provided it as an env var.
 // See: https://github.com/kr1sp1n/node-vault/pull/137#issuecomment-585309687
-if(envConfig.vaultNamespace) {
+if (envConfig.vaultNamespace) {
   vaultOptions.headers = {
     'X-VAULT-NAMESPACE': envConfig.vaultNamespace
   }
