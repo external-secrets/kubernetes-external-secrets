@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/3.3.0...4.0.0) (2020-06-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* Changes the values return type from GCP secret manager
+Previously secret value was wrapped in an object `{ "value": <secret> }` while now `<secret>` will be returned directly so KES features can be properly used
+* `GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json` is no longer set by default as it causes conflicts with other configurations.
+
+### Features
+
+* add support for Alibaba Cloud KMS Secret Manager ([#355](https://github.com/godaddy/kubernetes-external-secrets/issues/355)) ([cceb40b](https://github.com/godaddy/kubernetes-external-secrets/commit/cceb40b8fe797899c3309673434da25adce1bacf))
+* Chart optionally installs CRD / CR Manager configurable for more strict clusters ([#344](https://github.com/godaddy/kubernetes-external-secrets/issues/344)) ([131e201](https://github.com/godaddy/kubernetes-external-secrets/commit/131e2018b9013f2b84da41806b9359934f78e449))
+
+
+### Bug Fixes
+
+* don't set GOOGLE_APPLICATION_CREDENTIALS by default and update README for Google Secret Manager ([#371](https://github.com/godaddy/kubernetes-external-secrets/issues/371)) ([e9db0f8](https://github.com/godaddy/kubernetes-external-secrets/commit/e9db0f8a875db0c5054463c6fa4d02467e705bbd))
+* Handle JSON in GCP Secrets Manager ([#373](https://github.com/godaddy/kubernetes-external-secrets/issues/373)) ([4273598](https://github.com/godaddy/kubernetes-external-secrets/commit/4273598a35b96b5f054630026dcaf5ec1aa59baf))
+* **vault:** follow all redirects to support vault HA ([#394](https://github.com/godaddy/kubernetes-external-secrets/issues/394)) ([a05aa92](https://github.com/godaddy/kubernetes-external-secrets/commit/a05aa928b438e2da43bf04e9a8a99eb60e694967))
+
 ## [3.3.0](https://github.com/godaddy/kubernetes-external-secrets/compare/3.2.0...3.3.0) (2020-05-01)
 
 

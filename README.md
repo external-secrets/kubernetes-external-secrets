@@ -238,7 +238,7 @@ A few properties has changed name overtime, we still maintain backwards compatbi
 
 ## Backends
 
-kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault,  Azure Key Vault and Google Secret Manager.
+kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault, Azure Key Vault, Google Secret Manager and Alibaba Cloud KMS Secret Manager.
 
 ### AWS Secrets Manager
 
@@ -369,10 +369,10 @@ filesFromSecret:
 kubernetes-external-secrets supports fetching secrets from [Azure Key vault](https://azure.microsoft.com/en-ca/services/key-vault/)
 
 You will need to set these env vars in the deployment of kubernetes-external-secrets:
+
 - AZURE_TENANT_ID
 - AZURE_CLIENT_ID
 - AZURE_CLIENT_SECRET
-
 The SP configured will require get and list access policies on the AZURE_KEYVAULT_NAME.
 
 ```yml
@@ -404,6 +404,41 @@ spec:
     - key: hello-service/credentials
       name: password
       isBinary: true
+```
+
+### Alibaba Cloud KMS Secret Manager
+
+kubernetes-external-secrets supports fetching secrets from [Alibaba Cloud KMS Secret Manager](https://www.alibabacloud.com/help/doc-detail/152001.htm)
+
+create secret by using the [aliyun-cli](https://github.com/aliyun/aliyun-cli) command below:
+
+```bash
+# you need to configure aliyun-cli with a valid RAM user and proper permission
+aliyun kms CreateSecret --SecretName my_secret --SecretData P@ssw0rd --VersionId 001
+```
+
+You will need to set these env vars in the deployment of kubernetes-external-secrets:
+
+- ALICLOUD_ACCESS_KEY_ID
+- ALICLOUD_ACCESS_KEY_SECRET
+- ALICLOUD_ENDPOINT
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: alicloudSecretsManager
+  # optional: specify role to assume using provided access key ID and access key secret when retrieving the data
+  roleArn: acs:ram::{UID}:role/demo
+  data:
+    - key: hello-credentials1
+      name: password
+    - key: hello-credentials2
+      name: username
+      # Version Stage in Alibaba Cloud KMS Secrets Manager. Optional, default value is ACSCurrent
+      versionStage: ACSCurrent
 ```
 
 ### GCP Secret Manager

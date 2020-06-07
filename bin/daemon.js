@@ -31,9 +31,7 @@ async function main () {
   logger.info('loading kube specs')
   await kubeClient.loadSpec()
   logger.info('successfully loaded kube specs')
-  logger.info('updating CRD')
-  await customResourceManager.upsertResource({ customResourceManifest })
-  logger.info('successfully updated CRD')
+  await customResourceManager.manageCrd({ customResourceManifest })
 
   const externalSecretEvents = getExternalSecretEvents({
     kubeClient,
