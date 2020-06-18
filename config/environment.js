@@ -17,6 +17,9 @@ if (environment === 'development') {
 }
 
 const vaultEndpoint = process.env.VAULT_ADDR || 'http://127.0.0.1:8200'
+// Grab the vault namespace from the environment
+const vaultNamespace = process.env.VAULT_NAMESPACE || null
+
 const pollerIntervalMilliseconds = process.env.POLLER_INTERVAL_MILLISECONDS
   ? Number(process.env.POLLER_INTERVAL_MILLISECONDS) : 10000
 
@@ -32,6 +35,7 @@ const customResourceManagerDisabled = 'DISABLE_CUSTOM_RESOURCE_MANAGER' in proce
 
 module.exports = {
   vaultEndpoint,
+  vaultNamespace,
   environment,
   pollerIntervalMilliseconds,
   metricsPort,

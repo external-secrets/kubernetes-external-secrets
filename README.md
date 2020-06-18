@@ -345,6 +345,8 @@ spec:
     property: api-key
 ```
 
+If you use Vault Namespaces (a Vault Enterprise feature) you can set the namespace to interact with via the `VAULT_NAMESPACE` environment variable.
+
 If Vault uses a certificate issued by a self-signed CA you will need to provide that certificate:
 
 ```sh
