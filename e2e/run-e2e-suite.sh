@@ -35,7 +35,7 @@ RED='\e[35m'
 NC='\e[0m'
 BGREEN='\e[32m'
 
-K8S_VERSION=${K8S_VERSION:-v1.15.3}
+K8S_VERSION=${K8S_VERSION:-v1.15.11}
 KIND_CLUSTER_NAME="external-secrets-dev"
 REGISTRY=external-secrets
 
