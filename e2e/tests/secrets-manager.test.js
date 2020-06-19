@@ -142,65 +142,132 @@ describe('secretsmanager', async () => {
         body: {
           metadata: {
             annotations: {
-              'iam.amazonaws.com/permitted': '.*'
+              'iam.amazonaws.com/permitted': '.*',
+              'externalsecrets.kubernetes-client.io/permitted-key-name': '.*'
             }
           }
         }
       })
     })
 
-    it('should not pull from secretsmanager', async () => {
-      let result = await createSecret({
-        Name: `e2e/${uuid}/tls/permitted`,
-        SecretString: '{"crt":"foo","key":"bar"}'
-      }).catch(err => {
-        expect(err).to.equal(null)
-      })
+    describe('assuming role', async () => {
+      it('should not pull from secretsmanager', async () => {
+        let result = await createSecret({
+          Name: `e2e/${uuid}/tls/permitted`,
+          SecretString: '{"crt":"foo","key":"bar"}'
+        }).catch(err => {
+          expect(err).to.equal(null)
+        })
 
-      result = await kubeClient
-        .apis[customResourceManifest.spec.group]
-        .v1.namespaces('default')[customResourceManifest.spec.names.plural]
-        .post({
+        result = await kubeClient
+          .apis[customResourceManifest.spec.group]
+          .v1.namespaces('default')[customResourceManifest.spec.names.plural]
+          .post({
+            body: {
+              apiVersion: 'kubernetes-client.io/v1',
+              kind: 'ExternalSecret',
+              metadata: {
+                name: `e2e-secretmanager-permitted-tls-${uuid}`
+              },
+              spec: {
+                backendType: 'secretsManager',
+                type: 'kubernetes.io/tls',
+                // this should not be allowed
+                roleArn: 'let-me-be-root',
+                data: [
+                  {
+                    key: `e2e/${uuid}/tls/permitted`,
+                    property: 'crt',
+                    name: 'tls.crt'
+                  },
+                  {
+                    key: `e2e/${uuid}/tls/permitted`,
+                    property: 'key',
+                    name: 'tls.key'
+                  }
+                ]
+              }
+            }
+          })
+
+        expect(result).to.not.equal(undefined)
+        expect(result.statusCode).to.equal(201)
+
+        const secret = await waitForSecret('default', `e2e-secretmanager-permitted-tls-${uuid}`)
+        expect(secret).to.equal(undefined)
+
+        result = await kubeClient
+          .apis[customResourceManifest.spec.group]
+          .v1.namespaces('default')
+          .externalsecrets(`e2e-secretmanager-permitted-tls-${uuid}`)
+          .get()
+        expect(result).to.not.equal(undefined)
+        expect(result.body.status.status).to.contain('namespace does not allow to assume role let-me-be-root')
+      })
+    })
+
+    describe('enforcing naming convention', async () => {
+      it('should not pull from secretsmanager', async () => {
+        await kubeClient.api.v1.namespaces('default').patch({
           body: {
-            apiVersion: 'kubernetes-client.io/v1',
-            kind: 'ExternalSecret',
             metadata: {
-              name: `e2e-secretmanager-permitted-tls-${uuid}`
-            },
-            spec: {
-              backendType: 'secretsManager',
-              type: 'kubernetes.io/tls',
-              // this should not be allowed
-              roleArn: 'let-me-be-root',
-              data: [
-                {
-                  key: `e2e/${uuid}/tls/permitted`,
-                  property: 'crt',
-                  name: 'tls.crt'
-                },
-                {
-                  key: `e2e/${uuid}/tls/permitted`,
-                  property: 'key',
-                  name: 'tls.key'
-                }
-              ]
+              annotations: {
+                'iam.amazonaws.com/permitted': '.*',
+                'externalsecrets.kubernetes-client.io/permitted-key-name': '/permitted/path/.*'
+              }
             }
           }
         })
 
-      expect(result).to.not.equal(undefined)
-      expect(result.statusCode).to.equal(201)
+        let result = await createSecret({
+          Name: `e2e/${uuid}/another_credentials`,
+          SecretString: '{"username":"foo","password":"bar"}'
+        }).catch(err => {
+          expect(err).to.equal(null)
+        })
 
-      const secret = await waitForSecret('default', `e2e-secretmanager-permitted-tls-${uuid}`)
-      expect(secret).to.equal(undefined)
+        result = await kubeClient
+          .apis[customResourceManifest.spec.group]
+          .v1.namespaces('default')[customResourceManifest.spec.names.plural]
+          .post({
+            body: {
+              apiVersion: 'kubernetes-client.io/v1',
+              kind: 'ExternalSecret',
+              metadata: {
+                name: `e2e-secretmanager-permitted-key-${uuid}`
+              },
+              spec: {
+                backendType: 'secretsManager',
+                data: [
+                  {
+                    key: `e2e/${uuid}/another_credentials`,
+                    property: 'password',
+                    name: 'password'
+                  },
+                  {
+                    key: `e2e/${uuid}/another_credentials`,
+                    property: 'username',
+                    name: 'username'
+                  }
+                ]
+              }
+            }
+          })
 
-      result = await kubeClient
-        .apis[customResourceManifest.spec.group]
-        .v1.namespaces('default')
-        .externalsecrets(`e2e-secretmanager-permitted-tls-${uuid}`)
-        .get()
-      expect(result).to.not.equal(undefined)
-      expect(result.body.status.status).to.contain('namespace does not allow to assume role let-me-be-root')
+        expect(result).to.not.equal(undefined)
+        expect(result.statusCode).to.equal(201)
+
+        const secret = await waitForSecret('default', `e2e-secretmanager-permitted-key-${uuid}`)
+        expect(secret).to.equal(undefined)
+
+        result = await kubeClient
+          .apis[customResourceManifest.spec.group]
+          .v1.namespaces('default')
+          .externalsecrets(`e2e-secretmanager-permitted-key-${uuid}`)
+          .get()
+        expect(result).to.not.equal(undefined)
+        expect(result.body.status.status).to.contain(`key name e2e/${uuid}/another_credentials does not match naming convention /permitted/path/.*`)
+      })
     })
   })
 })
