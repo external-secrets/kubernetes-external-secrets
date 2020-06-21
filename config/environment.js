@@ -38,6 +38,8 @@ const metricsPort = process.env.METRICS_PORT || 3001
 
 const customResourceManagerDisabled = 'DISABLE_CUSTOM_RESOURCE_MANAGER' in process.env
 
+const pollInternalSecrets = 'POLL_INTERNAL_SECRETS' in process.env
+
 module.exports = {
   vaultEndpoint,
   vaultNamespace,
@@ -52,5 +54,6 @@ module.exports = {
   logLevel,
   customResourceManagerDisabled,
   useHumanReadableLogLevels,
-  logMessageKey
+  logMessageKey,
+  pollInternalSecrets
 }

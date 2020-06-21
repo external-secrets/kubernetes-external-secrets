@@ -25,7 +25,8 @@ const {
   pollingDisabled,
   rolePermittedAnnotation,
   namingPermittedAnnotation,
-  enforceNamespaceAnnotation
+  enforceNamespaceAnnotation,
+  pollInternalSecrets
 } = require('../config')
 
 async function main () {
@@ -53,6 +54,7 @@ async function main () {
     enforceNamespaceAnnotation,
     customResourceManifest,
     pollingDisabled,
+    pollInternalSecrets,
     logger
   })
 
