@@ -6,6 +6,7 @@ const clonedeep = require('lodash.clonedeep')
 const merge = require('lodash.merge')
 
 const localstack = process.env.LOCALSTACK || 0
+const fargate = process.env.FARGATE || 0
 
 let secretsManagerConfig = {}
 let systemManagerConfig = {}
@@ -44,13 +45,25 @@ module.exports = {
   },
   assumeRole: (assumeRoleOpts) => {
     const sts = new AWS.STS(stsConfig)
-    return new Promise((resolve, reject) => {
-      sts.assumeRole(assumeRoleOpts, (err, res) => {
-        if (err) {
-          return reject(err)
-        }
-        resolve(res)
+    if (fargate){
+      return new Promise((resolve, reject) => {
+        sts.assumeRoleWithWebIdentity(assumeRoleOpts, (err, res) => {
+          if (err) {
+            return reject(err)
+          }
+          resolve(res)
+        })
       })
-    })
+    } else {
+      return new Promise((resolve, reject) => {
+        sts.assumeRole(assumeRoleOpts, (err, res) => {
+          if (err) {
+            return reject(err)
+          }
+          resolve(res)
+        })
+      })
+    }
+  }
   }
 }
