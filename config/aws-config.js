@@ -15,7 +15,6 @@ let stsConfig = {
   region: process.env.AWS_REGION || 'us-west-2',
   stsRegionalEndpoints: process.env.AWS_STS_ENDPOINT_TYPE || 'regional'
 }
-var servicetoken
 
 if (localstack) {
   secretsManagerConfig = {
