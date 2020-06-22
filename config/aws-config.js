@@ -4,6 +4,7 @@
 const AWS = require('aws-sdk')
 const clonedeep = require('lodash.clonedeep')
 const merge = require('lodash.merge')
+const fs = require('fs').promises;
 
 const localstack = process.env.LOCALSTACK || 0
 const fargate = process.env.FARGATE || 0
@@ -14,6 +15,7 @@ let stsConfig = {
   region: process.env.AWS_REGION || 'us-west-2',
   stsRegionalEndpoints: process.env.AWS_STS_ENDPOINT_TYPE || 'regional'
 }
+var servicetoken
 
 if (localstack) {
   secretsManagerConfig = {
@@ -28,6 +30,11 @@ if (localstack) {
     endpoint: process.env.LOCALSTACK_STS_URL || 'http://localhost:4592',
     region: process.env.AWS_REGION || 'us-west-2'
   }
+}
+
+async function loadServiceToken() {
+  const tokendata = await fs.readFile("/var/run/secrets/eks.amazonaws.com/serviceaccount/token", "utf8");
+  return new Buffer(data);
 }
 
 module.exports = {
@@ -47,7 +54,7 @@ module.exports = {
     const sts = new AWS.STS(stsConfig)
     if (fargate){
       return new Promise((resolve, reject) => {
-        sts.assumeRoleWithWebIdentity(assumeRoleOpts, (err, res) => {
+        sts.assumeRoleWithWebIdentity(merge(assumeRoleOpts, {WebIdentityToken: loadServiceToken()}), (err, res) => {
           if (err) {
             return reject(err)
           }
@@ -64,6 +71,5 @@ module.exports = {
         })
       })
     }
-  }
   }
 }
