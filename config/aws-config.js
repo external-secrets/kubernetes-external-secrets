@@ -4,7 +4,7 @@
 const AWS = require('aws-sdk')
 const clonedeep = require('lodash.clonedeep')
 const merge = require('lodash.merge')
-const fs = require('fs').promises;
+const fs = require('fs');
 
 const localstack = process.env.LOCALSTACK || 0
 const fargate = process.env.FARGATE || 0
@@ -32,8 +32,8 @@ if (localstack) {
   }
 }
 
-async function loadServiceToken() {
-  return await fs.readFile(tokenfile, "utf8");
+function loadServiceToken() {
+  return fs.readFileSync(tokenfile, "utf8")
 }
 
 module.exports = {
