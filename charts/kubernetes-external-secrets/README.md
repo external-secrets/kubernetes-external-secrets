@@ -35,6 +35,8 @@ To install the chart with [AWS IAM Roles for Service Accounts](https://docs.aws.
 $ helm install my-release external-secrets/kubernetes-external-secrets --skip-crds --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME'
 ```
 
+If you're deploying the external-secrets controller onto an EKS Fargate node, add the ```--set env.FARGATE=1``` flag to the above command to enable the use of Web Identities (EC2 Metadata API is not available on EKS Fargate nodes)
+
 ### Installing the CRD
 
 To install the `ExternalSecret` CRD via the chart and disable the custom resource manager, you can omit `--skip-crds` and set `customResourceManagerDisabled`:
@@ -80,6 +82,8 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `env.POLLER_INTERVAL_MILLISECONDS`        | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod                                                                                | `10000`                               |
 | `env.VAULT_ADDR`                          | Endpoint for the Vault backend, if using Vault                                                                                    | `http://127.0.0.1:8200                |
 | `env.DISABLE_POLLING`                     | Disables backend polling and only updates secrets when ExternalSecret is modified, setting this to any value will disable polling | `nil`                                 |
+| `env.FARGATE`                             | Enables the use of Web Identities when set to `1`; Required when running the ExternalSecret Controller pod on EKS Fargate nodes   | `0` |
+| `env.AWS_WEB_IDENTITY_TOKEN_FILE`         | In-Container location where the AWS Service Account token can be found (Fargate / Web Identity)                                   | `/var/run/secrets/eks.amazonaws.com/serviceaccount/token` |
 | `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod                                                                           |                                       |
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod                                                                       |                                       |
 | `envVarsFromSecret.AZURE_TENANT_ID`       | Set AZURE_TENANT_ID (from a secret) in Deployment Pod                                                                             |                                       |
