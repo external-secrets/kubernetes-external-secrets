@@ -4,7 +4,7 @@
 const AWS = require('aws-sdk')
 const clonedeep = require('lodash.clonedeep')
 const merge = require('lodash.merge')
-const fs = require('fs');
+const fs = require('fs')
 
 const localstack = process.env.LOCALSTACK || 0
 const fargate = process.env.FARGATE || 0
@@ -32,8 +32,8 @@ if (localstack) {
   }
 }
 
-function loadServiceToken() {
-  return fs.readFileSync(tokenfile, "utf8")
+function loadServiceToken () {
+  return fs.readFileSync(tokenfile, 'utf8')
 }
 
 module.exports = {
@@ -51,9 +51,9 @@ module.exports = {
   },
   assumeRole: (assumeRoleOpts) => {
     const sts = new AWS.STS(stsConfig)
-    if (fargate){
+    if (fargate) {
       return new Promise((resolve, reject) => {
-        sts.assumeRoleWithWebIdentity(merge(assumeRoleOpts, {WebIdentityToken: loadServiceToken()}), (err, res) => {
+        sts.assumeRoleWithWebIdentity(merge(assumeRoleOpts, { WebIdentityToken: loadServiceToken() }), (err, res) => {
           if (err) {
             return reject(err)
           }
