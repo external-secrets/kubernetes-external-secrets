@@ -8,6 +8,7 @@ const fs = require('fs').promises;
 
 const localstack = process.env.LOCALSTACK || 0
 const fargate = process.env.FARGATE || 0
+const tokenfile = process.env.AWS_WEB_IDENTITY_TOKEN_FILE || "/var/run/secrets/eks.amazonaws.com/serviceaccount/token"
 
 let secretsManagerConfig = {}
 let systemManagerConfig = {}
@@ -32,8 +33,7 @@ if (localstack) {
 }
 
 async function loadServiceToken() {
-  const tokendata = await fs.readFile("/var/run/secrets/eks.amazonaws.com/serviceaccount/token", "utf8");
-  return new Buffer(data);
+  return await fs.readFile(tokenfile, "utf8");
 }
 
 module.exports = {
