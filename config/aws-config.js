@@ -52,7 +52,7 @@ module.exports = {
         })
       })
     }
-      
+
     return new Promise((resolve, reject) => {
       sts.assumeRole(assumeRoleOpts, (err, res) => {
         if (err) {
