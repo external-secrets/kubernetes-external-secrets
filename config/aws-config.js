@@ -32,7 +32,7 @@ if (localstack) {
 }
 
 function loadServiceToken () {
-  return fs.readFileSync(tokenfile, 'utf8')
+  return fs.readFileSync(webIdentity, 'utf8')
 }
 
 module.exports = {
