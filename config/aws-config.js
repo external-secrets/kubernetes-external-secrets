@@ -67,7 +67,7 @@ module.exports = {
           return reject(err)
         }
         resolve(res)
-      }
-    }
+      })
+    })
   }
 }
