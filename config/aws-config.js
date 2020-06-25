@@ -7,7 +7,7 @@ const merge = require('lodash.merge')
 const fs = require('fs')
 
 const localstack = process.env.LOCALSTACK || 0
-const tokenfile = process.env.AWS_WEB_IDENTITY_TOKEN_FILE || 0
+const webIdentity = process.env.AWS_WEB_IDENTITY_TOKEN_FILE || 0
 
 let secretsManagerConfig = {}
 let systemManagerConfig = {}
@@ -50,7 +50,7 @@ module.exports = {
   },
   assumeRole: (assumeRoleOpts) => {
     const sts = new AWS.STS(stsConfig)
-    if (tokenfile) {
+    if (webIdentity) {
       return new Promise((resolve, reject) => {
         sts.assumeRoleWithWebIdentity(merge(assumeRoleOpts, { WebIdentityToken: loadServiceToken() }), (err, res) => {
           if (err) {
@@ -59,15 +59,15 @@ module.exports = {
           resolve(res)
         })
       })
-    } else {
-      return new Promise((resolve, reject) => {
-        sts.assumeRole(assumeRoleOpts, (err, res) => {
-          if (err) {
-            return reject(err)
-          }
-          resolve(res)
-        })
-      })
+    }
+
+    return new Promise((resolve, reject) => {
+      sts.assumeRole(assumeRoleOpts, (err, res) => {
+        if (err) {
+          return reject(err)
+        }
+        resolve(res)
+      }
     }
   }
 }
