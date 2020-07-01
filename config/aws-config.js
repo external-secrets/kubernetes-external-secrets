@@ -4,6 +4,7 @@
 const AWS = require('aws-sdk')
 const clonedeep = require('lodash.clonedeep')
 const merge = require('lodash.merge')
+const fs = require('fs')
 
 const localstack = process.env.LOCALSTACK || 0
 const webIdentity = process.env.AWS_WEB_IDENTITY_TOKEN_FILE || 0
@@ -30,6 +31,10 @@ if (localstack) {
   }
 }
 
+function loadServiceToken () {
+  return fs.readFileSync(webIdentity, 'utf8')
+}
+
 module.exports = {
   secretsManagerFactory: (opts = {}) => {
     if (localstack) {
@@ -47,7 +52,7 @@ module.exports = {
     const sts = new AWS.STS(stsConfig)
     if (webIdentity) {
       return new Promise((resolve, reject) => {
-        sts.assumeRoleWithWebIdentity(assumeRoleOpts, (err, res) => {
+        sts.assumeRoleWithWebIdentity(merge(assumeRoleOpts, { WebIdentityToken: loadServiceToken() }), (err, res) => {
           if (err) {
             return reject(err)
           }
