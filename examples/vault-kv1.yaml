@@ -1,13 +1,16 @@
 apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
-  name: hello-service
+  name: database-credentials-from-kv1
 spec:
   backendType: vault
   vaultMountPoint: my-kubernetes-vault-mount-point
   vaultRole: my-vault-role
-  kvVersion: 2 # defaults to 2
+  kvVersion: 1
   data:
+    - name: username
+      key: kv/database
+      property: db-username
     - name: password
-      key: secret/data/hello-service/password
-      property: password
+      key: kv/database
+      property: db-password
