@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.1.0](https://github.com/godaddy/kubernetes-external-secrets/compare/4.0.0...4.1.0) (2020-07-09)
+
+
+### Features
+
+* add e2e test for naming conventions enforcement ([#412](https://github.com/godaddy/kubernetes-external-secrets/issues/412)) ([bfb5ed2](https://github.com/godaddy/kubernetes-external-secrets/commit/bfb5ed2203edb3c08be4936342aa03b2bcf77a37))
+* allow permitted-key-name to be provided as list ([#409](https://github.com/godaddy/kubernetes-external-secrets/issues/409)) ([10e3991](https://github.com/godaddy/kubernetes-external-secrets/commit/10e3991fff8d950ee5ac9d2d288257be401bfd96))
+* Vault namespace support ([#403](https://github.com/godaddy/kubernetes-external-secrets/issues/403)) ([6bd9570](https://github.com/godaddy/kubernetes-external-secrets/commit/6bd95706e77d2813ed226dafbfe8756b1d5cae14))
+
+
+### Bug Fixes
+
+* **vault:** fix requestOptions for vault namespace support ([#410](https://github.com/godaddy/kubernetes-external-secrets/issues/410)) ([e80d83d](https://github.com/godaddy/kubernetes-external-secrets/commit/e80d83d5c763b8eee312d6bac3a836e12ccb9194))
+* pass in the Web Identity token to assumeRoleWithWebIdentity ([#417](https://github.com/godaddy/kubernetes-external-secrets/issues/417)) ([23d511f](https://github.com/godaddy/kubernetes-external-secrets/commit/23d511f02901e0f1222b6d89122cc930cffa7939))
+* use assumeRoleWithWebIdentity when using IRSA ([#416](https://github.com/godaddy/kubernetes-external-secrets/issues/416)) ([117b926](https://github.com/godaddy/kubernetes-external-secrets/commit/117b9268759964e07bf412ba53a54e18ef53d1d8))
+
 ## [4.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/3.3.0...4.0.0) (2020-06-02)
 
 
