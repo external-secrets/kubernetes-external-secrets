@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.2.0](https://github.com/godaddy/kubernetes-external-secrets/compare/4.1.0...4.2.0) (2020-07-12)
+
+
+### Features
+
+* add support for using either Vault k/v 1 or k/v 2 ([#426](https://github.com/godaddy/kubernetes-external-secrets/issues/426)) ([4193050](https://github.com/godaddy/kubernetes-external-secrets/commit/4193050156de8ea3daaab712438f94d2bae395fc))
+
 ## [4.1.0](https://github.com/godaddy/kubernetes-external-secrets/compare/4.0.0...4.1.0) (2020-07-09)
 
 
