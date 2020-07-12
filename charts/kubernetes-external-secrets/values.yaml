@@ -53,6 +53,9 @@ env:
 #     secret: gcp-creds
 #     mountPath: /app/gcp-creds
 
+  # Print logs level as string ("info") rather than integer (30)
+  USE_HUMAN_READABLE_LOG_LEVELS: false
+
 rbac:
   # Specifies whether RBAC resources should be created
   create: true

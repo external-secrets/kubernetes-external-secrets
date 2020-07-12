@@ -24,6 +24,9 @@ const pollerIntervalMilliseconds = process.env.POLLER_INTERVAL_MILLISECONDS
   ? Number(process.env.POLLER_INTERVAL_MILLISECONDS) : 10000
 
 const logLevel = process.env.LOG_LEVEL || 'info'
+const useHumanReadableLogLevels = process.env.USE_HUMAN_READABLE_LOG_LEVELS
+  ? true : false
+
 const pollingDisabled = 'DISABLE_POLLING' in process.env
 
 const rolePermittedAnnotation = process.env.ROLE_PERMITTED_ANNOTATION || 'iam.amazonaws.com/permitted'
@@ -43,5 +46,6 @@ module.exports = {
   namingPermittedAnnotation,
   pollingDisabled,
   logLevel,
-  customResourceManagerDisabled
+  customResourceManagerDisabled,
+  useHumanReadableLogLevels
 }
