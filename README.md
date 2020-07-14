@@ -456,7 +456,19 @@ The external secret will poll for changes to the secret according to the value s
 
 A service account is required to grant the controller access to pull secrets. 
 
-#### Workload Identity
+
+#### Add a secret
+
+Add your secret data to your backend using GCP SDK :
+```
+echo -n '{"value": "my-secret-value"}' |     gcloud secrets create my-gsm-secret-name     --replication-policy="automatic"     --data-file=-
+```
+If the secret needs to be updated :
+```
+echo -n '{"value": "my-secret-value-with-update"}' |     gcloud secrets versions add my-gsm-secret-name --data-file=-
+```
+
+##### Deploy kubernetes-external-secrets using Workload Identity
 
 Instructions are here: [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable_workload_identity_on_a_new_cluster).  To enable workload identity on an existing cluster (which is not covered in that document), first enable it on the cluster like so:
 
@@ -498,7 +510,7 @@ Create the policy binding:
 
     gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$CLUSTER_PROJECT.svc.id.goog[$SECRETS_NAMESPACE/kubernetes-external-secrets]" my-secrets-sa@$PROJECT.iam.gserviceaccount.com
 
-#### Loading from a Service Account Key
+##### Deploy kubernetes-external-secrets using a service account key
 
 Alternatively you can create and mount a kubernetes secret containing google service account credentials and set the GOOGLE_APPLICATION_CREDENTIALS env variable.
 
@@ -530,21 +542,22 @@ Uncomment GOOGLE_APPLICATION_CREDENTIALS in the values file as well as the follo
          
 This will mount the secret at /app/gcp-creds/gcp-creds.json and make it available via the GOOGLE_APPLICATION_CREDENTIALS environment variable.
 
-Once you have this installed, you can create an external secret with YAML like the following:
+#### Usage 
+Once you have kubernetes-external-secrets installed, you can create an external secret with YAML like the following:
 
 ```yml
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
-  name: gcp-secrets-manager-example
+  name: gcp-secrets-manager-example    # name of the k8s external secret and the k8s secret
 spec:
   backendType: gcpSecretsManager
   projectId: my-gsm-secret-project
   data:
-    - key: my-gsm-secret-name
-      name: my-kubernetes-secret-name
-      version: latest
-      property: value
+    - key: my-gsm-secret-name     # name of the GCP secret
+      name: my-kubernetes-secret-name   # key name in the k8s secret
+      version: latest    # version of the GCP secret
+      property: value      # name of the field in the GCP secret
 ```
 
 The field "key" is the name of the secret in Google Secret Manager.  The field "name" is the name of the Kubernetes secret this external secret will generate.  The metadata "name" field is the name of the external secret in Kubernetes.
