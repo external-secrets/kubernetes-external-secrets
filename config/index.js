@@ -35,7 +35,8 @@ const logger = pino({
   serializers: {
     err: pino.stdSerializers.err
   },
-  level: envConfig.logLevel
+  level: envConfig.logLevel,
+  useLevelLabels: envConfig.useHumanReadableLogLevels
 })
 
 const customResourceManager = new CustomResourceManager({
