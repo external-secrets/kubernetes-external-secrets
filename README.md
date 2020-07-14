@@ -279,6 +279,11 @@ spec:
       # Version Stage in Secrets Manager
       versionStage: AWSPREVIOUS
       property: password_previous
+    - key: hello-service/credentials
+      name: password
+      # Version ID in Secrets Manager
+      versionId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+      property: password_versioned
 ```
 
 alternatively you can use `dataFrom` and get all the values from hello-service/credentials:
