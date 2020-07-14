@@ -16,6 +16,8 @@ env:
   AWS_DEFAULT_REGION: us-west-2
   POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
   LOG_LEVEL: info
+  # Print logs level as string ("info") rather than integer (30)
+  # USE_HUMAN_READABLE_LOG_LEVELS: true
   METRICS_PORT: 3001
   VAULT_ADDR: http://127.0.0.1:8200
 #  GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
@@ -52,9 +54,6 @@ env:
 #   gcp-creds:
 #     secret: gcp-creds
 #     mountPath: /app/gcp-creds
-
-  # Print logs level as string ("info") rather than integer (30)
-  USE_HUMAN_READABLE_LOG_LEVELS: false
 
 rbac:
   # Specifies whether RBAC resources should be created
