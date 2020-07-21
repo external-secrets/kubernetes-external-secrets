@@ -39,7 +39,7 @@ const logger = pino({
   level: envConfig.logLevel,
   formatters: {
     level (label, number) {
-      return { level: envConfig.useHumanReadableLogLevels ? label : number };
+      return { level: envConfig.useHumanReadableLogLevels ? label : number }
     }
   }
 })
