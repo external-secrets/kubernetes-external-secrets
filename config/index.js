@@ -34,7 +34,7 @@ const kubeClient = new kube.Client({ backend: kubeBackend })
 const logger = pino({
   serializers: {
     err: pino.stdSerializers.err,
-    messageKey: 'message'
+    messageKey: envConfig.logMessageKey || 'msg'
   },
   level: envConfig.logLevel,
   formatters: {
