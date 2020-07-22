@@ -32,8 +32,8 @@
   },
   "dependencies": {
     "@alicloud/kms20160120": "^1.1.0",
-    "@azure/identity": "^1.0.2",
-    "@azure/keyvault-secrets": "^4.0.2",
+    "@azure/identity": "^1.0.3",
+    "@azure/keyvault-secrets": "^4.0.4",
     "@google-cloud/secret-manager": "^1.2.1",
     "aws-sdk": "^2.628.0",
     "express": "^4.17.1",
