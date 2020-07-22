@@ -30,6 +30,7 @@ const pollingDisabled = 'DISABLE_POLLING' in process.env
 
 const rolePermittedAnnotation = process.env.ROLE_PERMITTED_ANNOTATION || 'iam.amazonaws.com/permitted'
 const namingPermittedAnnotation = process.env.NAMING_PERMITTED_ANNOTATION || 'externalsecrets.kubernetes-client.io/permitted-key-name'
+const enforceNamespaceAnnotation = process.env.ENFORCE_NAMESPACE_ANNOTATIONS || false
 
 const metricsPort = process.env.METRICS_PORT || 3001
 
@@ -43,6 +44,7 @@ module.exports = {
   metricsPort,
   rolePermittedAnnotation,
   namingPermittedAnnotation,
+  enforceNamespaceAnnotation,
   pollingDisabled,
   logLevel,
   customResourceManagerDisabled,
