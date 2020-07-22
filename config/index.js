@@ -33,10 +33,15 @@ const kubeClient = new kube.Client({ backend: kubeBackend })
 
 const logger = pino({
   serializers: {
-    err: pino.stdSerializers.err
+    err: pino.stdSerializers.err,
+    messageKey: envConfig.logMessageKey || 'msg'
   },
   level: envConfig.logLevel,
-  useLevelLabels: envConfig.useHumanReadableLogLevels
+  formatters: {
+    level (label, number) {
+      return { level: envConfig.useHumanReadableLogLevels ? label : number }
+    }
+  }
 })
 
 const customResourceManager = new CustomResourceManager({
