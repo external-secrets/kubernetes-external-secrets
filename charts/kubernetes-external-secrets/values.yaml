@@ -82,6 +82,8 @@ fullnameOverride: ""
 podAnnotations: {}
 podLabels: {}
 
+dnsConfig: {}
+
 securityContext:
   runAsNonRoot: true
   # Required for use of IRSA, see https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts-technical-overview.html
