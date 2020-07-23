@@ -77,7 +77,12 @@ if (envConfig.vaultNamespace) {
   }
 }
 const vaultClient = vault(vaultOptions)
-const vaultBackend = new VaultBackend({ client: vaultClient, logger })
+// The Vault token is renewed only during polling, not asynchronously. The default tokenRenewThreshold
+// is three times larger than the pollerInterval so that the token is renewed before it
+// expires and with at least one remaining poll opportunty to retry renewal if it fails.
+const vaultTokenRenewThreshold = envConfig.vaultTokenRenewThreshold 
+  ? Number(envConfig.vaultTokenRenewThreshold) : 3 * envConfig.pollerIntervalMilliseconds / 1000
+const vaultBackend = new VaultBackend({ client: vaultClient, tokenRenewThreshold: vaultTokenRenewThreshold, logger })
 const azureKeyVaultBackend = new AzureKeyVaultBackend({
   credential: azureConfig.azureKeyVault(),
   logger

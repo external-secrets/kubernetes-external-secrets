@@ -352,6 +352,8 @@ spec:
 
 If you use Vault Namespaces (a Vault Enterprise feature) you can set the namespace to interact with via the `VAULT_NAMESPACE` environment variable.
 
+The Vault token obtained by Kubernetes authentication will be renewed as needed. By default the token will be renewed three poller intervals (POLLER_INTERVAL_MILLISECONDS) before the token TTL expires. The default should be acceptable in most cases but the token renew threshold can also be customized by setting the `VAULT_TOKEN_RENEW_THRESHOLD` environment variable. The token renew threshold value is specified in seconds and tokens with remaining TTL less than this number of seconds will be renewed. In order to minimize token renewal load on the Vault server it is suggested that Kubernetes auth tokens issued by Vault have a TTL of at least ten times the poller interval so that they are renewed less frequently. A longer token TTL results in a lower  token renewal load on Vault.
+
 If Vault uses a certificate issued by a self-signed CA you will need to provide that certificate:
 
 ```sh
