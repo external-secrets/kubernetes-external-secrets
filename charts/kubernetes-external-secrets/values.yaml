@@ -73,7 +73,7 @@ replicaCount: 1
 
 image:
   repository: godaddy/kubernetes-external-secrets
-  tag: 4.2.0
+  tag: 5.0.0
   pullPolicy: IfNotPresent
   imagePullSecrets: []
 
