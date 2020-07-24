@@ -2,6 +2,50 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/3.1.0...5.0.0) (2020-07-24)
+
+
+### ⚠ BREAKING CHANGES
+
+* Changes the values return type from GCP secret manager
+Previously secret value was wrapped in an object `{ "value": <secret> }` while now `<secret>` will be returned directly so KES features can be properly used
+* `GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json` is no longer set by default as it causes conflicts with other configurations.
+
+### Bug Fixes
+
+* don't set GOOGLE_APPLICATION_CREDENTIALS by default and update README for Google Secret Manager ([#371](https://github.com/godaddy/kubernetes-external-secrets/issues/371)) ([e9db0f8](https://github.com/godaddy/kubernetes-external-secrets/commit/e9db0f8))
+* Handle JSON in GCP Secrets Manager ([#373](https://github.com/godaddy/kubernetes-external-secrets/issues/373)) ([4273598](https://github.com/godaddy/kubernetes-external-secrets/commit/4273598))
+* pass in the Web Identity token to assumeRoleWithWebIdentity ([#417](https://github.com/godaddy/kubernetes-external-secrets/issues/417)) ([23d511f](https://github.com/godaddy/kubernetes-external-secrets/commit/23d511f))
+* stringify json object based secrets ([#247](https://github.com/godaddy/kubernetes-external-secrets/issues/247)) ([828d0ce](https://github.com/godaddy/kubernetes-external-secrets/commit/828d0ce))
+* upgrade aws-sdk from 2.575.0 to 2.628.0 ([#305](https://github.com/godaddy/kubernetes-external-secrets/issues/305)) ([149e33a](https://github.com/godaddy/kubernetes-external-secrets/commit/149e33a))
+* **deps:** update dependency kubernetes-client to v9 ([#367](https://github.com/godaddy/kubernetes-external-secrets/issues/367)) ([f06bd59](https://github.com/godaddy/kubernetes-external-secrets/commit/f06bd59))
+* upgrade pino from 5.13.6 to 5.16.0 ([#306](https://github.com/godaddy/kubernetes-external-secrets/issues/306)) ([be74814](https://github.com/godaddy/kubernetes-external-secrets/commit/be74814))
+* upgrade the Azure Identity SDK and Azure KeyVault secret SDK to support AKS pod identity for authorization ([#447](https://github.com/godaddy/kubernetes-external-secrets/issues/447)) ([020c10b](https://github.com/godaddy/kubernetes-external-secrets/commit/020c10b))
+* use assumeRoleWithWebIdentity when using IRSA ([#416](https://github.com/godaddy/kubernetes-external-secrets/issues/416)) ([117b926](https://github.com/godaddy/kubernetes-external-secrets/commit/117b926))
+* verify dataFrom property in naming convention verification ([#292](https://github.com/godaddy/kubernetes-external-secrets/issues/292)) ([f26bf2b](https://github.com/godaddy/kubernetes-external-secrets/commit/f26bf2b))
+* **azure-registry:** handle binary files ([#311](https://github.com/godaddy/kubernetes-external-secrets/issues/311)) ([9727d48](https://github.com/godaddy/kubernetes-external-secrets/commit/9727d48))
+* **deps:** update dependency pino to v6 ([#322](https://github.com/godaddy/kubernetes-external-secrets/issues/322)) ([3664540](https://github.com/godaddy/kubernetes-external-secrets/commit/3664540))
+* **deps:** update dependency prom-client to v12 ([#323](https://github.com/godaddy/kubernetes-external-secrets/issues/323)) ([504ed6c](https://github.com/godaddy/kubernetes-external-secrets/commit/504ed6c))
+* **vault:** fix requestOptions for vault namespace support ([#410](https://github.com/godaddy/kubernetes-external-secrets/issues/410)) ([e80d83d](https://github.com/godaddy/kubernetes-external-secrets/commit/e80d83d))
+* **vault:** follow all redirects to support vault HA ([#394](https://github.com/godaddy/kubernetes-external-secrets/issues/394)) ([a05aa92](https://github.com/godaddy/kubernetes-external-secrets/commit/a05aa92))
+
+
+### Features
+
+* add e2e test for naming conventions enforcement ([#412](https://github.com/godaddy/kubernetes-external-secrets/issues/412)) ([bfb5ed2](https://github.com/godaddy/kubernetes-external-secrets/commit/bfb5ed2))
+* add GCP support ([#312](https://github.com/godaddy/kubernetes-external-secrets/issues/312)) ([5b41ad0](https://github.com/godaddy/kubernetes-external-secrets/commit/5b41ad0))
+* add last_state metric ([#357](https://github.com/godaddy/kubernetes-external-secrets/issues/357)) ([1d9d237](https://github.com/godaddy/kubernetes-external-secrets/commit/1d9d237))
+* add support for Alibaba Cloud KMS Secret Manager ([#355](https://github.com/godaddy/kubernetes-external-secrets/issues/355)) ([cceb40b](https://github.com/godaddy/kubernetes-external-secrets/commit/cceb40b))
+* add support for using either Vault k/v 1 or k/v 2 ([#426](https://github.com/godaddy/kubernetes-external-secrets/issues/426)) ([4193050](https://github.com/godaddy/kubernetes-external-secrets/commit/4193050))
+* allow permitted-key-name to be provided as list ([#409](https://github.com/godaddy/kubernetes-external-secrets/issues/409)) ([10e3991](https://github.com/godaddy/kubernetes-external-secrets/commit/10e3991))
+* Chart optionally installs CRD / CR Manager configurable for more strict clusters ([#344](https://github.com/godaddy/kubernetes-external-secrets/issues/344)) ([131e201](https://github.com/godaddy/kubernetes-external-secrets/commit/131e201))
+* **logging:** add config to allow switching level format to human-readable log levels ([#429](https://github.com/godaddy/kubernetes-external-secrets/issues/429)) ([4602ad0](https://github.com/godaddy/kubernetes-external-secrets/commit/4602ad0))
+* enable use of AWS STS regional endpoints ([#348](https://github.com/godaddy/kubernetes-external-secrets/issues/348)) ([9a46773](https://github.com/godaddy/kubernetes-external-secrets/commit/9a46773))
+* improve out-of-the-box compatibility with clusters running locked down PodSecurityPolicy enabling runAsNonRoot by default ([#361](https://github.com/godaddy/kubernetes-external-secrets/issues/361)) ([27ba7e1](https://github.com/godaddy/kubernetes-external-secrets/commit/27ba7e1))
+* support isBinary for GCP ([#353](https://github.com/godaddy/kubernetes-external-secrets/issues/353)) ([de20a1b](https://github.com/godaddy/kubernetes-external-secrets/commit/de20a1b)), closes [#352](https://github.com/godaddy/kubernetes-external-secrets/issues/352)
+* Vault namespace support ([#403](https://github.com/godaddy/kubernetes-external-secrets/issues/403)) ([6bd9570](https://github.com/godaddy/kubernetes-external-secrets/commit/6bd9570))
+* **secretsManager:** add support for versionId in AWS Secrets Manager ([#436](https://github.com/godaddy/kubernetes-external-secrets/issues/436)) ([95827bc](https://github.com/godaddy/kubernetes-external-secrets/commit/95827bc))
+
 ## [4.2.0](https://github.com/godaddy/kubernetes-external-secrets/compare/4.1.0...4.2.0) (2020-07-12)
 
 
