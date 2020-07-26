@@ -24,7 +24,8 @@ const {
   pollerIntervalMilliseconds,
   pollingDisabled,
   rolePermittedAnnotation,
-  namingPermittedAnnotation
+  namingPermittedAnnotation,
+  enforceNamespaceAnnotation
 } = require('../config')
 
 async function main () {
@@ -49,6 +50,7 @@ async function main () {
     pollerIntervalMilliseconds,
     rolePermittedAnnotation,
     namingPermittedAnnotation,
+    enforceNamespaceAnnotation,
     customResourceManifest,
     pollingDisabled,
     logger
