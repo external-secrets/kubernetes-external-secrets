@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.1.0](https://github.com/godaddy/kubernetes-external-secrets/compare/5.0.0...5.1.0) (2020-07-27)
+
+
+### Features
+
+* added the option to enforce namespace annotations ([#448](https://github.com/godaddy/kubernetes-external-secrets/issues/448)) ([1517333](https://github.com/godaddy/kubernetes-external-secrets/commit/1517333314359d5754864956bd49be83b9070120))
+
+
+### Bug Fixes
+
+* **config:** extract LOG_MESSAGE_KEY properly ([#456](https://github.com/godaddy/kubernetes-external-secrets/issues/456)) ([a50c219](https://github.com/godaddy/kubernetes-external-secrets/commit/a50c219c9f7c5f1455bb4c0808dd651b2e519fd5))
+* **pino:** messageKey option as root constructor property ([#455](https://github.com/godaddy/kubernetes-external-secrets/issues/455)) ([22208b0](https://github.com/godaddy/kubernetes-external-secrets/commit/22208b05023fa90eb7a8dd944e444358edb69a14))
+
 ## [5.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/3.1.0...5.0.0) (2020-07-24)
 
 
