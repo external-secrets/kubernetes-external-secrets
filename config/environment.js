@@ -25,7 +25,7 @@ const pollerIntervalMilliseconds = process.env.POLLER_INTERVAL_MILLISECONDS
 
 const logLevel = process.env.LOG_LEVEL || 'info'
 const useHumanReadableLogLevels = 'USE_HUMAN_READABLE_LOG_LEVELS' in process.env
-const logMessageKey = 'LOG_MESSAGE_KEY' in process.env
+const logMessageKey = process.env.LOG_MESSAGE_KEY || 'msg'
 
 const pollingDisabled = 'DISABLE_POLLING' in process.env
 
