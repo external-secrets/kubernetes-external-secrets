@@ -21,6 +21,8 @@ env:
   # USE_HUMAN_READABLE_LOG_LEVELS: true
   METRICS_PORT: 3001
   VAULT_ADDR: http://127.0.0.1:8200
+  # Set a role to be used when assuming roles specified in external secret (AWS only)
+  # AWS_INTERMEDIATE_ROLE_ARN:
 #  GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
 
 # Create environment variables from existing k8s secrets

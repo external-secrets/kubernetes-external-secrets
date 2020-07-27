@@ -7,6 +7,8 @@ const merge = require('lodash.merge')
 
 const localstack = process.env.LOCALSTACK || 0
 
+const intermediateRole = process.env.AWS_INTERMEDIATE_ROLE_ARN || 0
+
 let secretsManagerConfig = {}
 let systemManagerConfig = {}
 let stsConfig = {
@@ -29,6 +31,13 @@ if (localstack) {
   }
 }
 
+const intermediateCredentials = intermediateRole ? new AWS.ChainableTemporaryCredentials({
+  params: {
+    RoleArn: intermediateRole
+  },
+  stsConfig
+}) : null
+
 module.exports = {
   secretsManagerFactory: (opts = {}) => {
     if (localstack) {
@@ -43,15 +52,10 @@ module.exports = {
     return new AWS.SSM(opts)
   },
   assumeRole: (assumeRoleOpts) => {
-    const sts = new AWS.STS(stsConfig)
-
-    return new Promise((resolve, reject) => {
-      sts.assumeRole(assumeRoleOpts, (err, res) => {
-        if (err) {
-          return reject(err)
-        }
-        resolve(res)
-      })
+    return new AWS.ChainableTemporaryCredentials({
+      params: assumeRoleOpts,
+      masterCredentials: intermediateCredentials,
+      stsConfig
     })
   }
 }
