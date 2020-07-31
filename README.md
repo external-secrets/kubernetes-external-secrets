@@ -393,7 +393,6 @@ spec:
   data:
     - key: hello-service/credentials
       name: password
-      property: value
 ```
 
 Due to the way Azure handles binary files, you need to explicitly let the ExternalSecret know that the secret is binary.
