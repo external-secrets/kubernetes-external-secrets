@@ -217,7 +217,6 @@ secretDescriptor:
       name: .dockerconfigjson
 ```
 
-
 ## Enforcing naming conventions for backend keys
 
 by default an `ExternalSecret` may access arbitrary keys from the backend e.g.
