@@ -199,6 +199,24 @@ data:
   password: MTIzNA==
 ```
 
+### Create secrets of other types than opaque
+
+You can override `ExternalSecret` type using `template`, for example:
+
+```yaml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-docker
+secretDescriptor:
+  backendType: systemManager
+  template:
+    type: kubernetes.io/dockerconfigjson
+  data:
+    - key: /hello-service/hello-docker
+      name: .dockerconfigjson
+```
+
 ## Enforcing naming conventions for backend keys
 
 by default an `ExternalSecret` may access arbitrary keys from the backend e.g.
