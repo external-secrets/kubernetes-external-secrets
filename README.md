@@ -208,7 +208,7 @@ apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
   name: hello-docker
-secretDescriptor:
+spec:
   backendType: systemManager
   template:
     type: kubernetes.io/dockerconfigjson
