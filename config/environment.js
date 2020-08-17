@@ -20,6 +20,8 @@ const vaultEndpoint = process.env.VAULT_ADDR || 'http://127.0.0.1:8200'
 // Grab the vault namespace from the environment
 const vaultNamespace = process.env.VAULT_NAMESPACE || null
 const vaultTokenRenewThreshold = process.env.VAULT_TOKEN_RENEW_THRESHOLD || null
+const defaultVaultMountPoint = process.env.DEFAULT_VAULT_MOUNT_POINT || null
+const defaultVaultRole = process.env.DEFAULT_VAULT_ROLE || null
 
 const pollerIntervalMilliseconds = process.env.POLLER_INTERVAL_MILLISECONDS
   ? Number(process.env.POLLER_INTERVAL_MILLISECONDS) : 10000
@@ -42,6 +44,8 @@ module.exports = {
   vaultEndpoint,
   vaultNamespace,
   vaultTokenRenewThreshold,
+  defaultVaultMountPoint,
+  defaultVaultRole,
   environment,
   pollerIntervalMilliseconds,
   metricsPort,
