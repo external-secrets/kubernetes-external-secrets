@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [5.2.0](https://github.com/godaddy/kubernetes-external-secrets/compare/4.2.0...5.2.0) (2020-08-18)
+
+
+### Features
+
+* **logging:** add config to allow switching level format to human-readable log levels ([#429](https://github.com/godaddy/kubernetes-external-secrets/issues/429)) ([4602ad0](https://github.com/godaddy/kubernetes-external-secrets/commit/4602ad0616b9e5e0ec3e90ea4de8383d9482f4d8))
+* **secretsManager:** add support for versionId in AWS Secrets Manager ([#436](https://github.com/godaddy/kubernetes-external-secrets/issues/436)) ([95827bc](https://github.com/godaddy/kubernetes-external-secrets/commit/95827bcbeeb6ae87bee274022fac80c6c4754a79))
+* added the option to enforce namespace annotations ([#448](https://github.com/godaddy/kubernetes-external-secrets/issues/448)) ([1517333](https://github.com/godaddy/kubernetes-external-secrets/commit/1517333314359d5754864956bd49be83b9070120))
+
+
+### Bug Fixes
+
+* **config:** extract LOG_MESSAGE_KEY properly ([#456](https://github.com/godaddy/kubernetes-external-secrets/issues/456)) ([a50c219](https://github.com/godaddy/kubernetes-external-secrets/commit/a50c219c9f7c5f1455bb4c0808dd651b2e519fd5))
+* **pino:** messageKey option as root constructor property ([#455](https://github.com/godaddy/kubernetes-external-secrets/issues/455)) ([22208b0](https://github.com/godaddy/kubernetes-external-secrets/commit/22208b05023fa90eb7a8dd944e444358edb69a14))
+* reverts assumeRole to use pod role instead of web identity ([#453](https://github.com/godaddy/kubernetes-external-secrets/issues/453)) ([fa747dc](https://github.com/godaddy/kubernetes-external-secrets/commit/fa747dcbcd09136793b9045cb4331efe28f8e163))
+* upgrade the Azure Identity SDK and Azure KeyVault secret SDK to support AKS pod identity for authorization ([#447](https://github.com/godaddy/kubernetes-external-secrets/issues/447)) ([020c10b](https://github.com/godaddy/kubernetes-external-secrets/commit/020c10b75f2fd749bc2f010ff8090f958a081854))
+* **vault:** token ttl conditional renew ([#457](https://github.com/godaddy/kubernetes-external-secrets/issues/457)) ([a52987b](https://github.com/godaddy/kubernetes-external-secrets/commit/a52987b7b4951dc7e6f50f92a8bd8a45aa6f8ef1))
+
 ## [5.1.0](https://github.com/godaddy/kubernetes-external-secrets/compare/5.0.0...5.1.0) (2020-07-27)
 
 
