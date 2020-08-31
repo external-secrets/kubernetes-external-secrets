@@ -53,6 +53,50 @@ describe('ssm', async () => {
     expect(secret.body.data.name).to.equal('Zm9v')
   })
 
+  it('should pull existing secret from ssm in a different region', async () => {
+    const ssmEU = awsConfig.systemManagerFactory({
+      region: 'eu-west-1'
+    })
+    const putParameter = util.promisify(ssmEU.putParameter).bind(ssmEU)
+
+    let result = await putParameter({
+      Name: `/e2e/${uuid}/x-region`,
+      Type: 'String',
+      Value: 'foo'
+    }).catch(err => {
+      expect(err).to.equal(null)
+    })
+
+    result = await kubeClient
+      .apis[customResourceManifest.spec.group]
+      .v1.namespaces('default')[customResourceManifest.spec.names.plural]
+      .post({
+        body: {
+          apiVersion: 'kubernetes-client.io/v1',
+          kind: 'ExternalSecret',
+          metadata: {
+            name: `e2e-ssm-xregion-${uuid}`
+          },
+          spec: {
+            backendType: 'systemManager',
+            region: 'eu-west-1',
+            data: [
+              {
+                key: `/e2e/${uuid}/x-region`,
+                name: 'name'
+              }
+            ]
+          }
+        }
+      })
+
+    expect(result).to.not.equal(undefined)
+    expect(result.statusCode).to.equal(201)
+
+    const secret = await waitForSecret('default', `e2e-ssm-xregion-${uuid}`)
+    expect(secret.body.data.name).to.equal('Zm9v')
+  })
+
   describe('permitted annotation', async () => {
     beforeEach(async () => {
       await kubeClient.api.v1.namespaces('default').patch({

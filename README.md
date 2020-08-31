@@ -285,6 +285,8 @@ spec:
   backendType: secretsManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: us-east-1
   data:
     - key: hello-service/credentials
       name: password
@@ -315,6 +317,8 @@ spec:
   backendType: secretsManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: us-east-1
   dataFrom:
     - hello-service/credentials
 ```
@@ -330,6 +334,8 @@ spec:
   backendType: secretsManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: us-east-1
   dataFrom:
     - hello-service/credentials
   data:

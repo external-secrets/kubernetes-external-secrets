@@ -124,6 +124,70 @@ describe('secretsmanager', async () => {
     expect(secret.body.type).to.equal('kubernetes.io/tls')
   })
 
+  it('should pull existing secret from secretsmanager in the correct region', async () => {
+    const smEU = awsConfig.secretsManagerFactory({
+      region: 'eu-west-1'
+    })
+    const createSecret = util.promisify(smEU.createSecret).bind(smEU)
+    const putSecretValue = util.promisify(smEU.putSecretValue).bind(smEU)
+
+    let result = await createSecret({
+      Name: `e2e/${uuid}/x-region-credentials`,
+      SecretString: '{"username":"foo","password":"bar"}'
+    }).catch(err => {
+      expect(err).to.equal(null)
+    })
+
+    result = await kubeClient
+      .apis[customResourceManifest.spec.group]
+      .v1.namespaces('default')[customResourceManifest.spec.names.plural]
+      .post({
+        body: {
+          apiVersion: 'kubernetes-client.io/v1',
+          kind: 'ExternalSecret',
+          metadata: {
+            name: `e2e-secretmanager-x-region-${uuid}`
+          },
+          spec: {
+            backendType: 'secretsManager',
+            region: 'eu-west-1',
+            data: [
+              {
+                key: `e2e/${uuid}/x-region-credentials`,
+                property: 'password',
+                name: 'password'
+              },
+              {
+                key: `e2e/${uuid}/x-region-credentials`,
+                property: 'username',
+                name: 'username'
+              }
+            ]
+          }
+        }
+      })
+
+    expect(result).to.not.equal(undefined)
+    expect(result.statusCode).to.equal(201)
+
+    let secret = await waitForSecret('default', `e2e-secretmanager-x-region-${uuid}`)
+    expect(secret).to.not.equal(undefined)
+    expect(secret.body.data.username).to.equal('Zm9v')
+    expect(secret.body.data.password).to.equal('YmFy')
+
+    // update the secret value
+    result = await putSecretValue({
+      SecretId: `e2e/${uuid}/x-region-credentials`,
+      SecretString: '{"username":"your mom","password":"1234"}'
+    }).catch(err => {
+      expect(err).to.equal(null)
+    })
+    await delay(2000)
+    secret = await waitForSecret('default', `e2e-secretmanager-x-region-${uuid}`)
+    expect(secret.body.data.username).to.equal('eW91ciBtb20=')
+    expect(secret.body.data.password).to.equal('MTIzNA==')
+  })
+
   describe('permitted annotation', async () => {
     beforeEach(async () => {
       await kubeClient.api.v1.namespaces('default').patch({
