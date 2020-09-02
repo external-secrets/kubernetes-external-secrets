@@ -54,18 +54,44 @@ This KEP proposes the CRD Spec and documents the use-cases, not the choice of te
 * Secret: credentials that act as a key to sensitive information
 
 ## Use-Cases
+* one global KES instance that manages ES in **all namespaces**, which gives access to **all backends**, with ACL
+* multiple global KES instances, each manages access to a single or multiple backends (e.g.: shard by stage or team...)
+* one KES per namespace (a user manages his/her own KES instance)
 
-The following use cases are taken from
+### User definitions
+* `operator :=` i manage one or multiple `KES` instances
+* `user :=` i only create `ES`, KES is managed by someone else
 
-1. AS a KES user i want to run multiple KES instances per cluster (e.g. one KES instance per DEV/PROD)
-2. AS a KES user i want to integrate **multiple backends** from a **single KES instance** (e.g. dev namespace has access only to dev secrets)
+### User Stories
+From that we can derive the following requirements or user-stories:
+1. AS a KES operator i want to run multiple KES instances per cluster (e.g. one KES instance per DEV/PROD)
+2. AS a KES operator or user i want to integrate **multiple backends** from a **single KES instance** (e.g. dev namespace has access only to dev secrets)
 3. AS a KES user i want to control the sink for the secrets (aka frontend: store secret as `kind=ConfigMap` or `kind=Secret`)
 4. AS a KES user i want to fetch **from multiple** Backends and store the secrets **in a single** Frontend
 5. AS a KES operator i want to limit the access to certain backends or subresources (e.g. having one central KES instance that handles all ES - similar to `iam.amazonaws.com/permitted` annotation per namespace)
 
+### Backends
+
+These backends are relevant:
+* AWS Secure Systems Manager Parameter Store
+* AWS Secrets Manager
+* Hashicorp Vault
+* Azure Key Vault
+* Alibaba Cloud KMS Secret Manager
+* Google Cloud Platform Secret Manager
+* noop (see #476)
+
+### Frontends
+
+* Kind=Secret
+* Kind=ConfigMap
+* *potentially* we could sync backend to backend
+
 ## Proposal
 
 ### API
+
+### External Secret
 
 The `ExternalSecret` CustomResourceDefinition is **namespaced**. It defines the following:
 1. source for the secret (backend)
@@ -158,6 +184,58 @@ status:
 This API makes the options more explicit rather than having annotations.
 
 
-## Alternatives
+### External Secret Backend
 
-###
+The Backend configuration in an `ExternalSecret` may contain a lot of redundancy, this can be factored out into its own CRD.
+These backends are defined in a particular namespace using `SecretBackend` **or** globally with `GlobalSecretBackend`.
+
+```yaml
+apiVerson: kes.io/v1alpha1
+kind: SecretBackend # or GlobalSecretBackend
+metadata:
+  name: vault
+  namespace: example-ns # TODO: namespaced?
+spec:
+  vault:
+    server: "https://vault.example.com"
+    path: secret/data
+    auth:
+      kubernetes:
+        path: kubernetes
+        role: example-role
+        secretRef:
+          name: vault-secret
+```
+
+Example Secret that uses the reference to a backend
+```yaml
+apiVersion: kes.io/v1alpha1
+kind: ExternalSecret
+metadata:
+  name: foo
+spec:
+  externalSecretClassName: "example"
+  backend:
+    type: BackendRef # or GlobalBackendRef
+    backendRef:
+      name: vault # this must exist in the same namespace
+  frontend:
+    secret:
+      name: my-secret
+      template:
+        type: kubernetes.io/TLS
+  data:
+  - key: /corp.org/dev/certs/ingress
+    property: pubcert
+    name: tls.crt
+  - key: /corp.org/dev/certs/ingress
+    property: privkey
+    name: tls.key
+```
+
+Workflow in a KES instance:
+1. A user creates a CRD with a certain `spec.externalSecretClassName`
+2. A controller picks up the `ExternalSecret` if it matches the `className`
+3. a) It fetches the `SecretBackend` or `GlobalSecretBackend` defined in `spec.backend.backendRef` and applies it. This does also apply to `spec.data[].backend`
+
+## Alternatives
