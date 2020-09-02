@@ -195,7 +195,7 @@ apiVerson: kes.io/v1alpha1
 kind: SecretBackend # or GlobalSecretBackend
 metadata:
   name: vault
-  namespace: example-ns # TODO: namespaced?
+  namespace: example-ns
 spec:
   vault:
     server: "https://vault.example.com"
