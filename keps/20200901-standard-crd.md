@@ -79,6 +79,7 @@ These backends are relevant:
 * Azure Key Vault
 * Alibaba Cloud KMS Secret Manager
 * Google Cloud Platform Secret Manager
+* Kubernetes (see #422)
 * noop (see #476)
 
 ### Frontends
