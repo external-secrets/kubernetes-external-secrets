@@ -113,6 +113,9 @@ spec:
   # and filters ES based on this property
   externalSecretClassName: "dev"
 
+  # the amount of time before the values will be read again from the backen
+  refreshInterval: "1h"
+
   # This is the "simple" version to specify a single backend which will be used by all keys
   # we can have multiple backends per ES (they can be declared per key)
   # Each backend does need a configuration (e.g. AWS IAM Roles, AWS Region, GCP project-id, )
