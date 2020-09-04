@@ -25,10 +25,11 @@ const {
   pollingDisabled,
   rolePermittedAnnotation,
   namingPermittedAnnotation,
-  enforceNamespaceAnnotation
+  enforceNamespaceAnnotation,
+  kubernetesNamespaceOnly
 } = require('../config')
 
-async function main () {
+async function main() {
   logger.info('loading kube specs')
   await kubeClient.loadSpec()
   logger.info('successfully loaded kube specs')
@@ -59,7 +60,8 @@ async function main () {
   const daemon = new Daemon({
     externalSecretEvents,
     logger,
-    pollerFactory
+    pollerFactory,
+    kubernetesNamespaceOnly
   })
 
   const metricsServer = new MetricsServer({
