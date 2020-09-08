@@ -106,6 +106,13 @@ metadata: {...}
 
 spec:
 
+  # optional.
+  # used to select the correct KES instance (think: ingress.ingressClassName)
+  # There is no need for a indirection (e.g. having a extra resource like kind=IngressClass)
+  # the KES controller is instantiated with a specific class name
+  # and filters ES based on this property
+  className: "dev"
+
   # the amount of time before the values will be read again from the store
   refreshInterval: "1h"
 
@@ -187,12 +194,6 @@ metadata:
   name: vault
   namespace: example-ns
 spec:
-  # optional.
-  # used to select the correct KES instance (think: ingress.ingressClassName)
-  # There is no need for a indirection (e.g. having a extra resource like kind=IngressClass)
-  # the KES controller is instantiated with a specific class name
-  # and filters ES based on this property
-  externalSecretClassName: "dev"
 
   store:
     # store implementation
@@ -214,7 +215,6 @@ kind: ExternalSecret
 metadata:
   name: foo
 spec:
-  externalSecretClassName: "example"
   storeRef:
     kind: SecretStore # ClusterSecretStore
     name: my-store
