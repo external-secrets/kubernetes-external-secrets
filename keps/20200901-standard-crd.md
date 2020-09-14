@@ -100,7 +100,7 @@ The `ExternalSecret` CustomResourceDefinition is **namespaced**. It defines the 
 3. and a mapping to translate the keys
 
 ```yaml
-apiVersion: kes.io/v1alpha1
+apiVersion: external-secrets.k8s.io/v1alpha1
 kind: ExternalSecret
 metadata: {...}
 
@@ -188,7 +188,7 @@ The store configuration in an `ExternalSecret` may contain a lot of redundancy, 
 These stores are defined in a particular namespace using `SecretStore` **or** globally with `GlobalSecretStore`.
 
 ```yaml
-apiVerson: kes.io/v1alpha1
+apiVerson: external-secrets.k8s.io/v1alpha1
 kind: SecretStore # or ClusterSecretStore
 metadata:
   name: vault
@@ -210,7 +210,7 @@ spec:
 
 Example Secret that uses the reference to a store
 ```yaml
-apiVersion: kes.io/v1alpha1
+apiVersion: external-secrets.k8s.io/v1alpha1
 kind: ExternalSecret
 metadata:
   name: foo
