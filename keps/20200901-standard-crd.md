@@ -35,6 +35,15 @@ As a starting point i would like to define a **common denominator** for a Custom
 
 Once the CRD API is defined we can move on with more delicate discussions about technology, organization and processes.
 
+List of Projects known so far or related:
+* https://github.com/godaddy/kubernetes-external-secrets
+* https://github.com/itscontained/secret-manager
+* https://github.com/ContainerSolutions/externalsecret-operator
+* https://github.com/mumoshu/aws-secret-operator
+* https://github.com/cmattoon/aws-ssm
+* https://github.com/tuenti/secrets-manager
+* https://github.com/kubernetes-sigs/k8s-gsm-tools
+
 ### Goals
 
 - Define a alpha CRD
@@ -44,13 +53,15 @@ Once the CRD API is defined we can move on with more delicate discussions about 
 
 This KEP proposes the CRD Spec and documents the use-cases, not the choice of technology or migration path towards implementing the CRD.
 
+We do not want to sync secrets into a `ConfigMap`.
+
 ## Terminology
 
 * Kubernetes External Secrets `KES`: A Application that runs a control loop which syncs secrets
 * KES `instance`: A single entity that runs a control loop.
 * ExternalSecret `ES`: A CustomResource that declares which secrets should be synced
 * Store: Is a **source** for secrets. The Store is external to KES. It can be a hosted service like Alibabacloud SecretsManager, AWS SystemsManager, Azure KeyVault...
-* Frontend: A **sink** for the synced secrets. Usually a `ConfigMap` or `Secret`
+* Frontend: A **sink** for the synced secrets. Usually a `Secret`
 * Secret: credentials that act as a key to sensitive information
 
 ## Use-Cases
@@ -66,9 +77,10 @@ This KEP proposes the CRD Spec and documents the use-cases, not the choice of te
 From that we can derive the following requirements or user-stories:
 1. AS a KES operator i want to run multiple KES instances per cluster (e.g. one KES instance per DEV/PROD)
 2. AS a KES operator or user i want to integrate **multiple stores** from a **single KES instance** (e.g. dev namespace has access only to dev secrets)
-3. AS a KES user i want to control the sink for the secrets (aka frontend: store secret as `kind=ConfigMap` or `kind=Secret`)
+3. AS a KES user i want to control the sink for the secrets (aka frontend: store secret as `kind=Secret`)
 4. AS a KES user i want to fetch **from multiple** stores and store the secrets **in a single** Frontend
 5. AS a KES operator i want to limit the access to certain stores or subresources (e.g. having one central KES instance that handles all ES - similar to `iam.amazonaws.com/permitted` annotation per namespace)
+4. AS a KES user i want to provide an application with a configuration that contains a secret
 
 ### Stores
 
@@ -85,7 +97,6 @@ These stores are relevant:
 ### Frontends
 
 * Kind=Secret
-* Kind=ConfigMap
 * *potentially* we could sync store to store
 
 ## Proposal
@@ -126,51 +137,43 @@ spec:
       name: my-secret
       template:
         type: kubernetes.io/dockerconfigjson # or TLS...
+        # use inline templates
+        data:
+          config.yml: |
+            endpoints:
+            - https://{{ .data.user }}:{{ .data.password }}@api.exmaple.com
         metadata:
           annotations: {}
           labels: {}
-    # of course only one frontend should be defined
-    configMap:
-      # do we need a api version here? who handles upgrades?
-      apiVersion: v1 #
-      name: my-configmap
-      template:
-        metadata:
-          labels:
-            app: foo
 
+      # Uses an existing template from configmap
+      # secret is fetched, merged and templated within the referenced configMap data
+      # It does not update the configmap, it creates a secret with: data["alertmanager.yml"] = ...result...
+      templateFrom:
+      - configMap:
+          name: alertmanager
+          items:
+          - key: alertmanager.yaml
+
+
+  # data contains key/value pairs which correspond to the keys in the resulting secret
   data:
 
     # EXAMPLE 1: simple mapping
     # one key from a store may hold multiple values
     # we need a way to map the values to the frontend
     # it is the responsibility of the store implementation to know how to extract a value
-  - key: /corp.org/dev/certs/ingress
-    property: pubcert
-    name: tls.crt
-  - key: /corp.org/dev/certs/ingress
-    property: privkey
-    name: tls.key
+    tls.crt:
+      key: /corp.org/dev/certs/ingress
+      property: pubcert
+    tls.key:
+      key: /corp.org/dev/certs/ingress
+      property: privkey
 
-  # EXAMPLE 2: multiple stores per ES
-  # we also need a way to fetch secrets from multiple stores
-  # thus, we need a way to define a store per data key
-  - key: /rds/database-secret
-    name: database
-    storeRef:
-      name: foo
-  - key: /users/my-db-user
-    name: username
-    storeRef:
-      name: bar
-
-  # used to fetch all properties from a secret
-  # properties are merged in specified order
+  # used to fetch all properties from a secret.
+  # if multiple dataFrom are specified, secrets are merged in the specified order
   dataFrom:
   - key: /user/all-creds
-    # optional: reference store
-    storeRef:
-      name: fuu
 
 # status holds the timestamp and status of last last sync
 status:
@@ -224,12 +227,12 @@ spec:
       template:
         type: kubernetes.io/TLS
   data:
-  - key: /corp.org/dev/certs/ingress
-    property: pubcert
-    name: tls.crt
-  - key: /corp.org/dev/certs/ingress
-    property: privkey
-    name: tls.key
+    tls.crt:
+      key: /corp.org/dev/certs/ingress
+      property: pubcert
+    tls.key:
+      key: /corp.org/dev/certs/ingress
+      property: privkey
 ```
 
 Workflow in a KES instance:
