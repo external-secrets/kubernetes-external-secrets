@@ -120,24 +120,32 @@ spec:
   # the amount of time before the values will be read again from the store
   refreshInterval: "1h"
 
-  # there can only be one frontend per ES
-  # this is the "thing" that is created by KES.
-  # conceptually speaking a frontend is just a thing that can hold k/v pairs
-  frontend:
-    secret:
-      # do we need a api version here? who handles upgrades?
-      apiVersion: v1
-      name: my-secret
-      template:
-        type: kubernetes.io/dockerconfigjson # or TLS...
-        # use inline templates
-        data:
-          config.yml: |
-            endpoints:
-            - https://{{ .data.user }}:{{ .data.password }}@api.exmaple.com
-        metadata:
-          annotations: {}
-          labels: {}
+  # there can only be one target per ES
+  target:
+    # The secret name of the resource
+    # defaults to .metadata.name of the ExternalSecret. immutable.
+    name: my-secret
+
+    # Enum with values: 'Owner', 'Merge', or 'None'
+    # Default value of 'Owner'
+    # Owner creates the secret and sets .metadata.ownerReferences of the resource
+    # Merge does not create the secret, but merges in the data fields to the secret
+    # None does not create a secret (future use with injector)
+    creationPolicy: 'Merge'
+
+    # specify a blueprint for the resulting Kind=Secret
+    template:
+      type: kubernetes.io/dockerconfigjson # or TLS...
+
+      metadata:
+        annotations: {}
+        labels: {}
+
+      # use inline templates to construct your desired config file that contains your secret
+      data:
+        config.yml: |
+          endpoints:
+          - https://{{ .data.user }}:{{ .data.password }}@api.exmaple.com
 
       # Uses an existing template from configmap
       # secret is fetched, merged and templated within the referenced configMap data
@@ -147,7 +155,6 @@ spec:
           name: alertmanager
           items:
           - key: alertmanager.yaml
-
 
   # data contains key/value pairs which correspond to the keys in the resulting secret
   data:
@@ -238,3 +245,10 @@ Workflow in a KES instance:
 1. A user creates a Store with a certain `spec.controller`
 2. A controller picks up the `ExternalSecret` if it matches the `controller` field
 3. The controller fetches the secret from the provider and stores it as kind=Secret in the same namespace as ES
+
+
+## Backlog
+
+We have a bunch of features which are not relevant for the MVP implementation. We keep the features here in this backlog. Order is not specific:
+
+1. Secret injection with a mutating Webhook [#81](https://github.com/godaddy/kubernetes-external-secrets/issues/81)
