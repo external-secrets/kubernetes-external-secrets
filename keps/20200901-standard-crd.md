@@ -117,13 +117,6 @@ metadata: {...}
 
 spec:
 
-  # optional.
-  # used to select the correct KES instance (think: ingress.ingressClassName)
-  # There is no need for a indirection (e.g. having a extra resource like kind=IngressClass)
-  # the KES controller is instantiated with a specific class name
-  # and filters ES based on this property
-  className: "dev"
-
   # the amount of time before the values will be read again from the store
   refreshInterval: "1h"
 
@@ -198,6 +191,12 @@ metadata:
   namespace: example-ns
 spec:
 
+  # optional.
+  # used to select the correct KES controller (think: ingress.ingressClassName)
+  # The KES controller is instantiated with a specific controller name
+  # and filters ES based on this property
+  controller: "dev"
+
   store:
     # store implementation
     vault:
@@ -236,8 +235,6 @@ spec:
 ```
 
 Workflow in a KES instance:
-1. A user creates a CRD with a certain `spec.externalSecretClassName`
-2. A controller picks up the `ExternalSecret` if it matches the `className`
-3. a) It fetches the `SecretStore` or `GlobalSecretStore` defined in `spec.storeRef` and applies it. This does also apply to `spec.data[].storeRef`
-
-## Alternatives
+1. A user creates a Store with a certain `spec.controller`
+2. A controller picks up the `ExternalSecret` if it matches the `controller` field
+3. The controller fetches the secret from the provider and stores it as kind=Secret in the same namespace as ES
