@@ -82,7 +82,13 @@ const vaultClient = vault(vaultOptions)
 // expires and with at least one remaining poll opportunty to retry renewal if it fails.
 const vaultTokenRenewThreshold = envConfig.vaultTokenRenewThreshold
   ? Number(envConfig.vaultTokenRenewThreshold) : 3 * envConfig.pollerIntervalMilliseconds / 1000
-const vaultBackend = new VaultBackend({ client: vaultClient, tokenRenewThreshold: vaultTokenRenewThreshold, logger })
+const vaultBackend = new VaultBackend({
+  client: vaultClient,
+  tokenRenewThreshold: vaultTokenRenewThreshold,
+  logger: logger,
+  defaultVaultMountPoint: envConfig.defaultVaultMountPoint,
+  defaultVaultRole: envConfig.defaultVaultRole
+})
 const azureKeyVaultBackend = new AzureKeyVaultBackend({
   credential: azureConfig.azureKeyVault(),
   logger
