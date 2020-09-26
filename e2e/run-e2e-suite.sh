@@ -18,7 +18,7 @@ DISABLE_CUSTOM_RESOURCE_MANAGER=${1:-true}
 HELM_VERSION=${2:-V3}
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-KIND_LOGGING="--quiet"
+KIND_LOGGING=""
 if ! [ -z "$DEBUG" ]; then
     set -x
     KIND_LOGGING="--verbosity=4"
@@ -35,7 +35,7 @@ RED='\e[35m'
 NC='\e[0m'
 BGREEN='\e[32m'
 
-K8S_VERSION=${K8S_VERSION:-v1.15.11}
+K8S_VERSION=${K8S_VERSION:-v1.16.15}
 KIND_CLUSTER_NAME="external-secrets-dev"
 REGISTRY=external-secrets
 
