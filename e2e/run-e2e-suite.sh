@@ -47,12 +47,12 @@ echo -e "${BGREEN}[dev-env] creating Kubernetes cluster with kind${NC}"
 kind create cluster \
   ${KIND_LOGGING} \
   --name ${KIND_CLUSTER_NAME} \
-  --config ${DIR}/kind.yaml \
+  --config "${DIR}/kind.yaml" \
   --image "kindest/node:${K8S_VERSION}"
 
 echo -e "${BGREEN}building external-secrets images${NC}"
-docker build -t external-secrets:test -f $DIR/../Dockerfile $DIR/../
-docker build -t external-secrets-e2e:test -f $DIR/Dockerfile $DIR/../
+docker build -t external-secrets:test -f "$DIR/../Dockerfile" "$DIR/../"
+docker build -t external-secrets-e2e:test -f "$DIR/Dockerfile" "$DIR/../"
 kind load docker-image --name="${KIND_CLUSTER_NAME}" external-secrets-e2e:test
 kind load docker-image --name="${KIND_CLUSTER_NAME}" external-secrets:test
 
@@ -60,7 +60,7 @@ function cleanup {
   set +e
   kubectl delete pod e2e 2>/dev/null
   kubectl delete crd/externalsecrets.kubernetes-client.io 2>/dev/null
-  kubectl delete -f ${DIR}/localstack.deployment.yaml 2>/dev/null
+  kubectl delete -f "${DIR}/localstack.deployment.yaml" 2>/dev/null
   kind delete cluster \
     ${KIND_LOGGING} \
     --name ${KIND_CLUSTER_NAME}
