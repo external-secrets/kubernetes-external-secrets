@@ -10,6 +10,7 @@ require('make-promises-safe')
 const Prometheus = require('prom-client')
 const Daemon = require('../lib/daemon')
 const MetricsServer = require('../lib/metrics-server')
+const WebhookServer = require('../lib/webhook-server')
 const Metrics = require('../lib/metrics')
 const { getExternalSecretEvents } = require('../lib/external-secret')
 const PollerFactory = require('../lib/poller-factory')
@@ -21,11 +22,13 @@ const {
   customResourceManifest,
   logger,
   metricsPort,
+  webhookPort,
   pollerIntervalMilliseconds,
   pollingDisabled,
   rolePermittedAnnotation,
   namingPermittedAnnotation,
-  enforceNamespaceAnnotation
+  enforceNamespaceAnnotation,
+  webhookEnabled
 } = require('../config')
 
 async function main () {
@@ -71,6 +74,18 @@ async function main () {
   logger.info('starting app')
   daemon.start()
   metricsServer.start()
+
+  if (webhookEnabled) {
+    const webhookServer = new WebhookServer({
+      port: webhookPort,
+      logger,
+      metrics,
+      daemon
+    })
+
+    webhookServer.start()
+  }
+
   logger.info('successfully started app')
 }
 

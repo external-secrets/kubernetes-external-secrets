@@ -37,8 +37,11 @@ const namingPermittedAnnotation = process.env.NAMING_PERMITTED_ANNOTATION || 'ex
 const enforceNamespaceAnnotation = 'ENFORCE_NAMESPACE_ANNOTATIONS' in process.env || false
 
 const metricsPort = process.env.METRICS_PORT || 3001
+const webhookPort = process.env.WEBHOOK_PORT || 3002
 
 const customResourceManagerDisabled = 'DISABLE_CUSTOM_RESOURCE_MANAGER' in process.env
+
+const webhookEnabled = 'WEBHOOK_ENABLED' in process.env
 
 module.exports = {
   vaultEndpoint,
@@ -49,6 +52,7 @@ module.exports = {
   environment,
   pollerIntervalMilliseconds,
   metricsPort,
+  webhookPort,
   rolePermittedAnnotation,
   namingPermittedAnnotation,
   enforceNamespaceAnnotation,
@@ -56,5 +60,6 @@ module.exports = {
   logLevel,
   customResourceManagerDisabled,
   useHumanReadableLogLevels,
-  logMessageKey
+  logMessageKey,
+  webhookEnabled
 }

@@ -609,11 +609,52 @@ The secrets will persist even if the helm installation is removed, although they
 
 kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:
 
-| Metric                                    | Description                                                                     | Example                                                                       |
-| ----------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `sync_calls`                              | This metric counts the number of sync calls by backend, secret name and status  | `sync_calls{name="foo",namespace="example",backend="foo",status="success"} 1` |
-| `last_state`                              | A value of -1 or 1 where -1 means the last sync_call was an error and 1 means the last sync_call was a success  | `last_state{name="foo",namespace="example",backend="foo"} 1` |
+| Metric                                                    | Description                                                                                                     | Example                                                                                                  |
+| --------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------- |
+| `sync_calls`                                              | This metric counts the number of sync calls by backend, secret name and status                                  | `sync_calls{name="foo",namespace="example",backend="foo",status="success"} 1`                            |
+| `last_state`                                              | A value of -1 or 1 where -1 means the last sync_call was an error and 1 means the last sync_call was a success  | `last_state{name="foo",namespace="example",backend="foo"} 1`                                             |
+| `kubernetes_external_secrets_webhook_sync_requests_total` | Counts request to the webhook endpoint /sync. name and namespace are only set if the call was successfull       | `kubernetes_external_secrets_webhook_sync_requests_total{name="foo",namespace="example",status="200"} 1` |
 
+
+## Webhook
+
+You can enable a webhook endpoint to trigger syncs manually. You will need the following environment variables:
+
+```
+WEBHOOK_ENABLED="true"
+WEBHOOK_PORT=... // defaults to 3002
+```
+
+The webhook server exposes a single route `POST /sync` which can trigger a sync for one of your Secrets. You need to specify the secret in the JSON payload:
+
+```json
+{
+  "name": "<NAME_OF_THE_EXTERNAL_SECRET>",
+  "namespace": "<NAMESPACE_OF_THE_EXTERNAL_SECRET>"
+}
+```
+
+### Secret versioning
+
+When triggering a sync through the webhook you can optionaly specify a versionSuffix parameter. If set instead of overwriting the existing Secret a new one with name `${EXTERNAL_SECRET_NAME}-${VERSION_SUFFIX}` will get created.
+
+Example:
+
+Assuming you created an ExternalSecret `test-secret` in namespace `test-namespace` you can call the webhook with payload
+
+```json
+{
+  "name": "test-secret",
+  "namespace": "test-namespace",
+  "versionSuffix": "v23"
+}
+```
+
+and it will create a Secret `test-secret-v23` in namespace `test-namespace`.
+
+Please notice that there is no build-in way to clean up created secrets yet.
+If you trigger the webhook regularly you will probably need some job that cleans up Secrets that are no longer needed.
+Support for this feature might get added later.
 
 ## Development
 
