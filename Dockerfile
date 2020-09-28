@@ -1,4 +1,4 @@
-FROM node:12.18.2-alpine
+FROM node:12.18.4-alpine
 
 ENV NODE_ENV production
 ENV NPM_CONFIG_LOGLEVEL info
