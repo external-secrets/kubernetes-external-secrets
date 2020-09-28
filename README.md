@@ -227,11 +227,11 @@ by default an `ExternalSecret` may access arbitrary keys from the backend e.g.
       name: password
 ```
 
-An enforced naming convention helps to keep the structure tidy and limits the access according 
-to your naming schema. 
+An enforced naming convention helps to keep the structure tidy and limits the access according
+to your naming schema.
 
-Configure the schema as regular expression in the namespace using an annotation. 
-This allows `ExternalSecrets` in `core-namespace` just to access secrets that start with 
+Configure the schema as regular expression in the namespace using an annotation.
+This allows `ExternalSecrets` in `core-namespace` just to access secrets that start with
 `/dev/cluster1/core-namespace/`:
 
 ```yaml
@@ -342,6 +342,13 @@ spec:
 
 kubernetes-external-secrets supports fetching secrets from [Hashicorp Vault](https://www.vaultproject.io/), using the [Kubernetes authentication method](https://www.vaultproject.io/docs/auth/kubernetes).
 
+```yml
+env:
+  VAULT_ADDR: https://vault.domain.tld
+  DEFAULT_VAULT_MOUNT_POINT: "k8s-auth" # optional, default value to be used if not specified in the ExternalSecret
+  DEFAULT_VAULT_ROLE: "k8s-auth-role" # optional, default value to be used if not specified in the ExternalSecret
+```
+
 You will need to set the `VAULT_ADDR` environment variables so that kubernetes-external-secrets knows which endpoint to connect to, then create `ExternalSecret` definitions as follows:
 
 ```yml
@@ -352,10 +359,12 @@ metadata:
 spec:
   backendType: vault
   # Your authentication mount point, e.g. "kubernetes"
+  # Overrides cluster DEFAULT_VAULT_MOUNT_POINT
   vaultMountPoint: my-kubernetes-vault-mount-point
   # The vault role that will be used to fetch the secrets
   # This role will need to be bound to kubernetes-external-secret's ServiceAccount; see Vault's documentation:
   # https://www.vaultproject.io/docs/auth/kubernetes.html
+  # Overrides cluster DEFAULT_VAULT_ROLE
   vaultRole: my-vault-role
   data:
   - name: password
@@ -474,7 +483,7 @@ kubernetes-external-secrets supports fetching secrets from [GCP Secret Manager](
 
 The external secret will poll for changes to the secret according to the value set for POLLER_INTERVAL_MILLISECONDS in env.  Depending on the time interval this is set to you may incur additional charges as Google Secret Manager [charges](https://cloud.google.com/secret-manager/pricing) per a set number of API calls.
 
-A service account is required to grant the controller access to pull secrets. 
+A service account is required to grant the controller access to pull secrets.
 
 
 #### Add a secret
@@ -493,7 +502,7 @@ echo -n '{"value": "my-secret-value-with-update"}' |     gcloud secrets versions
 Instructions are here: [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable_workload_identity_on_a_new_cluster).  To enable workload identity on an existing cluster (which is not covered in that document), first enable it on the cluster like so:
 
     gcloud container clusters update $CLUSTER_NAME --workload-pool=$PROJECT_NAME.svc.id.goog
-    
+
 Next enable workload metadata config on the node pool in which the pod will run:
 
     gcloud beta container node-pools update $POOL --cluster $CLUSTER_NAME --workload-metadata-from-node=GKE_METADATA_SERVER
@@ -509,7 +518,7 @@ If enabling it only for a particular pool, make sure to add any relevant tolerat
         operator: "Equal"
         effect: "NoSchedule"
         value: "node-pool-taint"
-    
+
     affinity:
       nodeAffinity:
         requiredDuringSchedulingIgnoredDuringExecution:
@@ -519,11 +528,11 @@ If enabling it only for a particular pool, make sure to add any relevant tolerat
                   operator: In
                   values:
                     - node-pool
-    
+
 You can add an annotation which is needed for workload identity by passing it in via Helm:
 
     serviceAccount:
-      annotations: 
+      annotations:
         iam.gke.io/gcp-service-account: my-secrets-sa@$PROJECT.iam.gserviceaccount.com
 
 Create the policy binding:
@@ -559,10 +568,10 @@ Uncomment GOOGLE_APPLICATION_CREDENTIALS in the values file as well as the follo
        gcp-creds:
          secret: gcp-creds
          mountPath: /app/gcp-creds
-         
+
 This will mount the secret at /app/gcp-creds/gcp-creds.json and make it available via the GOOGLE_APPLICATION_CREDENTIALS environment variable.
 
-#### Usage 
+#### Usage
 Once you have kubernetes-external-secrets installed, you can create an external secret with YAML like the following:
 
 ```yml
@@ -585,11 +594,11 @@ The field "key" is the name of the secret in Google Secret Manager.  The field "
 To retrieve external secrets, you can use the following command:
 
     kubectl get externalsecrets -n $NAMESPACE
-    
+
 To retrieve the secrets themselves, you can use the regular:
 
     kubectl get secrets -n $NAMESPACE
-    
+
 To retrieve an individual secret's content, use the following where "mysecret" is the key to the secret content under the "data" field:
 
     kubectl get secret my-secret -o 'go-template={{index .data "mysecret"}}' | base64 -D
