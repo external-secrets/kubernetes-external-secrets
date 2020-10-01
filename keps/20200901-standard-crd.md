@@ -175,10 +175,21 @@ spec:
   dataFrom:
   - key: /user/all-creds
 
-# status holds the timestamp and status of last last sync
 status:
-  lastSync: 2020-09-01T18:19:17.263Z # ISO 8601 date string
-  status: success # or failure
+  # represents the current phase of secret sync:
+  # * Pending | ES created, controller did not yet sync the ES or other dependencies are missing (e.g. secret store or configmap template)
+  # * Syncing | ES is being actively synced according to spec
+  # * Failing | Secret can not be synced, this might require user intervention
+  # * Failed  | ES can not be synced right now and will not able to
+  # * Completed | ES was synced successfully (one-time use only)
+  phase: Syncing
+  conditions:
+  - type: InSync
+    status: "True" # False if last sync was not successful
+    reason: "SecretSynced"
+    message: "Secret was synced"
+    lastTransitionTime: "2019-08-12T12:33:02Z"
+    lastSyncTime: "2020-09-23T16:27:53Z"
 
 ```
 
@@ -215,6 +226,16 @@ spec:
           role: example-role
           secretRef:
             name: vault-secret
+status:
+  # * Pending: e.g. referenced secret containing credentials is missing
+  # * Running: all dependencies are met, sync
+  phase: Running
+  conditions:
+  - type: Ready
+    status: "False"
+    reason: "ErrorConfig"
+    message: "Unable to assume role arn:xxxx"
+    lastTransitionTime: "2019-08-12T12:33:02Z"
 ```
 
 Example Secret that uses the reference to a store
