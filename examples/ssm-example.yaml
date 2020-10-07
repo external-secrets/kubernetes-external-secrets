@@ -6,6 +6,8 @@ spec:
   backendType: systemManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: eu-west-1
   data:
     - key: /foo/name1
       name: variable-name
