@@ -118,6 +118,7 @@ metadata: {...}
 spec:
 
   # the amount of time before the values will be read again from the store
+  # may be set to zero to fetch and create it once
   refreshInterval: "1h"
 
   # there can only be one target per ES
@@ -193,8 +194,9 @@ status:
 
 ```
 
-This API makes the options more explicit rather than having annotations.
+#### Behavior
 
+The ExternalSecret control loop **ensures** that the target resource exists and stays up to date with the upstream provider. Because most upstream APIs are limited in throughput the control loop must implement some sort of jitter and retry/backoff mechanic.
 
 ### External Secret Store
 
