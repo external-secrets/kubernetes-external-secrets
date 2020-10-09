@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/5.2.0...6.0.0) (2020-10-09)
+
+
+### ⚠ BREAKING CHANGES
+
+* **azure:** Unwraps the value returned from Azure Key vault (migration: "property: value" -> remove property selector) (#460)
+
+### Features
+
+* **aws:** add region support to ssm and sm ([#475](https://github.com/godaddy/kubernetes-external-secrets/issues/475)) ([0b35441](https://github.com/godaddy/kubernetes-external-secrets/commit/0b354413cc8f68b604b0507cee12cf4ff2ffb463))
+* **aws:** add support for setting an intermediate iam role ([#454](https://github.com/godaddy/kubernetes-external-secrets/issues/454)) ([72920e4](https://github.com/godaddy/kubernetes-external-secrets/commit/72920e4d8b42b434199ad4ab5b500bed5ac464e1))
+* Cluster level default settings for Hashicorp Vault ([#472](https://github.com/godaddy/kubernetes-external-secrets/issues/472)) ([5215090](https://github.com/godaddy/kubernetes-external-secrets/commit/5215090625c07ff0be296a11dec02715e186b551))
+
+
+### Bug Fixes
+
+* **azure:** Unwraps the value returned from Azure Key vault (migration: "property: value" -> remove property selector) ([#460](https://github.com/godaddy/kubernetes-external-secrets/issues/460)) ([36d5bbb](https://github.com/godaddy/kubernetes-external-secrets/commit/36d5bbb2f2046ca6e9dd79863f145b7cacc9bfba))
+* **deps:** update dependency @google-cloud/secret-manager to v3 ([#345](https://github.com/godaddy/kubernetes-external-secrets/issues/345)) ([2bf42db](https://github.com/godaddy/kubernetes-external-secrets/commit/2bf42db6bdd04f04ed7c7d78db1c959eb1eb9d40))
+* **helm:** apply namespace to Deployment and Service ([#471](https://github.com/godaddy/kubernetes-external-secrets/issues/471)) ([ba38e3a](https://github.com/godaddy/kubernetes-external-secrets/commit/ba38e3a19d439495bcecab65842b033290876c5d))
+* **vault:** Cache Vault clients/tokens on a per-role&mountpoint basis. ([#488](https://github.com/godaddy/kubernetes-external-secrets/issues/488)) ([ab36718](https://github.com/godaddy/kubernetes-external-secrets/commit/ab36718cb1e0d66423da19abd09eae2808e94b9f))
+* **vault:** handle token renewal failures ([#497](https://github.com/godaddy/kubernetes-external-secrets/issues/497)) ([c3c27bc](https://github.com/godaddy/kubernetes-external-secrets/commit/c3c27bc427c7129e4e98b5b10e4c5dde146c422d))
+* e2e tests to work with kind 0.9.0 + bump k8s version used ([#498](https://github.com/godaddy/kubernetes-external-secrets/issues/498)) ([f815afd](https://github.com/godaddy/kubernetes-external-secrets/commit/f815afdf92403bce2a9b5dc2411e934275ec2efc))
+* provide a meaningful error message when an SSM parameter is missing ([#483](https://github.com/godaddy/kubernetes-external-secrets/issues/483)) ([99ce81e](https://github.com/godaddy/kubernetes-external-secrets/commit/99ce81eb72f37d7f0b08a3b31fdeb2174eac8e0b))
+
 ## [5.2.0](https://github.com/godaddy/kubernetes-external-secrets/compare/4.2.0...5.2.0) (2020-08-18)
 
 
