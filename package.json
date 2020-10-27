@@ -50,7 +50,7 @@
   "devDependencies": {
     "chai": "4.2.0",
     "dotenv": "8.2.0",
-    "eslint": "7.11.0",
+    "eslint": "7.12.1",
     "eslint-config-standard": "14.1.1",
     "eslint-plugin-import": "2.22.1",
     "eslint-plugin-node": "11.1.0",
