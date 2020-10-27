@@ -218,16 +218,12 @@ spec:
   controller: "dev"
 
   store:
-    # store implementation
-    vault:
+    type: vault
+    parameters: # provider specific k/v pairs
       server: "https://vault.example.com"
-      path: secret/data
-      auth:
-        kubernetes:
-          path: kubernetes
-          role: example-role
-          secretRef:
-            name: vault-secret
+      path: path/on/vault/store
+    auth: {} # provider specific k/v pairs
+
 status:
   # * Pending: e.g. referenced secret containing credentials is missing
   # * Running: all dependencies are met, sync
