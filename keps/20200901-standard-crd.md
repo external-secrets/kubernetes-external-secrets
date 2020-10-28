@@ -246,7 +246,7 @@ spec:
   storeRef:
     kind: SecretStore # ClusterSecretStore
     name: my-store
-  frontend:
+  target:
     secret:
       name: my-secret
       template:
