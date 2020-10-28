@@ -247,10 +247,9 @@ spec:
     kind: SecretStore # ClusterSecretStore
     name: my-store
   target:
-    secret:
-      name: my-secret
-      template:
-        type: kubernetes.io/TLS
+    name: my-secret
+    template:
+      type: kubernetes.io/TLS
   data:
     tls.crt:
       key: /corp.org/dev/certs/ingress
