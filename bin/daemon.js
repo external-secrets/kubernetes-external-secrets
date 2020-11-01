@@ -28,6 +28,12 @@ const {
   enforceNamespaceAnnotation
 } = require('../config')
 
+const k8s = require('@kubernetes/client-node')
+const kc = new k8s.KubeConfig()
+kc.loadFromDefault()
+
+const k8sCoApi = kc.makeApiClient(k8s.CustomObjectsApi)
+
 async function main () {
   logger.info('loading kube specs')
   await kubeClient.loadSpec()
@@ -35,7 +41,8 @@ async function main () {
   await customResourceManager.manageCrd({ customResourceManifest })
 
   const externalSecretEvents = getExternalSecretEvents({
-    kubeClient,
+    kubeConfig: kc,
+    k8sCoApi,
     customResourceManifest,
     logger
   })
