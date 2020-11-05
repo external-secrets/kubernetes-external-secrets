@@ -85,6 +85,8 @@ fullnameOverride: ""
 podAnnotations: {}
 podLabels: {}
 
+priorityClassName: ""
+
 dnsConfig: {}
 
 securityContext:
