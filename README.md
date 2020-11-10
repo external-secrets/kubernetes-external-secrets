@@ -614,10 +614,10 @@ The secrets will persist even if the helm installation is removed, although they
 
 kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:
 
-| Metric                                    | Description                                                                     | Example                                                                       |
-| ----------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `sync_calls`                              | This metric counts the number of sync calls by backend, secret name and status  | `sync_calls{name="foo",namespace="example",backend="foo",status="success"} 1` |
-| `last_state`                              | A value of -1 or 1 where -1 means the last sync_call was an error and 1 means the last sync_call was a success  | `last_state{name="foo",namespace="example",backend="foo"} 1` |
+| Metric                                             | Type    | Description                                                                     | Example                                                                       |
+| -------------------------------------------------- | ------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `kubernetes_external_secrets_sync_calls_count`     | Counter | Number of sync operations by backend, secret name and status                    | `kubernetes_external_secrets_sync_calls_count{name="foo",namespace="example",backend="foo",status="success"} 1` |
+| `kubernetes_external_secrets_last_sync_call_state` | Gauge   | State of last sync call of external secert, where -1 means the last sync_call was an error and 1 means the last sync_call was a success  | `kubernetes_external_secrets_last_sync_call_state{name="foo",namespace="example",backend="foo"} 1` |
 
 
 ## Development
