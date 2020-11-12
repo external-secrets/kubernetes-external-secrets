@@ -1,4 +1,5 @@
 [![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/)
+[![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/godaddy/kubernetes-external-secrets)](https://lgtm.com/projects/g/godaddy/kubernetes-external-secrets)
 
 # Kubernetes External Secrets
 
