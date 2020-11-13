@@ -217,9 +217,12 @@ spec:
       name: .dockerconfigjson
 ```
 
-## Enforcing naming conventions for backend keys
+## Scoping access
 
-by default an `ExternalSecret` may access arbitrary keys from the backend e.g.
+### Using Namespace annotation
+
+Enforcing naming conventions for backend keys could be done by using namespace annotations.
+By default an `ExternalSecret` may access arbitrary keys from the backend e.g.
 
 ```yml
   data:
@@ -242,6 +245,47 @@ metadata:
     # annotation key is configurable
     externalsecrets.kubernetes-client.io/permitted-key-name: "/dev/cluster1/core-namespace/.*"
 ```
+
+### Using ExternalSecret annotation
+
+ExternalSecret annotation allows scoping the access of kubernetes-external-secrets controller.
+This allows to deploy multi kubernetes-external-secrets instances at the same cluster
+and each instance can access a set of ExternalSecrets.
+
+To enable this option, set the env var in the controller side:
+```yaml
+env:
+  INSTANCE_ID: "dev-team-instance"
+```
+
+And in ExternalSecret side, use the annotation:
+```yaml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: foo
+  annotations:
+    # The annotation key is configurable using 'MANAGED_BY_ANNOTATION' env var.
+    externalsecrets.kubernetes-client.io/managed-by: "dev-team-instance"
+spec:
+[...]
+```
+
+Finally, in the second kubernetes-external-secrets deployment, it's recommended to disable CRD manager
+to avoid having multiple deployments fighting over the CRD.
+
+That's could be done in the controller side by setting the env var:
+```yaml
+env:
+  DISABLE_CUSTOM_RESOURCE_MANAGER: true
+```
+
+Or in Helm, by setting `customResourceManagerDisabled=true`.
+
+**Please note**
+
+This option provides only a logical separation and doesn't cover the security aspects.
+i.e it assumes the security side is managed by another component like Kubernetes Network policies or Open Policy Agent.
 
 ## Deprecations
 

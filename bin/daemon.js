@@ -25,7 +25,9 @@ const {
   pollingDisabled,
   rolePermittedAnnotation,
   namingPermittedAnnotation,
-  enforceNamespaceAnnotation
+  enforceNamespaceAnnotation,
+  instanceId,
+  managedByAnnotation
 } = require('../config')
 
 async function main () {
@@ -57,6 +59,8 @@ async function main () {
   })
 
   const daemon = new Daemon({
+    instanceId,
+    managedByAnnotation,
     externalSecretEvents,
     logger,
     pollerFactory

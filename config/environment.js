@@ -40,6 +40,11 @@ const metricsPort = process.env.METRICS_PORT || 3001
 
 const customResourceManagerDisabled = 'DISABLE_CUSTOM_RESOURCE_MANAGER' in process.env
 
+// Set kubernetes-external-secret instance ID and manged-by annotation,
+// that will be used to decide which instance manages which externalsecret.
+const instanceId = process.env.INSTANCE_ID || ''
+const managedByAnnotation = process.env.MANAGED_BY_ANNOTATION || 'externalsecrets.kubernetes-client.io/managed-by'
+
 module.exports = {
   vaultEndpoint,
   vaultNamespace,
@@ -56,5 +61,7 @@ module.exports = {
   logLevel,
   customResourceManagerDisabled,
   useHumanReadableLogLevels,
-  logMessageKey
+  logMessageKey,
+  instanceId,
+  managedByAnnotation
 }
