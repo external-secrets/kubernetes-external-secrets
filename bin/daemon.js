@@ -26,7 +26,8 @@ const {
   rolePermittedAnnotation,
   namingPermittedAnnotation,
   enforceNamespaceAnnotation,
-  watchTimeout
+  watchTimeout,
+  watchedNamespaces
 } = require('../config')
 
 async function main () {
@@ -37,6 +38,7 @@ async function main () {
 
   const externalSecretEvents = getExternalSecretEvents({
     kubeClient,
+    watchedNamespaces,
     customResourceManifest,
     logger,
     watchTimeout
