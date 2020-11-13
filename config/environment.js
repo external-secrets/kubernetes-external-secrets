@@ -40,6 +40,9 @@ const metricsPort = process.env.METRICS_PORT || 3001
 
 const customResourceManagerDisabled = 'DISABLE_CUSTOM_RESOURCE_MANAGER' in process.env
 
+// A comma-separated list of watched namespaces. If set, ExternalSecret in those namespaces will be created only.
+const watchedNamespaces = (process.env.WATCHED_NAMESPACES || '').split(',')
+
 module.exports = {
   vaultEndpoint,
   vaultNamespace,
@@ -56,5 +59,6 @@ module.exports = {
   logLevel,
   customResourceManagerDisabled,
   useHumanReadableLogLevels,
-  logMessageKey
+  logMessageKey,
+  watchedNamespaces
 }
