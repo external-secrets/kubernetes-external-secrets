@@ -39,7 +39,7 @@ The official [helm chart](charts/kubernetes-external-secrets) can be used to cre
 
 
 ```bash
-$ helm repo add external-secrets https://godaddy.github.io/kubernetes-external-secrets/
+$ helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
 $ helm install external-secrets/kubernetes-external-secrets
 ```
 
