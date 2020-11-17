@@ -1,4 +1,3 @@
-[![Join Slack](https://img.shields.io/badge/Join%20us%20on-Slack-e01563.svg)](https://godaddy-oss-slack.herokuapp.com/)
 [![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/godaddy/kubernetes-external-secrets)](https://lgtm.com/projects/g/godaddy/kubernetes-external-secrets)
 
 # Kubernetes External Secrets
@@ -9,6 +8,11 @@ management systems, like [AWS Secrets Manager](https://aws.amazon.com/secrets-ma
 Kubernetes. Read more about the design and motivation for Kubernetes
 External Secrets on the [GoDaddy Engineering
 Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
+
+The community and maintainers of this project and related Kubernetes
+secret management projects use
+[`#external-secrets`](https://kubernetes.slack.com/archives/C017BF84G2Y)
+channel on the Kubernetes slack for discussion and brainstorming.
 
 ## How it works
 
