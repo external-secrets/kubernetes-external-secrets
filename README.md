@@ -24,6 +24,11 @@ The project extends the Kubernetes API by adding a `ExternalSecrets` object usin
 An `ExternalSecret` declares how to fetch the secret data, while the controller converts all `ExternalSecrets` to `Secrets`.
 The conversion is completely transparent to `Pods` that can access `Secrets` normally.
 
+By default `Secrets` are not encrypted at rest and are open to attack, either via the etcd server or via backups of etcd data.
+To mitigate this risk, use an
+[external secret management system with a KMS plugin](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/)
+to encrypt `Secrets` stored in etcd.
+
 ## System architecture
 
 ![Architecture](architecture.png)
