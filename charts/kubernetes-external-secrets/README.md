@@ -1,14 +1,14 @@
 # 💂 Kubernetes External Secrets
 
-[Kubernetes External Secrets](https://github.com/godaddy/kubernetes-external-secrets) allows you to use external secret management systems (*e.g.*, [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)) to securely add secrets in Kubernetes. Read more about the design and motivation for Kubernetes External Secrets on the [GoDaddy Engineering Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
+[Kubernetes External Secrets](https://github.com/external-secrets/kubernetes-external-secrets) allows you to use external secret management systems (*e.g.*, [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)) to securely add secrets in Kubernetes. Read more about the design and motivation for Kubernetes External Secrets on the [GoDaddy Engineering Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
 
 ## TL;DR;
 
 Assumes you are using Helm V3:
 
 ```bash
-$ helm repo add external-secrets https://godaddy.github.io/kubernetes-external-secrets/
-$ helm install kubernetes-external-secrets external-secrets/kubernetes-external-secrets --skip-crds
+$ helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
+$ helm install external-secrets/kubernetes-external-secrets --skip-crds
 ```
 
 See below for [Helm V2 considerations](#helm-v2-considerations) when installing the chart.
@@ -130,7 +130,7 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 helm install my-release external-secrets/kubernetes-external-secrets -f values.yaml
 ```
 
-> **Tip**: You can use the default [values.yaml](https://github.com/godaddy/kubernetes-external-secrets/blob/master/charts/kubernetes-external-secrets/values.yaml)
+> **Tip**: You can use the default [values.yaml](https://github.com/external-secrets/kubernetes-external-secrets/blob/master/charts/kubernetes-external-secrets/values.yaml)
 
 ## Add a secret
 
@@ -180,4 +180,4 @@ data:
 
 ## Further Information
 
-For more in-depth documentation of usage, please see the [Kubernetes External Secrets repo](https://github.com/godaddy/kubernetes-external-secrets)
+For more in-depth documentation of usage, please see the [Kubernetes External Secrets repo](https://github.com/external-secrets/kubernetes-external-secrets)
