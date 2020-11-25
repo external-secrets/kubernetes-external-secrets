@@ -1,5 +1,9 @@
 'use strict'
 
+const { bootstrap: bootstrapGlobalAgent } = require('global-agent')
+// Setup global support for environment variable based proxy configuration.
+bootstrapGlobalAgent()
+
 /* eslint-disable no-process-env */
 const AWS = require('aws-sdk')
 const clonedeep = require('lodash.clonedeep')

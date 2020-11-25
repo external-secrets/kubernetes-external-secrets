@@ -632,6 +632,18 @@ kubernetes-external-secrets exposes the following metrics over a prometheus endp
 | `kubernetes_external_secrets_sync_calls_count`     | Counter | Number of sync operations by backend, secret name and status                    | `kubernetes_external_secrets_sync_calls_count{name="foo",namespace="example",backend="foo",status="success"} 1` |
 | `kubernetes_external_secrets_last_sync_call_state` | Gauge   | State of last sync call of external secert, where -1 means the last sync_call was an error and 1 means the last sync_call was a success  | `kubernetes_external_secrets_last_sync_call_state{name="foo",namespace="example",backend="foo"} 1` |
 
+## Proxy configuration
+
+kubernetes-external-secrets leverages the global-agent proxy. You can configure the proxy configuration by passing the following environment variables to the container:
+
+|Name|Description|Default|
+|---|---|---|
+|`GLOBAL_AGENT_ENVIRONMENT_VARIABLE_NAMESPACE`|Defines namespace of `HTTP_PROXY`, `HTTPS_PROXY` and `NO_PROXY` environment variables.|`GLOBAL_AGENT_`|
+|`GLOBAL_AGENT_FORCE_GLOBAL_AGENT`|Forces to use `global-agent` HTTP(S) agent even when request was explicitly constructed with another agent.|`true`|
+|`GLOBAL_AGENT_SOCKET_CONNECTION_TIMEOUT`|Destroys socket if connection is not established within the timeout.|`60000`|
+|`${NAMESPACE}_HTTP_PROXY`|Sets the initial proxy controller HTTP_PROXY value.|N/A|
+|`${NAMESPACE}_HTTPS_PROXY`|Sets the initial proxy controller HTTPS_PROXY value.|N/A|
+|`${NAMESPACE}_NO_PROXY`|Sets the initial proxy controller NO_PROXY value.|N/A|
 
 ## Development
 
