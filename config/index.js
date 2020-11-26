@@ -41,7 +41,8 @@ const logger = pino({
     level (label, number) {
       return { level: envConfig.useHumanReadableLogLevels ? label : number }
     }
-  }
+  },
+  nestedKey: 'payload'
 })
 
 const customResourceManager = new CustomResourceManager({
