@@ -1,6 +1,6 @@
 name: Tests
 
-on: 
+on:
   push:
     branches:
       - master
@@ -29,7 +29,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: azure/setup-helm@v1
         with:
-          version: v2.16.1
+          version: v2.17.0
         if: matrix.helmVersion == 'V2'
       - name: configure helm v2
         run: |
