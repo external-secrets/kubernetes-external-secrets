@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.1.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.0.0...6.1.0) (2020-12-22)
+
+
+### Features
+
+* add general support for isBinary for all backends ([#585](https://github.com/external-secrets/kubernetes-external-secrets/issues/585)) ([e138a28](https://github.com/external-secrets/kubernetes-external-secrets/commit/e138a28973aeadb9902195ca889147a2705f43e4))
+* restart watcher if no events seen for specified period (default 60 sec) ([#532](https://github.com/external-secrets/kubernetes-external-secrets/issues/532)) ([bb1ed9e](https://github.com/external-secrets/kubernetes-external-secrets/commit/bb1ed9eefde360d55f25cdd4767440f0f9f35cde))
+* **helm:** add the ability to set the priorityClassName ([#534](https://github.com/external-secrets/kubernetes-external-secrets/issues/534)) ([e719c87](https://github.com/external-secrets/kubernetes-external-secrets/commit/e719c8724f4496d51f962b689b40ee49a0cd928a))
+* **metrics:** add metrics names following Prometheus best practices, **deprecating** old metrics names! ([#540](https://github.com/external-secrets/kubernetes-external-secrets/issues/540)) ([5b5a00f](https://github.com/external-secrets/kubernetes-external-secrets/commit/5b5a00fdad1100abf057c2d944643469174d2048))
+
+
+### Bug Fixes
+
+* **values:** imagePullSecrets was wrongly indented under image ([#577](https://github.com/external-secrets/kubernetes-external-secrets/issues/577)) ([7861473](https://github.com/external-secrets/kubernetes-external-secrets/commit/78614739a7e8de9aab85ce5e063b5bde8f6c0a2b)), closes [#522](https://github.com/external-secrets/kubernetes-external-secrets/issues/522)
+* configure nestedKey in logger to avoid invalid json ([#568](https://github.com/external-secrets/kubernetes-external-secrets/issues/568)) ([a430320](https://github.com/external-secrets/kubernetes-external-secrets/commit/a430320e8b9857154b4eca888fa5775ba3e1cda5))
+* **deps:** bumping @grpc/grpc-js to 1.1.8 ([#550](https://github.com/external-secrets/kubernetes-external-secrets/issues/550)) ([4e88026](https://github.com/external-secrets/kubernetes-external-secrets/commit/4e88026fb21b73f2242226548abad80479d33a46))
+* **deps:** bumping lodash from 4.17.19 to 4.17.20 ([#545](https://github.com/external-secrets/kubernetes-external-secrets/issues/545)) ([6c9d60d](https://github.com/external-secrets/kubernetes-external-secrets/commit/6c9d60d426405e16bce7ee00b542dde43b5e7171))
+
 ## [6.0.0](https://github.com/godaddy/kubernetes-external-secrets/compare/5.2.0...6.0.0) (2020-10-09)
 
 
