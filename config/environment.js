@@ -39,6 +39,7 @@ const enforceNamespaceAnnotation = 'ENFORCE_NAMESPACE_ANNOTATIONS' in process.en
 const metricsPort = process.env.METRICS_PORT || 3001
 
 const customResourceManagerDisabled = 'DISABLE_CUSTOM_RESOURCE_MANAGER' in process.env
+const watchTimeout = process.env.WATCH_TIMEOUT ? parseInt(process.env.WATCH_TIMEOUT) : 60000
 
 module.exports = {
   vaultEndpoint,
@@ -56,5 +57,6 @@ module.exports = {
   logLevel,
   customResourceManagerDisabled,
   useHumanReadableLogLevels,
-  logMessageKey
+  logMessageKey,
+  watchTimeout
 }

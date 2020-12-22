@@ -15,6 +15,7 @@ env:
   AWS_REGION: us-west-2
   AWS_DEFAULT_REGION: us-west-2
   POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
+  WATCH_TIMEOUT: 60000
   LOG_LEVEL: info
   LOG_MESSAGE_KEY: 'msg'
   # Print logs level as string ("info") rather than integer (30)
