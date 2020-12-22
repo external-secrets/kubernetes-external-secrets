@@ -443,23 +443,6 @@ spec:
       name: password
 ```
 
-Due to the way Azure handles binary files, you need to explicitly let the ExternalSecret know that the secret is binary.
-You can do that with the `isBinary` field on the key. This is necessary for certificates and other secret binary files.
-
-```yml
-apiVersion: kubernetes-client.io/v1
-kind: ExternalSecret
-metadata:
-  name: hello-keyvault-service
-spec:
-  backendType: azureKeyVault
-  keyVaultName: hello-world
-  data:
-    - key: hello-service/credentials
-      name: password
-      isBinary: true
-```
-
 ### Alibaba Cloud KMS Secret Manager
 
 kubernetes-external-secrets supports fetching secrets from [Alibaba Cloud KMS Secret Manager](https://www.alibabacloud.com/help/doc-detail/152001.htm)
@@ -622,6 +605,33 @@ To retrieve an individual secret's content, use the following where "mysecret" i
     kubectl get secret my-secret -o 'go-template={{index .data "mysecret"}}' | base64 -D
 
 The secrets will persist even if the helm installation is removed, although they will no longer sync to Google Secret Manager.
+
+## Binary Secrets
+Most backends do not treat binary secrets any differently than text secrets. Since you typically store a binary secret as a base64-encoded string in the backend, you need to explicitly let the ExternalSecret know that the secret is binary, otherwise it will be encoded in base64 again.
+You can do that with the `isBinary` field on the key. This is necessary for certificates and other secret binary files.
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: anySupportedBackend
+  # ...
+  data:
+    - key: hello-service/archives/secrets_zip
+      name: secrets.zip
+      isBinary: true  # Default: false
+    # also works with `property`
+    - key: hello-service/certificates
+      name: cert.p12
+      property: cert.p12
+      isBinary: true
+```
+
+AWS Secrets Manager is a notable exception to this. If you create/update a secret using [SecretBinary](https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_CreateSecret.html#API_CreateSecret_RequestSyntax) parameter of the API, then AWS API will return the secret data as `SecretBinary` in the response and ExternalSecret will handle it accordingly. In that case, you do not need to use the `isBinary` field.
+
+Note that `SecretBinary` parameter is not available when using the AWS Secrets Manager console. For any binary secrets (represented by a base64-encoded strings) created/updated via the AWS console, or stored in key-value pairs instead of text strings, you can just use the `isBinary` field explicitly as above.
 
 ## Metrics
 
