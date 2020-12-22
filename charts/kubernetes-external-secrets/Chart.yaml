@@ -6,11 +6,9 @@ description: Kubernetes External Secrets CustomResourceDefinition
 keywords:
   - kubernetes-external-secrets
   - secrets
-home: https://github.com/godaddy/kubernetes-external-secrets
+home: https://github.com/external-secrets/kubernetes-external-secrets
 sources:
-  - https://github.com/godaddy/kubernetes-external-secrets
+  - https://github.com/external-secrets/kubernetes-external-secrets
 maintainers:
-  - name: jeffpearce
-    email: jxpearce@godaddy.com
-  - name: keweilu
-    email: klu6@godaddy.com
+  - name: external-secrets
+    url: https://github.com/external-secrets
