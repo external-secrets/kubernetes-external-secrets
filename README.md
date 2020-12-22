@@ -308,15 +308,15 @@ spec:
       name: username
       property: username
     - key: hello-service/credentials
-      name: password
+      name: password_previous
       # Version Stage in Secrets Manager
       versionStage: AWSPREVIOUS
-      property: password_previous
+      property: password
     - key: hello-service/credentials
-      name: password
+      name: password_versioned
       # Version ID in Secrets Manager
       versionId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
-      property: password_versioned
+      property: password
 ```
 
 alternatively you can use `dataFrom` and get all the values from hello-service/credentials:
