@@ -4,12 +4,14 @@
 const AWS = require('aws-sdk')
 const clonedeep = require('lodash.clonedeep')
 const merge = require('lodash.merge')
-var proxy = require('proxy-agent');
+const proxy = require('proxy-agent')
 
-if (process.env.HTTP_PROXY !== ""){
+if (process.env.HTTP_PROXY !== ''){
   AWS.config.update({
-    httpOptions: { agent: proxy(process.env.HTTP_PROXY) }
-  });
+    httpOptions: { 
+      agent: proxy(process.env.HTTP_PROXY) 
+    }
+  })
 }
 
 const localstack = process.env.LOCALSTACK || 0
