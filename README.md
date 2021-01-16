@@ -79,6 +79,8 @@ Access to AWS secrets backends (SSM & secrets manager) can be granted in various
 
 4. Directly provide AWS access credentials to the `kubernetes-external-secrets` pod by environmental variables.
 
+5. Optionally configure AWS_STS_ENDPOINT, [AWS_SSM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/ssm.html), [AWS_SM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/asm.html).  Useful if you need to use the FIPS endpoints for compliance.
+
 ##### Using AWS access credentials
 
 Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars in the `kubernetes-external-secrets` session/pod.
