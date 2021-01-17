@@ -33,7 +33,7 @@ kind load docker-image --name="es-dev-cluster" external-secrets:test
 kubectl apply -f ./localstack.deployment.yaml
 
 # deploy external secrets
-helm template ../charts/kubernetes-external-secrets \
+helm template e2e ../charts/kubernetes-external-secrets \
   --set image.repository=external-secrets \
   --set image.tag=test \
   --set env.LOG_LEVEL=debug \
