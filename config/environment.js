@@ -41,6 +41,17 @@ const metricsPort = process.env.METRICS_PORT || 3001
 const customResourceManagerDisabled = 'DISABLE_CUSTOM_RESOURCE_MANAGER' in process.env
 const watchTimeout = process.env.WATCH_TIMEOUT ? parseInt(process.env.WATCH_TIMEOUT) : 60000
 
+// A comma-separated list of watched namespaces. If set, only ExternalSecrets in those namespaces will be handled.
+let watchedNamespaces = process.env.WATCHED_NAMESPACES || ''
+
+// Return an array after splitting the watched namespaces string and clean up user input.
+watchedNamespaces = watchedNamespaces
+  .split(',')
+  // Remove any extra spaces.
+  .map(namespace => { return namespace.trim() })
+  // Remove empty values (in case there is a tailing comma).
+  .filter(namespace => namespace)
+
 module.exports = {
   vaultEndpoint,
   vaultNamespace,
@@ -58,5 +69,6 @@ module.exports = {
   customResourceManagerDisabled,
   useHumanReadableLogLevels,
   logMessageKey,
-  watchTimeout
+  watchTimeout,
+  watchedNamespaces
 }

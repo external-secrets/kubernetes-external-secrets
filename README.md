@@ -230,9 +230,12 @@ spec:
       name: .dockerconfigjson
 ```
 
-## Enforcing naming conventions for backend keys
+## Scoping access
 
-by default an `ExternalSecret` may access arbitrary keys from the backend e.g.
+### Using Namespace annotation
+
+Enforcing naming conventions for backend keys could be done by using namespace annotations.
+By default an `ExternalSecret` may access arbitrary keys from the backend e.g.
 
 ```yml
   data:
@@ -255,6 +258,31 @@ metadata:
     # annotation key is configurable
     externalsecrets.kubernetes-client.io/permitted-key-name: "/dev/cluster1/core-namespace/.*"
 ```
+
+### Using ExternalSecret controller config
+
+ExternalSecret config allows scoping the access of kubernetes-external-secrets controller.
+This allows to deploy multi kubernetes-external-secrets instances in the same cluster
+and each instance can access a set of predefined namespaces.
+
+To enable this option, set the env var in the controller side with a list of namespaces:
+```yaml
+env:
+  WATCHED_NAMESPACES: "default,qa,dev"
+```
+
+Finally, in case more than one kubernetes-external-secrets is deployed,
+it's recommended to make only one deployment manage the CRDs.
+To disable CRD management in the other deployments,
+to avoid having them fighting over the CRD.
+
+That can be done in the controller side by setting the env var:
+```yaml
+env:
+  DISABLE_CUSTOM_RESOURCE_MANAGER: true
+```
+
+Or in Helm, by setting `customResourceManagerDisabled=true`.
 
 ## Deprecations
 
