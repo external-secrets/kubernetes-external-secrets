@@ -36,5 +36,4 @@ jobs:
           helm init --client-only
         if: matrix.helmVersion == 'V2'
       - run: ./e2e/run-e2e-suite.sh ${{ matrix.disableCustomResourceManager }} ${{ matrix.helmVersion }}
-        env:
-          DEBUG: 'true'
+
