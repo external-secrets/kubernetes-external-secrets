@@ -262,7 +262,7 @@ metadata:
 ### Using ExternalSecret controller config
 
 ExternalSecret config allows scoping the access of kubernetes-external-secrets controller.
-This allows to deploy multi kubernetes-external-secrets instances at the same cluster
+This allows to deploy multi kubernetes-external-secrets instances in the same cluster
 and each instance can access a set of predefined namespaces.
 
 To enable this option, set the env var in the controller side with a list of namespaces:
@@ -271,12 +271,12 @@ env:
   WATCHED_NAMESPACES: "default,qa,dev"
 ```
 
-Finally, in case more than a kubernetes-external-secrets is deployment,
-it's recommended to make only one deployment is the CRD manager,
-and disable CRD management in the rest of the deployment
-to avoid having multiple deployments fighting over the CRD.
+Finally, in case more than one kubernetes-external-secrets is deployed,
+it's recommended to make only one deployment manage the CRDs.
+To disable CRD management in the other deployments,
+to avoid having them fighting over the CRD.
 
-That's could be done in the controller side by setting the env var:
+That can be done in the controller side by setting the env var:
 ```yaml
 env:
   DISABLE_CUSTOM_RESOURCE_MANAGER: true
