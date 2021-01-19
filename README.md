@@ -385,6 +385,33 @@ spec:
       property: password
 ```
 
+# AWS SSM Parameter Store
+
+You can scrape values from SSM Parameter Store individually or by providing a path to fetch all keys inside.
+
+Additionally you can also scrape all sub paths (child paths) if you need to. The default is not to scrape child paths
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: us-east-1
+  data:
+    - key: /foo/name
+      name: fooName
+    - path: /extra-people/
+      recursive: false
+```
+
+
+
+
 ### Hashicorp Vault
 
 kubernetes-external-secrets supports fetching secrets from [Hashicorp Vault](https://www.vaultproject.io/), using the [Kubernetes authentication method](https://www.vaultproject.io/docs/auth/kubernetes).
