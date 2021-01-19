@@ -1,13 +1,19 @@
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
+  namespace: test
   name: ssm-example
 spec:
   backendType: systemManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
   # optional: specify region
-  region: eu-west-1
+  region: us-west-2
   data:
-    - key: /foo/name1
+    # can either be key+name or all keys from a given path or even both
+    # order is important if you have same key name on different paths that you want to include
+    - key: /foo/name
       name: variable-name
+    - path: /bar/
+      # optional: choose wether to scrape all child paths or not. Default is false
+      recursive: false
