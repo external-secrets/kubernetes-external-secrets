@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.2.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.1.0...6.2.0) (2021-01-21)
+
+
+### Features
+
+* **multitenancy:** Allow to watch ExternalSecrets in specific namespaces ([#548](https://github.com/external-secrets/kubernetes-external-secrets/issues/548)) ([85739fd](https://github.com/external-secrets/kubernetes-external-secrets/commit/85739fde531e64eb329cc4a28264ffc80e29a5f0))
+* Add HTTP Proxy support to AWS SDK ([#601](https://github.com/external-secrets/kubernetes-external-secrets/issues/601)) ([c9d7785](https://github.com/external-secrets/kubernetes-external-secrets/commit/c9d77857add2b79f9e970b7fe20f45187439f159))
+
 ## [6.1.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.0.0...6.1.0) (2020-12-22)
 
 
