@@ -54,7 +54,7 @@ describe('ssm', async () => {
   })
 
   it('should pull existing secrets from ssm path and create a secret from it', async () => {
-    let name1 = await putParameter({
+    const name1 = await putParameter({
       Name: `/e2e/${uuid}-names/name1`,
       Type: 'String',
       Value: 'foo'
@@ -62,7 +62,7 @@ describe('ssm', async () => {
       expect(err).to.equal(null)
     })
 
-    let name2 = await putParameter({
+    const name2 = await putParameter({
       Name: `/e2e/${uuid}-names/name2`,
       Type: 'String',
       Value: 'bar'
@@ -70,7 +70,7 @@ describe('ssm', async () => {
       expect(err).to.equal(null)
     })
 
-    let result = await kubeClient
+    const result = await kubeClient
       .apis[customResourceManifest.spec.group]
       .v1.namespaces('default')[customResourceManifest.spec.names.plural]
       .post({
@@ -84,7 +84,7 @@ describe('ssm', async () => {
             backendType: 'systemManager',
             data: [
               {
-                path: `/e2e/${uuid}-names`,
+                path: `/e2e/${uuid}-names`
               }
             ]
           }

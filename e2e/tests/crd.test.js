@@ -56,4 +56,3 @@ describe('CRD', () => {
       .catch(err => expect(err).to.be.an('error'))
   })
 })
-
