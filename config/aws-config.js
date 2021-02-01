@@ -18,11 +18,27 @@ const localstack = process.env.LOCALSTACK || 0
 
 const intermediateRole = process.env.AWS_INTERMEDIATE_ROLE_ARN || 0
 
+const stsEndpoint = process.env.AWS_STS_ENDPOINT || 0
+const ssmEndpoint = process.env.AWS_SSM_ENDPOINT || 0
+const smEndpoint = process.env.AWS_SM_ENDPOINT || 0
+
 let secretsManagerConfig = {}
 let systemManagerConfig = {}
 let stsConfig = {
   region: process.env.AWS_REGION || 'us-west-2',
   stsRegionalEndpoints: process.env.AWS_STS_ENDPOINT_TYPE || 'regional'
+}
+
+if (smEndpoint) {
+  secretsManagerConfig.endpoint = smEndpoint
+}
+
+if (ssmEndpoint) {
+  systemManagerConfig.endpoint = ssmEndpoint
+}
+
+if (stsEndpoint) {
+  stsConfig.endpoint = stsEndpoint
 }
 
 if (localstack) {
