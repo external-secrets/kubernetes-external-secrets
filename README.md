@@ -79,7 +79,11 @@ Access to AWS secrets backends (SSM & secrets manager) can be granted in various
 
 4. Directly provide AWS access credentials to the `kubernetes-external-secrets` pod by environmental variables.
 
-5. Optionally configure AWS_STS_ENDPOINT, [AWS_SSM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/ssm.html), [AWS_SM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/asm.html).  Useful if you need to use the FIPS endpoints for compliance.
+5. Optionally configure custom endpoints using environment variables
+    * [AWS_SM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/asm.html) - Useful to set endpoints for FIPS compliance.
+    * [AWS_STS_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/sts.html) - Useful to set endpoints for FIPS compliance or regional latency.
+    * [AWS_SSM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/ssm.html) - Useful to set endpoints for FIPS compliance or custom VPC endpoint.
+
 
 ##### Using AWS access credentials
 

@@ -25,6 +25,10 @@ env:
   # Set a role to be used when assuming roles specified in external secret (AWS only)
   # AWS_INTERMEDIATE_ROLE_ARN:
   # GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
+  # Use custom endpoints for FIPS compliance
+  # AWS_STS_ENDPOINT: https://sts-fips.us-east-1.amazonaws.com
+  # AWS_SSM_ENDPOINT: http://ssm-fips.us-east-1.amazonaws.com
+  # AWS_SM_ENDPOINT: http://secretsmanager-fips.us-east-1.amazonaws.com
 
 # Create environment variables from existing k8s secrets
 # envVarsFromSecret:
