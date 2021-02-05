@@ -43,15 +43,15 @@ if (stsEndpoint) {
 
 if (localstack) {
   secretsManagerConfig = {
-    endpoint: process.env.LOCALSTACK_SM_URL || 'http://localhost:4584',
+    endpoint: process.env.LOCALSTACK_SM_URL || 'http://localhost:4566',
     region: process.env.AWS_REGION || 'us-west-2'
   }
   systemManagerConfig = {
-    endpoint: process.env.LOCALSTACK_SSM_URL || 'http://localhost:4583',
+    endpoint: process.env.LOCALSTACK_SSM_URL || 'http://localhost:4566',
     region: process.env.AWS_REGION || 'us-west-2'
   }
   stsConfig = {
-    endpoint: process.env.LOCALSTACK_STS_URL || 'http://localhost:4592',
+    endpoint: process.env.LOCALSTACK_STS_URL || 'http://localhost:4566',
     region: process.env.AWS_REGION || 'us-west-2'
   }
 }
