@@ -125,3 +125,19 @@ serviceMonitor:
   enabled: false
   interval: "30s"
   namespace:
+
+deploymentInitContainers: {}
+
+# Add in additional named volumes and volume mounts to the deployment
+#
+extraVolumes: []
+#  - name: namedVolume
+#    emptyDir: {}
+#
+extraVolumeMounts: []
+#  - name: namedVolume
+#    mountPath: /usr/path
+#    readOnly: false
+
+# Add additional RBAC rules to the ClusterRole granted to the service account
+customClusterRoles: {}

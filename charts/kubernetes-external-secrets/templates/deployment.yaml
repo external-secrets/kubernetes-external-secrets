@@ -32,6 +32,9 @@ spec:
       imagePullSecrets:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
+      {{- if .Values.deploymentInitContainers }}
+      {{- toYaml .Values.deploymentInitContainers | nindent 6 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -60,12 +63,17 @@ spec:
                 name: {{ $value.secretKeyRef | quote }}
                 key: {{ $value.key | quote }}
           {{- end }}
-          {{- with .Values.filesFromSecret }}
+          {{- if or .Values.filesFromSecret .Values.extraVolumeMounts }}
           volumeMounts:
+          {{- if .Values.extraVolumeMounts }}
+          {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+          {{- with .Values.filesFromSecret }}
           {{- range $key, $value := . }}
           - name: {{ $key }}
             mountPath: {{ $value.mountPath }}
             readOnly: true
+          {{- end }}
           {{- end }}
           {{- end }}
       {{- with .Values.dnsConfig }}
@@ -91,11 +99,16 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.filesFromSecret }}
+      {{- if or .Values.filesFromSecret .Values.extraVolumes }}
       volumes:
+      {{- if .Values.extraVolumes }}
+      {{- toYaml .Values.extraVolumes | nindent 8 }}
+      {{- end }}
+      {{- with .Values.filesFromSecret }}
       {{- range $key, $value := . }}
       - name: {{ $key }}
         secret:
           secretName: {{ $value.secret }}
+      {{- end }}
       {{- end }}
       {{- end }}
