@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.3.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.2.0...6.3.0) (2021-02-10)
+
+
+### Features
+
+* **aws:** allow custom endpoints for aws services ([#602](https://github.com/external-secrets/kubernetes-external-secrets/issues/602)) ([03f5c65](https://github.com/external-secrets/kubernetes-external-secrets/commit/03f5c656a6d988dfb0edfc1109c3448aa3969d4a))
+* **aws-ssm:** Add support to get parameters by path ([#603](https://github.com/external-secrets/kubernetes-external-secrets/issues/603)) ([74d4459](https://github.com/external-secrets/kubernetes-external-secrets/commit/74d445902e0c63f2ea82be50afc4b2b11dbe3a59))
+* **core:** adds support for nested key lookups (eg `key: a.b.c` to get nested value in json secret) ([#592](https://github.com/external-secrets/kubernetes-external-secrets/issues/592)) ([190e6db](https://github.com/external-secrets/kubernetes-external-secrets/commit/190e6dbf583b74fee137a5ec5a4d58f016f37bc7))
+* **helm:** add in ability to inject init containers in to deployment from values ([#615](https://github.com/external-secrets/kubernetes-external-secrets/issues/615)) ([21acce1](https://github.com/external-secrets/kubernetes-external-secrets/commit/21acce1891bb75e28e82a5163709d81395206224))
+* **helm:** add pdb in helm chart ([#616](https://github.com/external-secrets/kubernetes-external-secrets/issues/616)) ([3be641f](https://github.com/external-secrets/kubernetes-external-secrets/commit/3be641fd3419f780c95f52c91aace4ba11530499))
+
 ## [6.2.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.1.0...6.2.0) (2021-01-21)
 
 
