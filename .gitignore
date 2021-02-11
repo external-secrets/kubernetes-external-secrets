@@ -60,4 +60,5 @@ typings/
 # e2e test stuff
 e2e/**/.kubeconfig
 
+# IDE
 .idea/
