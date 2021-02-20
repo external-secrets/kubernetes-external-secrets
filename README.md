@@ -403,7 +403,7 @@ kind: ExternalSecret
 metadata:
   name: hello-service
 spec:
-  backendType: secretsManager
+  backendType: systemManager
   # optional: specify role to assume when retrieving the data
   roleArn: arn:aws:iam::123456789012:role/test-role
   # optional: specify region
