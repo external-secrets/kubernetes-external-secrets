@@ -77,6 +77,8 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name:
 
+# Using multiple replicas is not recommended as there is no coordination between replicas.
+# Replicas will try to create and update secrets concurrently which might lead to race conditions.
 replicaCount: 1
 
 image:
