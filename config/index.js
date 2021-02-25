@@ -77,7 +77,7 @@ if (envConfig.vaultNamespace) {
     'X-VAULT-NAMESPACE': envConfig.vaultNamespace
   }
 }
-const vaultFactory = () => vault(vaultOptions)
+const vaultFactory = (overrides = {}) => vault({ ...vaultOptions, ...overrides })
 
 // The Vault token is renewed only during polling, not asynchronously. The default tokenRenewThreshold
 // is three times larger than the pollerInterval so that the token is renewed before it
