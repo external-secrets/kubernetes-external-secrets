@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [6.4.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.3.0...6.4.0) (2021-02-25)
+
+
+### Features
+
+* **poller:** lodash template preprocess for externalsecret.spec.template field ([#626](https://github.com/external-secrets/kubernetes-external-secrets/issues/626)) ([6639553](https://github.com/external-secrets/kubernetes-external-secrets/commit/66395530b7c8070a222d41704e80947d5a9269f2))
+
 ## [6.3.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.2.0...6.3.0) (2021-02-10)
 
 
