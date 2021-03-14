@@ -713,6 +713,43 @@ Create the policy binding:
 
     gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$CLUSTER_PROJECT.svc.id.goog[$SECRETS_NAMESPACE/kubernetes-external-secrets]" my-secrets-sa@$PROJECT.iam.gserviceaccount.com
 
+### IBM Cloud Secrets Manager
+
+kubernetes-external-secrets supports fetching secrets from [IBM Cloud Secrets Manager](https://cloud.ibm.com/catalog/services/secrets-manager)
+
+create username_password secret by using the [ui, cli or API](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-user-credentials).
+The cli option is illustrated below:
+
+```bash
+# you need to configure ibm cloud cli with a valid endpoint 
+export IBM_CLOUD_SECRETS_MANAGER_API_URL=https://{instanceid}.{region}.secrets-manager.appdomain.cloud
+ibmcloud secrets-manager secret-create --secret-type username_password \ 
+--metadata '{"collection_type": "application/vnd.ibm.secrets-manager.secret+json", "collection_total": 1}' \ 
+--resources '[{"name": "example-username-password-secret","description": "Extended description for my secret.","username": "user123","password": "cloudy-rainy-coffee-book"}]'
+```
+
+You will need to set these env vars in the deployment of kubernetes-external-secrets:
+
+- IBM_CLOUD_SECRETS_MANAGER_API_APIKEY
+- IBM_CLOUD_SECRETS_MANAGER_API_ENDPOINT
+- IBM_CLOUD_SECRETS_MANAGER_API_AUTH_TYPE
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: ibmcloud-secrets-manager-example
+spec:
+  backendType: ibmcloudSecretsManager
+  data:
+    # The guid id of the secret
+    - key: <guid>
+      name: username
+      property: username 
+      secretType: username_password
+```
+
+
 ##### Deploy kubernetes-external-secrets using a service account key
 
 Alternatively you can create and mount a kubernetes secret containing google service account credentials and set the GOOGLE_APPLICATION_CREDENTIALS env variable.

@@ -35,6 +35,7 @@
     "@azure/identity": "^1.0.3",
     "@azure/keyvault-secrets": "^4.0.4",
     "@google-cloud/secret-manager": "^3.2.3",
+    "@ibm-cloud/secrets-manager": "^0.0.6",
     "aws-sdk": "^2.628.0",
     "express": "^4.17.1",
     "js-yaml": "^3.14.1",
