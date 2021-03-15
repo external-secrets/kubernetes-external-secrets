@@ -7,6 +7,25 @@ on:
   pull_request:
 
 jobs:
+
+  scan-container:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Build Artifacts
+        run: docker build -t test:test .
+
+      - name: Trivy Scan - High and Critical Severity
+        uses: aquasecurity/trivy-action@0.0.7
+        with:
+          image-ref: test:test
+          exit-code: 1
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
+
   test:
     runs-on: ubuntu-latest
     name: Node 12
@@ -36,4 +55,3 @@ jobs:
           helm init --client-only
         if: matrix.helmVersion == 'V2'
       - run: ./e2e/run-e2e-suite.sh ${{ matrix.disableCustomResourceManager }} ${{ matrix.helmVersion }}
-
