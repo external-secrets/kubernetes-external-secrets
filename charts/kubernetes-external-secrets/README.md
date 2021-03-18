@@ -4,11 +4,9 @@
 
 ## TL;DR;
 
-Assumes you are using Helm V3:
-
 ```bash
 $ helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
-$ helm install external-secrets/kubernetes-external-secrets --skip-crds
+$ helm install external-secrets/kubernetes-external-secrets
 ```
 
 See below for [Helm V2 considerations](#helm-v2-considerations) when installing the chart.
@@ -22,39 +20,13 @@ See below for [Helm V2 considerations](#helm-v2-considerations) when installing 
 To install the chart with the release named `my-release`:
 
 ```bash
-$ helm install my-release external-secrets/kubernetes-external-secrets --skip-crds
+$ helm install my-release external-secrets/kubernetes-external-secrets
 ```
-
-> **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`', however know this will not [autocreate a namespace](https://helm.sh/docs/faq/#automatically-creating-namespaces) like in Helm V2. To do that, also add the `--create-namespace` flag.
-
-> **Note**: `--skip-crds` is required in order to ensure the custom resource manager is used and will work for backwards compatibility. In future 4.x releases, this will not be required. See below for how to [disable the custom resource manager](#installing-the-crd) via the chart.
 
 To install the chart with [AWS IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html):
 
 ```bash
-$ helm install my-release external-secrets/kubernetes-external-secrets --skip-crds --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME'
-```
-
-### Installing the CRD
-
-To install the `ExternalSecret` CRD via the chart and disable the custom resource manager, you can omit `--skip-crds` and set `customResourceManagerDisabled`:
-
-```bash
-$ helm install external-secrets/kubernetes-external-secrets --name my-release --set customResourceManagerDisabled=true
-```
-
-### Helm V2 Considerations
-
-For Helm V2, `--skip-crds` is not needed, but `--name` is in order to set the release name:
-
-```bash
-$ helm install external-secrets/kubernetes-external-secrets --name my-release
-```
-
-If you wish to disable the custom resource manager and install the CRD via Helm V2, then `crds.create` must also be set:
-
-```bash
-$ helm install external-secrets/kubernetes-external-secrets --name my-release --set customResourceManagerDisabled=true --set crds.create=true
+$ helm install my-release external-secrets/kubernetes-external-secrets --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME'
 ```
 
 ## Uninstalling the Chart
@@ -71,8 +43,6 @@ The following table lists the configurable parameters of the `kubernetes-externa
 
 | Parameter                                 | Description                                                                                                                       | Default                               |
 | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| `crds.create`                             | For Helm V2 installations of the chart to install the CRD, for V3 installations use `--skip-crds` appropriately                   | `false`                               |
-| `customResourceManagerDisabled`           | Disables the custom resource manager, requiring the CRD be installed via the chart or other means                                 | `false`                               |
 | `env.AWS_REGION`                          | Set AWS_REGION in Deployment Pod                                                                                                  | `us-west-2`                           |
 | `env.AWS_INTERMEDIATE_ROLE_ARN`           | Specifies a role to be assumed before assuming role arn specified in external secrets                                             |                                       |
 | `env.LOG_LEVEL`                           | Set the application log level                                                                                                     | `info`                                |
@@ -122,7 +92,6 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 
 ```bash
 helm install my-release external-secrets/kubernetes-external-secrets \
---set customResourceManagerDisabled=true
 --set env.POLLER_INTERVAL_MILLISECONDS='300000' \
 --set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access'
 ```

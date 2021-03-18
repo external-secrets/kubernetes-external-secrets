@@ -1,6 +1,7 @@
 [![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/external-secrets/kubernetes-external-secrets)](https://lgtm.com/projects/g/external-secrets/kubernetes-external-secrets)
 
 ## Repository moved to external-secrets
+
 This project was moved from the [GoDaddy](https://github.com/godaddy) to the [external-secrets](https://github.com/external-secrets/kubernetes-external-secrets) GitHub organization in an effort to consolidate different projects with the same objective. More information [here](https://github.com/external-secrets/kubernetes-external-secrets/issues/554#issuecomment-728984416).
 
 # Kubernetes External Secrets
@@ -45,7 +46,6 @@ to encrypt `Secrets` stored in etcd.
 
 The official [helm chart](charts/kubernetes-external-secrets) can be used to create the `kubernetes-external-secrets` resources and `Deployment` on a [Kubernetes](http://kubernetes.io) cluster using the [Helm](https://helm.sh) package manager.
 
-
 ```bash
 $ helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
 $ helm install external-secrets/kubernetes-external-secrets
@@ -80,10 +80,9 @@ Access to AWS secrets backends (SSM & secrets manager) can be granted in various
 4. Directly provide AWS access credentials to the `kubernetes-external-secrets` pod by environmental variables.
 
 5. Optionally configure custom endpoints using environment variables
-    * [AWS_SM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/asm.html) - Useful to set endpoints for FIPS compliance.
-    * [AWS_STS_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/sts.html) - Useful to set endpoints for FIPS compliance or regional latency.
-    * [AWS_SSM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/ssm.html) - Useful to set endpoints for FIPS compliance or custom VPC endpoint.
-
+   - [AWS_SM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/asm.html) - Useful to set endpoints for FIPS compliance.
+   - [AWS_STS_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/sts.html) - Useful to set endpoints for FIPS compliance or regional latency.
+   - [AWS_SSM_ENDPOINT](https://docs.aws.amazon.com/general/latest/gr/ssm.html) - Useful to set endpoints for FIPS compliance or custom VPC endpoint.
 
 ##### Using AWS access credentials
 
@@ -91,7 +90,7 @@ Set AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY env vars in the `kubernetes-exte
 You can use envVarsFromSecret in the helm chart to create these env vars from existing k8s secrets.
 
 Additionally, you can specify a `roleArn` which will be assumed before retrieving the secret.
-You can limit the range of roles which can be assumed by this particular *namespace* by using annotations on the namespace resource. The annotation key is configurable (see above). The annotation value is evaluated as a regular expression and tries to match the `roleArn`.
+You can limit the range of roles which can be assumed by this particular _namespace_ by using annotations on the namespace resource. The annotation key is configurable (see above). The annotation value is evaluated as a regular expression and tries to match the `roleArn`.
 
 ```yaml
 kind: Namespace
@@ -119,7 +118,7 @@ aws ssm put-parameter --name "/hello-service/password" --type "String" --value "
 and then create a `hello-service-external-secret.yml` file:
 
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: "kubernetes-client.io/v1"
 kind: ExternalSecret
 metadata:
   name: hello-service
@@ -139,9 +138,11 @@ spec:
       labels:
         dog: farfel
 ```
+
 or
+
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: "kubernetes-client.io/v1"
 kind: ExternalSecret
 metadata:
   name: hello-service
@@ -153,6 +154,7 @@ spec:
 ```
 
 The following IAM policy allows a user or role to access parameters matching `prod-*`.
+
 ```json
 {
   "Version": "2012-10-17",
@@ -247,10 +249,10 @@ It can be leveraged for easier YAML content manipulation.
 
 Templating can be used for:
 
-* Generating K8S `Secret` keys:
-  * upserting plain text via `ExternalSecret.template.stringData`
-  * upserting base64 encoded content `ExternalSecret.template.data`
-* For creating dynamic labels, annotations and other fields available in K8S `Secret` object.
+- Generating K8S `Secret` keys:
+  - upserting plain text via `ExternalSecret.template.stringData`
+  - upserting base64 encoded content `ExternalSecret.template.data`
+- For creating dynamic labels, annotations and other fields available in K8S `Secret` object.
 
 To demonstrate templating functionality let's assume the secure backend, e.g. Hashicorp Vaule, contains following data
 
@@ -276,11 +278,7 @@ To demonstrate templating functionality let's assume the secure backend, e.g. Ha
 
 ```json
 {
-  "arrKey": [
-    1,
-    2,
-    3
-  ]
+  "arrKey": [1, 2, 3]
 }
 ```
 
@@ -290,7 +288,7 @@ To demonstrate templating functionality let's assume the secure backend, e.g. Ha
 
 Then, one could create following `ExternalSecret`
 
-````yaml
+```yaml
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
@@ -298,10 +296,10 @@ metadata:
 spec:
   backendType: vault
   data:
-  - key: kv/data/extsec/secret1
-    name: s1
-  - key: kv/data/extsec/secret2
-    name: s2
+    - key: kv/data/extsec/secret1
+      name: s1
+    - key: kv/data/extsec/secret2
+      name: s2
   kvVersion: 2
   template:
     data:
@@ -318,11 +316,11 @@ spec:
         <% }) %>`
   vaultMountPoint: kubernetes
   vaultRole: demo
-````
+```
 
 After applying this `ExternalSecret` to K8S cluster, the operator will generate following `Secret`
 
-````yaml
+```yaml
 apiVersion: v1
 data:
   file.txt: eyJzdHJLZXkiOiJoZWxsbyB3b3JsZCJ9
@@ -336,11 +334,11 @@ metadata:
     label1: "11"
     label2: hello-world
 type: Opaque
-````
+```
 
 Resulting `Secret` could be inspected to see that result is generated by `lodash` templating engine
 
-````bash
+```bash
 $ kubectl get secret/tmpl-ext-sec -ogo-template='{{ index .data "s1" | base64decode }}'
 {"intKey":11,"objKey":{"strKey":"hello world"}}
 
@@ -361,7 +359,7 @@ arr_2: 3
 
 $ kubectl get secret/tmpl-ext-sec -ogo-template='{{ .metadata.labels }}'
 map[label1:11 label2:hello-world]
-````
+```
 
 ## Scoping access
 
@@ -371,9 +369,9 @@ Enforcing naming conventions for backend keys could be done by using namespace a
 By default an `ExternalSecret` may access arbitrary keys from the backend e.g.
 
 ```yml
-  data:
-    - key: /dev/cluster1/core-namespace/hello-service/password
-      name: password
+data:
+  - key: /dev/cluster1/core-namespace/hello-service/password
+    name: password
 ```
 
 An enforced naming convention helps to keep the structure tidy and limits the access according
@@ -399,34 +397,22 @@ This allows to deploy multi kubernetes-external-secrets instances in the same cl
 and each instance can access a set of predefined namespaces.
 
 To enable this option, set the env var in the controller side with a list of namespaces:
+
 ```yaml
 env:
   WATCHED_NAMESPACES: "default,qa,dev"
 ```
 
-Finally, in case more than one kubernetes-external-secrets is deployed,
-it's recommended to make only one deployment manage the CRDs.
-To disable CRD management in the other deployments,
-to avoid having them fighting over the CRD.
-
-That can be done in the controller side by setting the env var:
-```yaml
-env:
-  DISABLE_CUSTOM_RESOURCE_MANAGER: true
-```
-
-Or in Helm, by setting `customResourceManagerDisabled=true`.
-
 ## Deprecations
 
 A few properties has changed name overtime, we still maintain backwards compatbility with these but they will eventually be removed, and they are not validated using the CRD validation.
 
-| Old                           | New                            |
-| ----------------------------- | ------------------------------ |
-| `secretDescriptor`            | `spec`                         |
-| `spec.type`                   | `spec.template.type`           |
-| `spec.properties`             | `spec.data`                    |
-| `backendType: secretManager`  | `backendType: secretsManager`  |
+| Old                          | New                           |
+| ---------------------------- | ----------------------------- |
+| `secretDescriptor`           | `spec`                        |
+| `spec.type`                  | `spec.template.type`          |
+| `spec.properties`            | `spec.data`                   |
+| `backendType: secretManager` | `backendType: secretsManager` |
 
 ## Backends
 
@@ -542,9 +528,6 @@ spec:
       recursive: false
 ```
 
-
-
-
 ### Hashicorp Vault
 
 kubernetes-external-secrets supports fetching secrets from [Hashicorp Vault](https://www.vaultproject.io/), using the [Kubernetes authentication method](https://www.vaultproject.io/docs/auth/kubernetes).
@@ -559,7 +542,7 @@ env:
 You will need to set the `VAULT_ADDR` environment variables so that kubernetes-external-secrets knows which endpoint to connect to, then create `ExternalSecret` definitions as follows:
 
 ```yml
-apiVersion: 'kubernetes-client.io/v1'
+apiVersion: "kubernetes-client.io/v1"
 kind: ExternalSecret
 metadata:
   name: hello-vault-service
@@ -574,19 +557,19 @@ spec:
   # Overrides cluster DEFAULT_VAULT_ROLE
   vaultRole: my-vault-role
   data:
-  - name: password
-    # The full path of the secret to read, as in `vault read secret/data/hello-service/credentials`
-    key: secret/data/hello-service/credentials
-    property: password
-  # Vault values are matched individually. If you have several keys in your Vault secret, you will need to add them all separately
-  - name: api-key
-    key: secret/data/hello-service/credentials
-    property: api-key
+    - name: password
+      # The full path of the secret to read, as in `vault read secret/data/hello-service/credentials`
+      key: secret/data/hello-service/credentials
+      property: password
+    # Vault values are matched individually. If you have several keys in your Vault secret, you will need to add them all separately
+    - name: api-key
+      key: secret/data/hello-service/credentials
+      property: api-key
 ```
 
 If you use Vault Namespaces (a Vault Enterprise feature) you can set the namespace to interact with via the `VAULT_NAMESPACE` environment variable.
 
-The Vault token obtained by Kubernetes authentication will be renewed as needed. By default the token will be renewed three poller intervals (POLLER_INTERVAL_MILLISECONDS) before the token TTL expires. The default should be acceptable in most cases but the token renew threshold can also be customized by setting the `VAULT_TOKEN_RENEW_THRESHOLD` environment variable. The token renew threshold value is specified in seconds and tokens with remaining TTL less than this number of seconds will be renewed. In order to minimize token renewal load on the Vault server it is suggested that Kubernetes auth tokens issued by Vault have a TTL of at least ten times the poller interval so that they are renewed less frequently. A longer token TTL results in a lower  token renewal load on Vault.
+The Vault token obtained by Kubernetes authentication will be renewed as needed. By default the token will be renewed three poller intervals (POLLER_INTERVAL_MILLISECONDS) before the token TTL expires. The default should be acceptable in most cases but the token renew threshold can also be customized by setting the `VAULT_TOKEN_RENEW_THRESHOLD` environment variable. The token renew threshold value is specified in seconds and tokens with remaining TTL less than this number of seconds will be renewed. In order to minimize token renewal load on the Vault server it is suggested that Kubernetes auth tokens issued by Vault have a TTL of at least ten times the poller interval so that they are renewed less frequently. A longer token TTL results in a lower token renewal load on Vault.
 
 If Vault uses a certificate issued by a self-signed CA you will need to provide that certificate:
 
@@ -605,7 +588,7 @@ filesFromSecret:
   certificate-authority:
     secret: vault-ca
     mountPath: /usr/local/share/ca-certificates
- ```
+```
 
 ### Azure Key Vault
 
@@ -616,7 +599,7 @@ You will need to set these env vars in the deployment of kubernetes-external-sec
 - AZURE_TENANT_ID
 - AZURE_CLIENT_ID
 - AZURE_CLIENT_SECRET
-The SP configured will require get and list access policies on the AZURE_KEYVAULT_NAME.
+  The SP configured will require get and list access policies on the AZURE_KEYVAULT_NAME.
 
 ```yml
 apiVersion: kubernetes-client.io/v1
@@ -670,25 +653,27 @@ spec:
 
 kubernetes-external-secrets supports fetching secrets from [GCP Secret Manager](https://cloud.google.com/solutions/secrets-management)
 
-The external secret will poll for changes to the secret according to the value set for POLLER_INTERVAL_MILLISECONDS in env.  Depending on the time interval this is set to you may incur additional charges as Google Secret Manager [charges](https://cloud.google.com/secret-manager/pricing) per a set number of API calls.
+The external secret will poll for changes to the secret according to the value set for POLLER_INTERVAL_MILLISECONDS in env. Depending on the time interval this is set to you may incur additional charges as Google Secret Manager [charges](https://cloud.google.com/secret-manager/pricing) per a set number of API calls.
 
 A service account is required to grant the controller access to pull secrets.
-
 
 #### Add a secret
 
 Add your secret data to your backend using GCP SDK :
+
 ```
 echo -n '{"value": "my-secret-value"}' |     gcloud secrets create my-gsm-secret-name     --replication-policy="automatic"     --data-file=-
 ```
+
 If the secret needs to be updated :
+
 ```
 echo -n '{"value": "my-secret-value-with-update"}' |     gcloud secrets versions add my-gsm-secret-name --data-file=-
 ```
 
 ##### Deploy kubernetes-external-secrets using Workload Identity
 
-Instructions are here: [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable_workload_identity_on_a_new_cluster).  To enable workload identity on an existing cluster (which is not covered in that document), first enable it on the cluster like so:
+Instructions are here: [Enable Workload Identity](https://cloud.google.com/kubernetes-engine/docs/how-to/workload-identity#enable_workload_identity_on_a_new_cluster). To enable workload identity on an existing cluster (which is not covered in that document), first enable it on the cluster like so:
 
     gcloud container clusters update $CLUSTER_NAME --workload-pool=$PROJECT_NAME.svc.id.goog
 
@@ -761,24 +746,25 @@ Uncomment GOOGLE_APPLICATION_CREDENTIALS in the values file as well as the follo
 This will mount the secret at /app/gcp-creds/gcp-creds.json and make it available via the GOOGLE_APPLICATION_CREDENTIALS environment variable.
 
 #### Usage
+
 Once you have kubernetes-external-secrets installed, you can create an external secret with YAML like the following:
 
 ```yml
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
-  name: gcp-secrets-manager-example    # name of the k8s external secret and the k8s secret
+  name: gcp-secrets-manager-example # name of the k8s external secret and the k8s secret
 spec:
   backendType: gcpSecretsManager
   projectId: my-gsm-secret-project
   data:
-    - key: my-gsm-secret-name     # name of the GCP secret
-      name: my-kubernetes-secret-name   # key name in the k8s secret
-      version: latest    # version of the GCP secret
-      property: value      # name of the field in the GCP secret
+    - key: my-gsm-secret-name # name of the GCP secret
+      name: my-kubernetes-secret-name # key name in the k8s secret
+      version: latest # version of the GCP secret
+      property: value # name of the field in the GCP secret
 ```
 
-The field "key" is the name of the secret in Google Secret Manager.  The field "name" is the name of the Kubernetes secret this external secret will generate.  The metadata "name" field is the name of the external secret in Kubernetes.
+The field "key" is the name of the secret in Google Secret Manager. The field "name" is the name of the Kubernetes secret this external secret will generate. The metadata "name" field is the name of the external secret in Kubernetes.
 
 To retrieve external secrets, you can use the following command:
 
@@ -795,6 +781,7 @@ To retrieve an individual secret's content, use the following where "mysecret" i
 The secrets will persist even if the helm installation is removed, although they will no longer sync to Google Secret Manager.
 
 ## Binary Secrets
+
 Most backends do not treat binary secrets any differently than text secrets. Since you typically store a binary secret as a base64-encoded string in the backend, you need to explicitly let the ExternalSecret know that the secret is binary, otherwise it will be encoded in base64 again.
 You can do that with the `isBinary` field on the key. This is necessary for certificates and other secret binary files.
 
@@ -809,7 +796,7 @@ spec:
   data:
     - key: hello-service/archives/secrets_zip
       name: secrets.zip
-      isBinary: true  # Default: false
+      isBinary: true # Default: false
     # also works with `property`
     - key: hello-service/certificates
       name: cert.p12
@@ -825,11 +812,10 @@ Note that `SecretBinary` parameter is not available when using the AWS Secrets M
 
 kubernetes-external-secrets exposes the following metrics over a prometheus endpoint:
 
-| Metric                                             | Type    | Description                                                                     | Example                                                                       |
-| -------------------------------------------------- | ------- | ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `kubernetes_external_secrets_sync_calls_count`     | Counter | Number of sync operations by backend, secret name and status                    | `kubernetes_external_secrets_sync_calls_count{name="foo",namespace="example",backend="foo",status="success"} 1` |
-| `kubernetes_external_secrets_last_sync_call_state` | Gauge   | State of last sync call of external secert, where -1 means the last sync_call was an error and 1 means the last sync_call was a success  | `kubernetes_external_secrets_last_sync_call_state{name="foo",namespace="example",backend="foo"} 1` |
-
+| Metric                                             | Type    | Description                                                                                                                             | Example                                                                                                         |
+| -------------------------------------------------- | ------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `kubernetes_external_secrets_sync_calls_count`     | Counter | Number of sync operations by backend, secret name and status                                                                            | `kubernetes_external_secrets_sync_calls_count{name="foo",namespace="example",backend="foo",status="success"} 1` |
+| `kubernetes_external_secrets_last_sync_call_state` | Gauge   | State of last sync call of external secert, where -1 means the last sync_call was an error and 1 means the last sync_call was a success | `kubernetes_external_secrets_last_sync_call_state{name="foo",namespace="example",backend="foo"} 1`              |
 
 ## Development
 

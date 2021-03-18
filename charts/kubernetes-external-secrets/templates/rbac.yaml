@@ -29,11 +29,6 @@ rules:
   - apiGroups: ["kubernetes-client.io"]
     resources: ["externalsecrets/status"]
     verbs: ["get", "update"]
- {{- if .Values.customResourceManagerDisabled | not }}
-  - apiGroups: ["apiextensions.k8s.io"]
-    resources: ["customresourcedefinitions"]
-    verbs: ["create"]
-  {{- end }}
   {{- if .Values.customClusterRoles }}
   {{- toYaml .Values.customClusterRoles | nindent 2 }}
   {{- end }}

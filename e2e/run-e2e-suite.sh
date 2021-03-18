@@ -14,9 +14,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DISABLE_CUSTOM_RESOURCE_MANAGER=${1:-true}
-HELM_VERSION=${2:-V3}
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
 KIND_LOGGING=""
 if ! [ -z "$DEBUG" ]; then
@@ -72,25 +69,9 @@ kubectl apply -f ${DIR}/localstack.deployment.yaml
 
 CHART_DIR="$(dirname "$DIR")/charts/kubernetes-external-secrets"
 HELM_TEMPLATE_ARGS="e2e ${CHART_DIR}"
-HELM_TEMPLATE_EXTRA_ARGS="--include-crds --set customResourceManagerDisabled=true"
-E2E_EXTRA_ARGS="--env=DISABLE_CUSTOM_RESOURCE_MANAGER=true"
-if [[ "$HELM_VERSION" == "V3" ]]; then
-  if [[ "$DISABLE_CUSTOM_RESOURCE_MANAGER" == "false" ]]; then
-    HELM_TEMPLATE_EXTRA_ARGS="--skip-crds"
-    E2E_EXTRA_ARGS=""
-  fi
-else
-  HELM_TEMPLATE_ARGS="${CHART_DIR} --name e2e"
-  if [[ "$DISABLE_CUSTOM_RESOURCE_MANAGER" == "true" ]]; then
-    HELM_TEMPLATE_EXTRA_ARGS="--set crds.create=true --set customResourceManagerDisabled=true"
-  else
-    HELM_TEMPLATE_EXTRA_ARGS=""
-    E2E_EXTRA_ARGS=""
-  fi
-fi
 
 helm template ${HELM_TEMPLATE_ARGS} \
-  ${HELM_TEMPLATE_EXTRA_ARGS} \
+  --include-crds \
   --set image.repository=external-secrets \
   --set image.tag=test \
   --set env.LOG_LEVEL=debug \
@@ -132,7 +113,6 @@ kubectl run \
   --env="AWS_DEFAULT_REGION=us-east-1" \
   --env="AWS_REGION=us-east-1" \
   --env="LOCALSTACK_STS_URL=http://sts" \
-  ${E2E_EXTRA_ARGS} \
   --generator=run-pod/v1 \
   --overrides='{ "apiVersion": "v1", "spec":{"serviceAccountName": "external-secrets-e2e"}}' \
   e2e --image=external-secrets-e2e:test

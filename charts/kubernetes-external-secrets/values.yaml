@@ -2,23 +2,15 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Determines whether the Helm chart or kubernetes-external-secrets
-# will handle the ExternalSecret CRD
-customResourceManagerDisabled: false
-
-crds:
-  # only needed for helm v2, leave this disabled for helm v3
-  create: false
-
 # Environment variables to set on deployment pod
 env:
   AWS_REGION: us-west-2
   AWS_DEFAULT_REGION: us-west-2
-  POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
+  POLLER_INTERVAL_MILLISECONDS: 10000 # Caution, setting this frequency may incur additional charges on some platforms
   WATCH_TIMEOUT: 60000
-  WATCHED_NAMESPACES: '' # Comma separated list of namespaces, empty or unset means ALL namespaces.
+  WATCHED_NAMESPACES: "" # Comma separated list of namespaces, empty or unset means ALL namespaces.
   LOG_LEVEL: info
-  LOG_MESSAGE_KEY: 'msg'
+  LOG_MESSAGE_KEY: "msg"
   # Print logs level as string ("info") rather than integer (30)
   # USE_HUMAN_READABLE_LOG_LEVELS: true
   METRICS_PORT: 3001
@@ -103,7 +95,8 @@ securityContext:
   # Required for use of IRSA, see https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts-technical-overview.html
   # fsGroup: 65534
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
