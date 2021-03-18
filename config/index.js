@@ -42,7 +42,8 @@ const logger = pino({
       return { level: envConfig.useHumanReadableLogLevels ? label : number }
     }
   },
-  nestedKey: 'payload'
+  nestedKey: 'payload',
+  timestamp: () => `,"message_time":"${new Date(Date.now()).toISOString()}"`
 })
 
 const customResourceManager = new CustomResourceManager({
