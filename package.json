@@ -38,7 +38,6 @@
     "aws-sdk": "^2.628.0",
     "express": "^4.17.1",
     "js-yaml": "^3.14.1",
-    "json-stream": "^1.0.0",
     "kubernetes-client": "^9.0.0",
     "lodash": "^4.17.21",
     "make-promises-safe": "^5.1.0",
