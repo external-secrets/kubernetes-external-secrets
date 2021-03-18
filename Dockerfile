@@ -1,7 +1,7 @@
 FROM node:12-alpine
 
 ENV NODE_ENV production
-ENV NPM_CONFIG_LOGLEVEL info
+ENV NPM_CONFIG_LOGLEVEL warn
 
 # Setup source directory
 WORKDIR /app
