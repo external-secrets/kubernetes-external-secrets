@@ -2,8 +2,8 @@
 
 /* eslint-disable no-process-env */
 const AWS = require('aws-sdk')
-const clonedeep = require('lodash.clonedeep')
-const merge = require('lodash.merge')
+const clonedeep = require('lodash/cloneDeep')
+const merge = require('lodash/merge')
 const proxy = require('proxy-agent')
 
 if (process.env.HTTP_PROXY !== '') {
