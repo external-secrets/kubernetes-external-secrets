@@ -27,11 +27,11 @@ jobs:
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            const { default_branch } = await github.repos.get(context.repo);
+            const res = await github.repos.get(context.repo);
 
             let imageName = 'kes-dev';
 
-            if (default_branch === context.ref.replace('refs/heads/', '') || context.ref.startsWith('refs/tags/')) {
+            if (res.data.default_branch === context.ref.replace('refs/heads/', '') || context.ref.startsWith('refs/tags/')) {
               imageName = 'kubernetes-external-secrets';
             }
 
