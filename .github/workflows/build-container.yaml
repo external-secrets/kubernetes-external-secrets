@@ -8,6 +8,12 @@ on:
       - '*.*.*'
   pull_request:
 
+env:
+  # We can't run a step 'if secrets.GHCR_USERNAME != ""' but we can run a step
+  # 'if env.GHCR_USERNAME' != ""', so we copy these to test whether credentials
+  # are available before trying to run steps that need them. Like PRs from forks!
+  GHCR_USERNAME: ${{ secrets.GHCR_USERNAME }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
