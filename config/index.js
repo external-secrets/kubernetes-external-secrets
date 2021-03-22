@@ -13,7 +13,6 @@ const azureConfig = require('./azure-config')
 const alicloudConfig = require('./alicloud-config')
 const gcpConfig = require('./gcp-config')
 const envConfig = require('./environment')
-const CustomResourceManager = require('../lib/custom-resource-manager')
 const SecretsManagerBackend = require('../lib/backends/secrets-manager-backend')
 const SystemManagerBackend = require('../lib/backends/system-manager-backend')
 const VaultBackend = require('../lib/backends/vault-backend')
@@ -24,7 +23,6 @@ const AliCloudSecretsManagerBackend = require('../lib/backends/alicloud-secrets-
 // Get document, or throw exception on error
 // eslint-disable-next-line security/detect-non-literal-fs-filename
 const customResourceManifest = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../charts/kubernetes-external-secrets/crds/kubernetes-client.io_externalsecrets_crd.yaml'), 'utf8'))
-customResourceManifest.metadata.annotations['app.kubernetes.io/managed-by'] = 'custom-resource-manager'
 
 const kubeconfig = new kube.KubeConfig()
 kubeconfig.loadFromDefault()
@@ -44,12 +42,6 @@ const logger = pino({
   },
   nestedKey: 'payload',
   timestamp: () => `,"message_time":"${new Date(Date.now()).toISOString()}"`
-})
-
-const customResourceManager = new CustomResourceManager({
-  kubeClient,
-  logger,
-  disabled: envConfig.customResourceManagerDisabled
 })
 
 const secretsManagerBackend = new SecretsManagerBackend({
@@ -122,7 +114,6 @@ backends.secretManager = secretsManagerBackend
 module.exports = {
   awsConfig,
   backends,
-  customResourceManager,
   customResourceManifest,
   ...envConfig,
   kubeClient,

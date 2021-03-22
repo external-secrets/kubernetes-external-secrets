@@ -17,7 +17,6 @@ const PollerFactory = require('../lib/poller-factory')
 const {
   backends,
   kubeClient,
-  customResourceManager,
   customResourceManifest,
   logger,
   metricsPort,
@@ -34,7 +33,8 @@ async function main () {
   logger.info('loading kube specs')
   await kubeClient.loadSpec()
   logger.info('successfully loaded kube specs')
-  await customResourceManager.manageCrd({ customResourceManifest })
+
+  kubeClient.addCustomResourceDefinition(customResourceManifest)
 
   const externalSecretEvents = getExternalSecretEvents({
     kubeClient,

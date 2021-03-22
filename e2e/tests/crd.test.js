@@ -5,8 +5,7 @@ const { expect } = require('chai')
 
 const {
   kubeClient,
-  customResourceManifest,
-  customResourceManagerDisabled
+  customResourceManifest
 } = require('../../config')
 
 const {
@@ -21,11 +20,7 @@ describe('CRD', () => {
       .customresourcedefinitions(customResourceManifest.metadata.name)
       .get()
 
-    let managedBy = 'custom-resource-manager'
-    if (customResourceManagerDisabled) {
-      managedBy = 'helm'
-    }
-
+    const managedBy = 'helm'
     expect(res).to.not.equal(undefined)
     expect(res.statusCode).to.equal(200)
     expect(res.body.metadata.annotations['app.kubernetes.io/managed-by']).to.equal(managedBy)
