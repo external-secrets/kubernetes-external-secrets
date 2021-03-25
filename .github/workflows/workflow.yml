@@ -19,7 +19,7 @@ jobs:
         run: docker build -t test:test .
 
       - name: Trivy Scan - High and Critical Severity
-        uses: aquasecurity/trivy-action@0.0.12
+        uses: aquasecurity/trivy-action@0.0.13
         with:
           image-ref: test:test
           exit-code: 1
