@@ -856,3 +856,10 @@ Add secrets using the AWS cli (example)
 ```sh
 AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar aws --region=us-west-2 --endpoint-url=http://localhost:4584 secretsmanager create-secret --name hello-service/password --secret-string "1234"
 ```
+
+## Related projects
+
+### khcheck-external-secrets
+
+[khcheck-external-secrets](https://github.com/Nick-Triller/khcheck-external-secrets) is a
+[kuberhealthy](https://github.com/Comcast/kuberhealthy) check that monitors if the external secrets operator is functional.
