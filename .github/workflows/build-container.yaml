@@ -67,3 +67,21 @@ jobs:
           tags: ${{ steps.docker_meta.outputs.tags }}
           labels: ${{ steps.docker_meta.outputs.labels }}
 
+      # cant load multi arch, so we build the same arch again (everything should cache hit)
+      - name: Load for scan
+        uses: docker/build-push-action@v2
+        id: docker_load
+        with:
+          context: .
+          platforms: linux/amd64
+          load: true
+          tags: kes-scan:scan
+          labels: ${{ steps.docker_meta.outputs.labels }}
+
+      - name: Trivy Scan - High and Critical Severity
+        uses: aquasecurity/trivy-action@0.0.13
+        with:
+          image-ref: kes-scan:scan
+          exit-code: 1
+          ignore-unfixed: true
+          severity: HIGH,CRITICAL
