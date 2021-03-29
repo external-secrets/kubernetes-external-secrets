@@ -16,7 +16,7 @@ describe('CRD', () => {
   it('ensure CRD is managed correctly', async () => {
     const res = await kubeClient
       .apis['apiextensions.k8s.io']
-      .v1beta1
+      .v1
       .customresourcedefinitions(customResourceManifest.metadata.name)
       .get()
 
