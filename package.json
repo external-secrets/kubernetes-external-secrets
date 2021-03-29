@@ -8,7 +8,7 @@
     "lint": "eslint --fix --ignore-pattern /coverage/ ./",
     "local": "LOCALSTACK=1 AWS_ACCESS_KEY_ID=foobar AWS_SECRET_ACCESS_KEY=foobar nodemon",
     "localstack": "docker run -it -p 4566:4566 -p 9999:8080 -e SERVICES=ssm,secretsmanager,sts -e DEBUG=1 --rm localstack/localstack:latest",
-    "release": "standard-version --tag-prefix='' && ./release.sh",
+    "release": "standard-version --tag-prefix='' -a",
     "start": "./bin/daemon.js",
     "nodemon": "nodemon ./bin/daemon.js",
     "test": "eslint --ignore-pattern /coverage/ ./ && mocha --recursive lib",
