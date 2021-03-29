@@ -4,7 +4,7 @@ FROM node:12.21.0-alpine
 RUN mkdir /app
 WORKDIR /app
 COPY package.json package-lock.json /app/
-RUN npm install
+RUN npm ci
 
 # Copy app to source directory
 COPY . /app
