@@ -713,6 +713,38 @@ Create the policy binding:
 
     gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$CLUSTER_PROJECT.svc.id.goog[$SECRETS_NAMESPACE/kubernetes-external-secrets]" my-secrets-sa@$PROJECT.iam.gserviceaccount.com
 
+##### Deploy kubernetes-external-secrets using a service account key
+
+Alternatively you can create and mount a kubernetes secret containing google service account credentials and set the GOOGLE_APPLICATION_CREDENTIALS env variable.
+
+Create a Kubernetes secret called gcp-creds with a JSON keyfile from a service account with necessary credentials to access the secrets:
+
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: mysecret
+    type: Opaque
+    stringData:
+      gcp-creds.json: |-
+        $KEYFILE_CONTENT
+
+Uncomment GOOGLE_APPLICATION_CREDENTIALS in the values file as well as the following section:
+
+    env:
+      AWS_REGION: us-west-2
+      POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
+      LOG_LEVEL: info
+      METRICS_PORT: 3001
+      VAULT_ADDR: http://127.0.0.1:8200
+      GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
+
+     filesFromSecret:
+       gcp-creds:
+         secret: gcp-creds
+         mountPath: /app/gcp-creds
+
+This will mount the secret at /app/gcp-creds/gcp-creds.json and make it available via the GOOGLE_APPLICATION_CREDENTIALS environment variable.
+
 ### IBM Cloud Secrets Manager
 
 kubernetes-external-secrets supports fetching secrets from [IBM Cloud Secrets Manager](https://cloud.ibm.com/catalog/services/secrets-manager)
@@ -748,39 +780,6 @@ spec:
       property: username 
       secretType: username_password
 ```
-
-
-##### Deploy kubernetes-external-secrets using a service account key
-
-Alternatively you can create and mount a kubernetes secret containing google service account credentials and set the GOOGLE_APPLICATION_CREDENTIALS env variable.
-
-Create a Kubernetes secret called gcp-creds with a JSON keyfile from a service account with necessary credentials to access the secrets:
-
-    apiVersion: v1
-    kind: Secret
-    metadata:
-      name: mysecret
-    type: Opaque
-    stringData:
-      gcp-creds.json: |-
-        $KEYFILE_CONTENT
-
-Uncomment GOOGLE_APPLICATION_CREDENTIALS in the values file as well as the following section:
-
-    env:
-      AWS_REGION: us-west-2
-      POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
-      LOG_LEVEL: info
-      METRICS_PORT: 3001
-      VAULT_ADDR: http://127.0.0.1:8200
-      GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
-
-     filesFromSecret:
-       gcp-creds:
-         secret: gcp-creds
-         mountPath: /app/gcp-creds
-
-This will mount the secret at /app/gcp-creds/gcp-creds.json and make it available via the GOOGLE_APPLICATION_CREDENTIALS environment variable.
 
 #### Usage
 
