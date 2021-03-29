@@ -1,7 +1,7 @@
 apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
-  name: hello-service
+  name: template-advanced
 spec:
   backendType: vault
   vaultMountPoint: my-kubernetes-vault-mount-point

@@ -1,7 +1,7 @@
 apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
-  name: database-credentials-from-kv1
+  name: vault-kv1
 spec:
   backendType: vault
   vaultMountPoint: my-kubernetes-vault-mount-point
