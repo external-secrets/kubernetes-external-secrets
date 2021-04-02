@@ -1,4 +1,4 @@
-FROM node:12.21.0-alpine
+FROM node:12-alpine
 
 # Setup source directory
 RUN mkdir /app
