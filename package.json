@@ -36,6 +36,8 @@
     "@azure/keyvault-secrets": "^4.0.4",
     "@google-cloud/secret-manager": "^3.2.3",
     "@ibm-cloud/secrets-manager": "^0.1.0",
+    "akeyless": "^2.0.15",
+    "akeyless-cloud-id": "^1.0.0",
     "aws-sdk": "^2.628.0",
     "express": "^4.17.1",
     "js-yaml": "^3.14.1",

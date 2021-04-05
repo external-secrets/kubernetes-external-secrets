@@ -13,6 +13,7 @@ const azureConfig = require('./azure-config')
 const alicloudConfig = require('./alicloud-config')
 const gcpConfig = require('./gcp-config')
 const ibmcloudConfig = require('./ibmcloud-config')
+const akeylessConfig = require('./akeyless-config')
 const envConfig = require('./environment')
 const SecretsManagerBackend = require('../lib/backends/secrets-manager-backend')
 const SystemManagerBackend = require('../lib/backends/system-manager-backend')
@@ -21,6 +22,7 @@ const AzureKeyVaultBackend = require('../lib/backends/azure-keyvault-backend')
 const GCPSecretsManagerBackend = require('../lib/backends/gcp-secrets-manager-backend')
 const AliCloudSecretsManagerBackend = require('../lib/backends/alicloud-secrets-manager-backend')
 const IbmCloudSecretsManagerBackend = require('../lib/backends/ibmcloud-secrets-manager-backend')
+const AkeylessBackend = require('../lib/backends/akeyless-backend')
 
 // Get document, or throw exception on error
 // eslint-disable-next-line security/detect-non-literal-fs-filename
@@ -103,6 +105,10 @@ const ibmcloudSecretsManagerBackend = new IbmCloudSecretsManagerBackend({
   credential: ibmcloudConfig.credential,
   logger
 })
+const akeylessBackend = new AkeylessBackend({
+  credential: akeylessConfig.credential,
+  logger
+})
 
 const backends = {
   // when adding a new backend, make sure to change the CRD property too
@@ -112,7 +118,8 @@ const backends = {
   azureKeyVault: azureKeyVaultBackend,
   gcpSecretsManager: gcpSecretsManagerBackend,
   alicloudSecretsManager: alicloudSecretsManagerBackend,
-  ibmcloudSecretsManager: ibmcloudSecretsManagerBackend
+  ibmcloudSecretsManager: ibmcloudSecretsManagerBackend,
+  akeyless: akeylessBackend
 }
 
 // backwards compatibility
