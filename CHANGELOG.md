@@ -2,6 +2,38 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.0.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.4.0...7.0.0) (2021-04-06)
+
+
+### ⚠ BREAKING CHANGES
+
+* require .spec field in CRD validation (#682)
+* drop helm v2 and builtin CRD management (#663)
+* rename time field to avoid duplicate time key in log output
+
+### Features
+
+* add arm v7 as docker multi arch target ([#679](https://github.com/external-secrets/kubernetes-external-secrets/issues/679)) ([7c7cca8](https://github.com/external-secrets/kubernetes-external-secrets/commit/7c7cca8521df628e3fb2c940c8c6b198000db540))
+* add container scan ([#658](https://github.com/external-secrets/kubernetes-external-secrets/issues/658)) ([82ff43e](https://github.com/external-secrets/kubernetes-external-secrets/commit/82ff43e07a26e41a7938f3c51db42db5d5f75219))
+* add support for IBM Cloud Secrets Manager backend ([#656](https://github.com/external-secrets/kubernetes-external-secrets/issues/656)) ([8ff9490](https://github.com/external-secrets/kubernetes-external-secrets/commit/8ff9490904a9fd6eea70562e7a5349a88cb866d4))
+* automated docker image build with multi arch (amd64 + arm64) ([#665](https://github.com/external-secrets/kubernetes-external-secrets/issues/665)) ([4846313](https://github.com/external-secrets/kubernetes-external-secrets/commit/48463138ff7506e89da473a6165035a1e1f51d32))
+* drop helm v2 and builtin CRD management ([#663](https://github.com/external-secrets/kubernetes-external-secrets/issues/663)) ([87a3ecb](https://github.com/external-secrets/kubernetes-external-secrets/commit/87a3ecb904f13f936a26296cdb8270521a432e98))
+
+
+### Bug Fixes
+
+* add a accurate log message when AWS region is not defined in the Systems manager manifest ([#648](https://github.com/external-secrets/kubernetes-external-secrets/issues/648)) ([448305a](https://github.com/external-secrets/kubernetes-external-secrets/commit/448305a8135eb3e8b697ed6df799eb431aef71e6))
+* remove instructions to push docker image when cutting release ([472ad25](https://github.com/external-secrets/kubernetes-external-secrets/commit/472ad251cc1f4ffc46c462221ee2956316f9d186))
+* rename time field to avoid duplicate time key in log output ([faf2093](https://github.com/external-secrets/kubernetes-external-secrets/commit/faf20933425f9f26f9c3c5ffbd5817a6f3aec5b0))
+* require .spec field in CRD validation ([#682](https://github.com/external-secrets/kubernetes-external-secrets/issues/682)) ([e43a6b8](https://github.com/external-secrets/kubernetes-external-secrets/commit/e43a6b8cc91fb4eaeb474571798807a230f3767c))
+* update transitive deps ([#667](https://github.com/external-secrets/kubernetes-external-secrets/issues/667)) ([7852dd6](https://github.com/external-secrets/kubernetes-external-secrets/commit/7852dd6dc89ddaef1dcf99ef108651f543ad704b))
+* update transitive netmask dependency to resolve CVE-2021-28918 ([#693](https://github.com/external-secrets/kubernetes-external-secrets/issues/693)) ([483fb90](https://github.com/external-secrets/kubernetes-external-secrets/commit/483fb90401ce4cf3383d730f05b6f3c9e567bd5d))
+* use getObjectStream to address deprecation warning in kubernetes-client ([#664](https://github.com/external-secrets/kubernetes-external-secrets/issues/664)) ([3ee939a](https://github.com/external-secrets/kubernetes-external-secrets/commit/3ee939a0882742440d6aeca863f398d054b36992))
+* watch without namespace path if watching all namespaces ([#673](https://github.com/external-secrets/kubernetes-external-secrets/issues/673)) ([fa070ef](https://github.com/external-secrets/kubernetes-external-secrets/commit/fa070ef152dff5aa0a08812b4a42b08855e451b2))
+* **deps:** drop individual 'lodash.*' packages in favor of lodash package  ([#661](https://github.com/external-secrets/kubernetes-external-secrets/issues/661)) ([cfe3366](https://github.com/external-secrets/kubernetes-external-secrets/commit/cfe3366e93738ce74e46431bbbef2127d507ef7a))
+* **helm:** add patch version to semverCompare ([#637](https://github.com/external-secrets/kubernetes-external-secrets/issues/637)) ([9394316](https://github.com/external-secrets/kubernetes-external-secrets/commit/939431695d7e4fd1b2fe2422692773b7a076afd9))
+* **secretsManager:** remove 'undefined' log message when AWS region is not defined in the ExternalSecret manifest ([#641](https://github.com/external-secrets/kubernetes-external-secrets/issues/641)) ([3409c66](https://github.com/external-secrets/kubernetes-external-secrets/commit/3409c66500e25ec2d069585e7d39e9699e790fe1))
+
 ## [6.4.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.3.0...6.4.0) (2021-02-25)
 
 
