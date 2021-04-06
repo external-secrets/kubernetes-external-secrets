@@ -125,6 +125,8 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [5.0.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/4.2.0...5.0.0) (2020-07-24)
 
+**NOTE** There was no breaking changes in this release, just a release script mishap bumping the major.
+
 
 ### Features
 
