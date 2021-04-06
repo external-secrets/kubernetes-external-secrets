@@ -27,7 +27,7 @@ describe('CRD', () => {
   })
 
   it('should reject invalid ExternalSecret manifests', async () => {
-    kubeClient
+    return kubeClient
       .apis[customResourceManifest.spec.group]
       .v1.namespaces('default')[customResourceManifest.spec.names.plural]
       .post({
@@ -48,6 +48,7 @@ describe('CRD', () => {
           }
         }
       })
-      .catch(err => expect(err).to.be.an('error'))
+      .then(() => { throw new Error('was not supposed to succeed') })
+      .catch((err) => expect(err).to.match(/spec: Required value/))
   })
 })

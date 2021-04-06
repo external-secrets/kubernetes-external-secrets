@@ -68,10 +68,8 @@ trap cleanup EXIT
 kubectl apply -f ${DIR}/localstack.deployment.yaml
 
 CHART_DIR="$(dirname "$DIR")/charts/kubernetes-external-secrets"
-HELM_TEMPLATE_ARGS="e2e ${CHART_DIR}"
 
-helm template ${HELM_TEMPLATE_ARGS} \
-  --include-crds \
+helm install e2e ${CHART_DIR} \
   --set image.repository=external-secrets \
   --set image.tag=test \
   --set env.LOG_LEVEL=debug \
@@ -83,7 +81,7 @@ helm template ${HELM_TEMPLATE_ARGS} \
   --set env.AWS_DEFAULT_REGION=us-east-1 \
   --set env.AWS_REGION=us-east-1 \
   --set env.POLLER_INTERVAL_MILLISECONDS=1000 \
-  --set env.LOCALSTACK_STS_URL=http://sts | kubectl apply -f -
+  --set env.LOCALSTACK_STS_URL=http://sts
 
 echo -e "${BGREEN}Granting permissions to external-secrets e2e service account...${NC}"
 kubectl create serviceaccount external-secrets-e2e || true

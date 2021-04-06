@@ -1,4 +1,4 @@
-[![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/external-secrets/kubernetes-external-secrets)](https://lgtm.com/projects/g/external-secrets/kubernetes-external-secrets)
+[![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/external-secrets)](https://artifacthub.io/packages/search?repo=external-secrets) [![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/external-secrets/kubernetes-external-secrets)](https://lgtm.com/projects/g/external-secrets/kubernetes-external-secrets)
 
 ## Repository moved to external-secrets
 

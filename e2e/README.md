@@ -21,7 +21,7 @@ To better understand how they are being run take a look at `run-e2e-suite.sh`.
 kind create cluster \
   --name es-dev-cluster \
   --config ./kind.yaml \
-  --image "kindest/node:v1.15.3"
+  --image "kindest/node:v1.16.15"
 
 export KUBECONFIG="$(kind get kubeconfig-path --name="es-dev-cluster")"
 
