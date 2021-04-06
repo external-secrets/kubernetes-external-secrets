@@ -124,7 +124,7 @@ describe('secretsmanager', async () => {
     expect(secret.body.metadata.labels.secretLabel).to.equal('Hellofoo123')
   })
 
-  it('should pull TLS secret from secretsmanager', async () => {
+  it('should pull TLS secret from secretsmanager - type', async () => {
     let result = await createSecret({
       Name: `e2e/${uuid}/tls/cert`,
       SecretString: '{"crt":"foo","key":"bar"}'
@@ -165,6 +165,55 @@ describe('secretsmanager', async () => {
     expect(result.statusCode).to.equal(201)
 
     const secret = await waitForSecret('default', `e2e-secretmanager-tls-${uuid}`)
+    expect(secret).to.not.equal(undefined)
+    expect(secret.body.data['tls.crt']).to.equal('Zm9v')
+    expect(secret.body.data['tls.key']).to.equal('YmFy')
+    expect(secret.body.type).to.equal('kubernetes.io/tls')
+  })
+
+  it('should pull TLS secret from secretsmanager - template', async () => {
+    let result = await createSecret({
+      Name: `e2e/${uuid}/tls/cert-template`,
+      SecretString: '{"crt":"foo","key":"bar"}'
+    }).catch(err => {
+      expect(err).to.equal(null)
+    })
+
+    result = await kubeClient
+      .apis[customResourceManifest.spec.group]
+      .v1.namespaces('default')[customResourceManifest.spec.names.plural]
+      .post({
+        body: {
+          apiVersion: 'kubernetes-client.io/v1',
+          kind: 'ExternalSecret',
+          metadata: {
+            name: `e2e-secretmanager-tls-template-${uuid}`
+          },
+          spec: {
+            backendType: 'secretsManager',
+            template: {
+              type: 'kubernetes.io/tls'
+            },
+            data: [
+              {
+                key: `e2e/${uuid}/tls/cert-template`,
+                property: 'crt',
+                name: 'tls.crt'
+              },
+              {
+                key: `e2e/${uuid}/tls/cert-template`,
+                property: 'key',
+                name: 'tls.key'
+              }
+            ]
+          }
+        }
+      })
+
+    expect(result).to.not.equal(undefined)
+    expect(result.statusCode).to.equal(201)
+
+    const secret = await waitForSecret('default', `e2e-secretmanager-tls-template-${uuid}`)
     expect(secret).to.not.equal(undefined)
     expect(secret.body.data['tls.crt']).to.equal('Zm9v')
     expect(secret.body.data['tls.key']).to.equal('YmFy')
