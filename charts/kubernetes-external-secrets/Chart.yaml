@@ -1,4 +1,4 @@
-apiVersion: v1
+apiVersion: v2
 name: kubernetes-external-secrets
 version: 7.0.0
 appVersion: 7.0.0
