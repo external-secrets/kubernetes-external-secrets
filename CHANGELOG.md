@@ -130,6 +130,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
+* **chart::** add dns config options
 * **logging:** add config to allow switching level format to human-readable log levels ([#429](https://github.com/external-secrets/kubernetes-external-secrets/issues/429)) ([4602ad0](https://github.com/external-secrets/kubernetes-external-secrets/commit/4602ad0616b9e5e0ec3e90ea4de8383d9482f4d8))
 * **secretsManager:** add support for versionId in AWS Secrets Manager ([#436](https://github.com/external-secrets/kubernetes-external-secrets/issues/436)) ([95827bc](https://github.com/external-secrets/kubernetes-external-secrets/commit/95827bcbeeb6ae87bee274022fac80c6c4754a79))
 
