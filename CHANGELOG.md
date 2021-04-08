@@ -2,14 +2,6 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [6.4.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.0.0...6.4.1) (2021-04-08)
-
-
-### Bug Fixes
-
-* **chart:** add prerelease suffix ('>=1.17.0-0') to all semverCompare checks in rbac template ([#699](https://github.com/external-secrets/kubernetes-external-secrets/issues/699)) ([87d6037](https://github.com/external-secrets/kubernetes-external-secrets/commit/87d603710bbfadec785b6b12ef3d70b4019daee0))
-* **chart:** bump Helm chart API version ([#698](https://github.com/external-secrets/kubernetes-external-secrets/issues/698)) ([ce27e88](https://github.com/external-secrets/kubernetes-external-secrets/commit/ce27e88c56756cc96950f9524f8d16bc63860579))
-
 ## [7.0.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/6.4.0...7.0.0) (2021-04-06)
 
 
