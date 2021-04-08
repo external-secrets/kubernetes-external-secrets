@@ -19,6 +19,24 @@ entries:
     urls:
     - kubernetes-external-secrets-7.0.0.tgz
     version: 7.0.0
+  - apiVersion: v2
+    appVersion: 6.4.1
+    created: "2021-04-08T02:35:54.1639555+02:00"
+    description: Kubernetes External Secrets CustomResourceDefinition
+    digest: 621a513e9fc126c246497700456dbee5bf5392e95784cae32e9c64843092d2b7
+    home: https://github.com/external-secrets/kubernetes-external-secrets
+    keywords:
+    - kubernetes-external-secrets
+    - secrets
+    maintainers:
+    - name: external-secrets
+      url: https://github.com/external-secrets
+    name: kubernetes-external-secrets
+    sources:
+    - https://github.com/external-secrets/kubernetes-external-secrets
+    urls:
+    - kubernetes-external-secrets-6.4.1.tgz
+    version: 6.4.1
   - apiVersion: v1
     appVersion: 6.4.0
     created: "2021-02-25T16:30:44.0557974+01:00"
@@ -431,4 +449,4 @@ entries:
     urls:
     - kubernetes-external-secrets-1.0.1.tgz
     version: 1.0.1
-generated: "2021-04-06T03:13:17.003514+02:00"
+generated: "2021-04-08T02:35:54.1635006+02:00"
