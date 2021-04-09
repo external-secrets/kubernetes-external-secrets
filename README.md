@@ -361,6 +361,19 @@ $ kubectl get secret/tmpl-ext-sec -ogo-template='{{ .metadata.labels }}'
 map[label1:11 label2:hello-world]
 ```
 
+## Disabling custom resource manager
+
+In case there is more than one kubernetes-external-secrets deployment, it's recommended to disable CRD manager
+to avoid having multiple deployments fighting over the CRD.
+
+That's could be done in the controller side by setting the env var:
+```yaml
+env:
+  DISABLE_CUSTOM_RESOURCE_MANAGER: true
+```
+
+Or in Helm, by setting `customResourceManagerDisabled=true`.
+
 ## Scoping access
 
 ### Using Namespace annotation
@@ -402,6 +415,35 @@ To enable this option, set the env var in the controller side with a list of nam
 env:
   WATCHED_NAMESPACES: "default,qa,dev"
 ```
+
+### Using ExternalSecret config
+
+ExternalSecret manifest allows scoping the access of kubernetes-external-secrets controller.
+This allows to deploy multi kubernetes-external-secrets instances at the same cluster
+and each instance can access a set of ExternalSecrets.
+
+To enable this option, set the env var in the controller side:
+```yaml
+env:
+  INSTANCE_ID: "dev-team-instance"
+```
+
+And in ExternalSecret side:
+```yaml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: foo
+spec:
+  controllerID: 'dev-team-instance'
+[...]
+```
+
+**Please note**
+
+Scoping access by ExternalSecret config provides only a logical separation and it doesn't cover the security aspects.
+i.e it assumes that the security side is managed by another component like Kubernetes Network policies
+or Open Policy Agent.
 
 ## Deprecations
 
