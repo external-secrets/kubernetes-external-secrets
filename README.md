@@ -435,7 +435,7 @@ kind: ExternalSecret
 metadata:
   name: foo
 spec:
-  controllerID: 'dev-team-instance'
+  controllerId: 'dev-team-instance'
 [...]
 ```
 
