@@ -54,10 +54,13 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.IMAGE_NAME }}:${{ steps.docker_meta.outputs.version }}
+          image-ref: ${{ env.IMAGE_NAME }}:nightly
           format: 'template'
           ignore-unfixed: true
           severity: HIGH,CRITICAL

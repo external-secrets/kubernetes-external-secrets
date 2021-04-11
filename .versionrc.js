@@ -48,5 +48,5 @@ module.exports = {
   scripts: {
     "prechangelog": "(cd charts/kubernetes-external-secrets && helm package . && helm repo index --merge ../../docs/index.yaml ./ && mv *.tgz ../../docs && mv index.yaml ../../docs && git add ../../docs)"
   },
-  bumpFiles: [chart, values, readme],
+  bumpFiles: ['package.json', 'package-lock.json', chart, values, readme],
 };
