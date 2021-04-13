@@ -361,19 +361,6 @@ $ kubectl get secret/tmpl-ext-sec -ogo-template='{{ .metadata.labels }}'
 map[label1:11 label2:hello-world]
 ```
 
-## Disabling custom resource manager
-
-In case there is more than one kubernetes-external-secrets deployment, it's recommended to disable CRD manager
-to avoid having multiple deployments fighting over the CRD.
-
-That's could be done in the controller side by setting the env var:
-```yaml
-env:
-  DISABLE_CUSTOM_RESOURCE_MANAGER: true
-```
-
-Or in Helm, by setting `customResourceManagerDisabled=true`.
-
 ## Scoping access
 
 ### Using Namespace annotation
