@@ -6,7 +6,7 @@
 
 ```bash
 $ helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
-$ helm install external-secrets/kubernetes-external-secrets
+$ helm install [RELEASE_NAME] external-secrets/kubernetes-external-secrets
 ```
 
 See below for [Helm V2 considerations](#helm-v2-considerations) when installing the chart.
