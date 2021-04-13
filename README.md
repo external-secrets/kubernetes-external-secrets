@@ -48,7 +48,7 @@ The official [helm chart](charts/kubernetes-external-secrets) can be used to cre
 
 ```bash
 $ helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
-$ helm install external-secrets/kubernetes-external-secrets
+$ helm install kes external-secrets/kubernetes-external-secrets
 ```
 
 For more details about configuration see the [helm chart docs](charts/kubernetes-external-secrets/README.md)
