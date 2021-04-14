@@ -403,6 +403,35 @@ env:
   WATCHED_NAMESPACES: "default,qa,dev"
 ```
 
+### Using ExternalSecret config
+
+ExternalSecret manifest allows scoping the access of kubernetes-external-secrets controller.
+This allows to deploy multi kubernetes-external-secrets instances at the same cluster
+and each instance can access a set of ExternalSecrets.
+
+To enable this option, set the env var in the controller side:
+```yaml
+env:
+  INSTANCE_ID: "dev-team-instance"
+```
+
+And in ExternalSecret side:
+```yaml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: foo
+spec:
+  controllerId: 'dev-team-instance'
+[...]
+```
+
+**Please note**
+
+Scoping access by ExternalSecret config provides only a logical separation and it doesn't cover the security aspects.
+i.e it assumes that the security side is managed by another component like Kubernetes Network policies
+or Open Policy Agent.
+
 ## Deprecations
 
 A few properties has changed name overtime, we still maintain backwards compatbility with these but they will eventually be removed, and they are not validated using the CRD validation.
