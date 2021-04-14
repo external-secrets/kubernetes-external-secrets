@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [7.2.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.1.0...7.2.0) (2021-04-14)
+
+
+### Features
+
+* **chart:** add envVarsFromConfigMap and envFrom support for more options to configure the Helm deployment ([#706](https://github.com/external-secrets/kubernetes-external-secrets/issues/706)) ([14900e5](https://github.com/external-secrets/kubernetes-external-secrets/commit/14900e532df9c71e741124225c0cdb34158ac1d8))
+
+
+### Bug Fixes
+
+* crash on watcher events introduced with multi-tenancy ([#708](https://github.com/external-secrets/kubernetes-external-secrets/issues/708)) ([c7250cc](https://github.com/external-secrets/kubernetes-external-secrets/commit/c7250cc6765668a5c6a56a0798e13dbc0f1eb3d3))
+
 ## [7.1.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.0.1...7.1.0) (2021-04-14)
 
 
