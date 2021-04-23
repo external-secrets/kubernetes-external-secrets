@@ -742,6 +742,10 @@ Create the policy binding:
 
     gcloud iam service-accounts add-iam-policy-binding --role roles/iam.workloadIdentityUser --member "serviceAccount:$CLUSTER_PROJECT.svc.id.goog[$SECRETS_NAMESPACE/kubernetes-external-secrets]" my-secrets-sa@$PROJECT.iam.gserviceaccount.com
 
+Grant GCP service account access to secrets:
+
+    gcloud projects add-iam-policy-binding $PROJECT_ID --member=serviceAccount:my-secrets-sa@$PROJECT.iam.gserviceaccount.com --role=roles/secretmanager.secretAccessor
+
 ##### Deploy kubernetes-external-secrets using a service account key
 
 Alternatively you can create and mount a kubernetes secret containing google service account credentials and set the GOOGLE_APPLICATION_CREDENTIALS env variable.
