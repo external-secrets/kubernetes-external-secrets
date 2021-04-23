@@ -64,6 +64,9 @@
     "standard-version": "^9.2.0",
     "supertest": "6.0.1"
   },
+  "resolutions": {
+    "jose": "^1.28.1"
+  },
   "nyc": {
     "check-coverage": true,
     "reporter": [
