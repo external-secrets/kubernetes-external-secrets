@@ -26,7 +26,8 @@ const {
   namingPermittedAnnotation,
   enforceNamespaceAnnotation,
   watchTimeout,
-  watchedNamespaces
+  watchedNamespaces,
+  instanceId
 } = require('../config')
 
 async function main () {
@@ -63,7 +64,8 @@ async function main () {
   const daemon = new Daemon({
     externalSecretEvents,
     logger,
-    pollerFactory
+    pollerFactory,
+    instanceId
   })
 
   const metricsServer = new MetricsServer({
