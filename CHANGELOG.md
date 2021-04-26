@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.2.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.2.0...7.2.1) (2021-04-26)
+
+
+### Bug Fixes
+
+* correctly pass instanceId to daemon so scoping with controllerId works ([#719](https://github.com/external-secrets/kubernetes-external-secrets/issues/719)) ([82f54e2](https://github.com/external-secrets/kubernetes-external-secrets/commit/82f54e20a8bc765b4d29568ec1f30200e5e3e6a2))
+* update dependency jose ([#713](https://github.com/external-secrets/kubernetes-external-secrets/issues/713)) ([e47dee0](https://github.com/external-secrets/kubernetes-external-secrets/commit/e47dee0f17388c561c5cede43f283ccc0a8a0e5d))
+
 ## [7.2.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.1.0...7.2.0) (2021-04-14)
 
 
