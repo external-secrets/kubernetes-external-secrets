@@ -254,7 +254,7 @@ Templating can be used for:
   - upserting base64 encoded content `ExternalSecret.template.data`
 - For creating dynamic labels, annotations and other fields available in K8S `Secret` object.
 
-To demonstrate templating functionality let's assume the secure backend, e.g. Hashicorp Vaule, contains the following data
+To demonstrate templating functionality let's assume the secure backend, e.g. Hashicorp Vault, contains the following data
 
 <table>
 <tr>
