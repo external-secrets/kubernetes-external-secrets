@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-external-secrets",
-  "version": "7.0.1",
+  "version": "7.2.1",
   "description": "Kubernetes external secrets",
   "main": "bin/daemon.js",
   "scripts": {
@@ -65,6 +65,9 @@
     "sinon": "9.2.1",
     "standard-version": "^9.2.0",
     "supertest": "6.0.1"
+  },
+  "resolutions": {
+    "jose": "^1.28.1"
   },
   "nyc": {
     "check-coverage": true,

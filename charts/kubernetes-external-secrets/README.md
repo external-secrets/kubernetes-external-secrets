@@ -6,7 +6,7 @@
 
 ```bash
 $ helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
-$ helm install external-secrets/kubernetes-external-secrets
+$ helm install [RELEASE_NAME] external-secrets/kubernetes-external-secrets
 ```
 
 See below for [Helm V2 considerations](#helm-v2-considerations) when installing the chart.
@@ -67,8 +67,10 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `envVarsFromSecret.ALICLOUD_ENDPOINT`     | Set ALICLOUD_ENDPOINT for KMS Service in Deployment Pod                                                                           |                                       |
 | `envVarsFromSecret.ALICLOUD_ACCESS_KEY_ID`     | Set ALICLOUD_ACCESS_KEY_ID (from a secret) in Deployment Pod                                                                 |                                       |
 | `envVarsFromSecret.ALICLOUD_ACCESS_KEY_SECRET` | Set ALICLOUD_ACCESS_KEY_SECRET (from a secret) in Deployment Pod                                                             |                                       |
+| `envVarsFromConfigMap.*` | Set any of the environment variables as `envVarsFromSecret` does but from a `configMap` in Deployment Pod                                                             |                                       |
+| `envFrom` | Enables the [`envFrom` block](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) on the Deployment pod                                                              |                                       |
 | `image.repository`                        | kubernetes-external-secrets Image name                                                                                            | `godaddy/kubernetes-external-secrets` |
-| `image.tag`                               | kubernetes-external-secrets Image tag                                                                                             | `7.0.1`                               |
+| `image.tag`                               | kubernetes-external-secrets Image tag                                                                                             | `7.2.1`                               |
 | `image.pullPolicy`                        | Image pull policy                                                                                                                 | `IfNotPresent`                        |
 | `nameOverride`                            | Override the name of app                                                                                                          | `nil`                                 |
 | `fullnameOverride`                        | Override the full name of app                                                                                                     | `nil`                                 |

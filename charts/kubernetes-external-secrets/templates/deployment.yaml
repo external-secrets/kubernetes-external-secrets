@@ -59,6 +59,17 @@ spec:
                 name: {{ $value.secretKeyRef | quote }}
                 key: {{ $value.key | quote }}
           {{- end }}
+          {{- range $key, $value := .Values.envVarsFromConfigMap }}
+          - name: {{ $key }}
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $value.configMapKeyRef | quote }}
+                key: {{ $value.key | quote }}
+          {{- end }}
+          {{- if .Values.envFrom }}
+          envFrom:
+          {{- .Values.envFrom | toYaml | nindent 12 }}
+          {{- end }}
           {{- if or .Values.filesFromSecret .Values.extraVolumeMounts }}
           volumeMounts:
           {{- if .Values.extraVolumeMounts }}

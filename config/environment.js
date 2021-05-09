@@ -16,6 +16,10 @@ if (environment === 'development') {
   require('dotenv').config()
 }
 
+// The name of this KES instance which used to scope access of ExternalSecrets.
+// This is needed in case there is more than a KES controller instances within the cluster.
+const instanceId = process.env.INSTANCE_ID || ''
+
 const vaultEndpoint = process.env.VAULT_ADDR || 'http://127.0.0.1:8200'
 // Grab the vault namespace from the environment
 const vaultNamespace = process.env.VAULT_NAMESPACE || null
@@ -52,6 +56,7 @@ watchedNamespaces = watchedNamespaces
   .filter(namespace => namespace)
 
 module.exports = {
+  instanceId,
   vaultEndpoint,
   vaultNamespace,
   vaultTokenRenewThreshold,

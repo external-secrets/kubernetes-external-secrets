@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [7.2.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.2.0...7.2.1) (2021-04-26)
+
+
+### Bug Fixes
+
+* correctly pass instanceId to daemon so scoping with controllerId works ([#719](https://github.com/external-secrets/kubernetes-external-secrets/issues/719)) ([82f54e2](https://github.com/external-secrets/kubernetes-external-secrets/commit/82f54e20a8bc765b4d29568ec1f30200e5e3e6a2))
+* update dependency jose ([#713](https://github.com/external-secrets/kubernetes-external-secrets/issues/713)) ([e47dee0](https://github.com/external-secrets/kubernetes-external-secrets/commit/e47dee0f17388c561c5cede43f283ccc0a8a0e5d))
+
+## [7.2.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.1.0...7.2.0) (2021-04-14)
+
+
+### Features
+
+* **chart:** add envVarsFromConfigMap and envFrom support for more options to configure the Helm deployment ([#706](https://github.com/external-secrets/kubernetes-external-secrets/issues/706)) ([14900e5](https://github.com/external-secrets/kubernetes-external-secrets/commit/14900e532df9c71e741124225c0cdb34158ac1d8))
+
+
+### Bug Fixes
+
+* crash on watcher events introduced with multi-tenancy ([#708](https://github.com/external-secrets/kubernetes-external-secrets/issues/708)) ([c7250cc](https://github.com/external-secrets/kubernetes-external-secrets/commit/c7250cc6765668a5c6a56a0798e13dbc0f1eb3d3))
+
+## [7.1.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.0.1...7.1.0) (2021-04-14)
+
+
+### Features
+
+* **multitenancy:** scope KES access using ExternalSecret `spec.controllerId` and `INSTANCE_ID` env ([#701](https://github.com/external-secrets/kubernetes-external-secrets/issues/701)) ([af50ca6](https://github.com/external-secrets/kubernetes-external-secrets/commit/af50ca63130e0b7d14fcc29dd1f65ef9092f25aa))
+
 ### [7.0.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.0.0...7.0.1) (2021-04-08)
 
 

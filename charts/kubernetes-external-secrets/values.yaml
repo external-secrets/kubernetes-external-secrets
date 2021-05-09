@@ -6,9 +6,9 @@
 env:
   AWS_REGION: us-west-2
   AWS_DEFAULT_REGION: us-west-2
-  POLLER_INTERVAL_MILLISECONDS: 10000 # Caution, setting this frequency may incur additional charges on some platforms
+  POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
   WATCH_TIMEOUT: 60000
-  WATCHED_NAMESPACES: "" # Comma separated list of namespaces, empty or unset means ALL namespaces.
+  WATCHED_NAMESPACES: ""  # Comma separated list of namespaces, empty or unset means ALL namespaces.
   LOG_LEVEL: info
   LOG_MESSAGE_KEY: "msg"
 
@@ -34,7 +34,7 @@ env:
   # AWS_SM_ENDPOINT: http://secretsmanager-fips.us-east-1.amazonaws.com
 
 # Create environment variables from existing k8s secrets
-# envVarsFromSecret:
+envVarsFromSecret: {}
 #  AWS_ACCESS_KEY_ID:
 #    secretKeyRef: aws-credentials
 #    key: id
@@ -59,6 +59,47 @@ env:
 #  AZURE_CLIENT_SECRET:
 #    secretKeyRef: azure-credentials
 #    key: clientsecret
+
+# Create environment variables from existing k8s secrets
+envVarsFromConfigMap: {}
+#  AWS_ACCESS_KEY_ID:
+#    configMapKeyRef: aws-credentials
+#    key: id
+#  AWS_SECRET_ACCESS_KEY:
+#    configMapKeyRef: aws-credentials
+#    key: key
+#  ALICLOUD_ENDPOINT:
+#    configMapKeyRef: alicloud-credentials
+#    key: endpoint
+#  ALICLOUD_ACCESS_KEY_ID:
+#    configMapKeyRef: alicloud-credentials
+#    key: id
+#  ALICLOUD_ACCESS_KEY_SECRET:
+#    configMapKeyRef: alicloud-credentials
+#    key: secret
+#  AZURE_TENANT_ID:
+#    configMapKeyRef: azure-credentials
+#    key: tenantid
+#  AZURE_CLIENT_ID:
+#    configMapKeyRef: azure-credentials
+#    key: clientid
+#  AZURE_CLIENT_SECRET:
+#    configMapKeyRef: azure-credentials
+#    key: clientsecret
+
+
+# List of sources to populate environment variables in the container.
+# The keys defined within a source must be a C_IDENTIFIER. All invalid keys
+# will be reported as an event when the container is starting. When a key
+# exists in multiple sources, the value associated with the last source will
+# take precedence. Values defined by an Env with a duplicate key will take precedence.
+# https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+envFrom: {}
+# - configMapRef:
+#     name: special-config
+# - secretRef:
+#     name: special-config
+
 
 # Create files from existing k8s secrets
 # filesFromSecret:
@@ -85,7 +126,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/external-secrets/kubernetes-external-secrets
-  tag: 7.0.1
+  tag: 7.2.1
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
