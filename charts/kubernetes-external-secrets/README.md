@@ -13,7 +13,7 @@ See below for [Helm V2 considerations](#helm-v2-considerations) when installing 
 
 ## Prerequisites
 
-* Kubernetes 1.12+
+* Kubernetes 1.16+
 
 ## Installing the Chart
 
