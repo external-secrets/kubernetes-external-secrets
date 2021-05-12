@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Node 12
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - name: Setup node
         uses: actions/setup-node@v2.1.5
         with:
@@ -22,5 +22,5 @@ jobs:
     runs-on: ubuntu-latest
     name: E2E
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v2.3.4
       - run: ./e2e/run-e2e-suite.sh
