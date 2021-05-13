@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-external-secrets",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "Kubernetes external secrets",
   "main": "bin/daemon.js",
   "scripts": {

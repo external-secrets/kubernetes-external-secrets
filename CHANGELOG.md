@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.0.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.0.0...8.0.1) (2021-05-13)
+
+
+### Bug Fixes
+
+* add observedGeneration to CRD status fields ([#747](https://github.com/external-secrets/kubernetes-external-secrets/issues/747)) ([d8abea3](https://github.com/external-secrets/kubernetes-external-secrets/commit/d8abea3f184d43cd2806a7b2b6ee32df6bfe9f27))
+
 ## [8.0.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.2.1...8.0.0) (2021-05-12)
 
 
