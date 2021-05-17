@@ -12,19 +12,19 @@ const awsConfig = require('./aws-config')
 const azureConfig = require('./azure-config')
 const alicloudConfig = require('./alicloud-config')
 const gcpConfig = require('./gcp-config')
+const ibmcloudConfig = require('./ibmcloud-config')
 const envConfig = require('./environment')
-const CustomResourceManager = require('../lib/custom-resource-manager')
 const SecretsManagerBackend = require('../lib/backends/secrets-manager-backend')
 const SystemManagerBackend = require('../lib/backends/system-manager-backend')
 const VaultBackend = require('../lib/backends/vault-backend')
 const AzureKeyVaultBackend = require('../lib/backends/azure-keyvault-backend')
 const GCPSecretsManagerBackend = require('../lib/backends/gcp-secrets-manager-backend')
 const AliCloudSecretsManagerBackend = require('../lib/backends/alicloud-secrets-manager-backend')
+const IbmCloudSecretsManagerBackend = require('../lib/backends/ibmcloud-secrets-manager-backend')
 
 // Get document, or throw exception on error
 // eslint-disable-next-line security/detect-non-literal-fs-filename
 const customResourceManifest = yaml.safeLoad(fs.readFileSync(path.resolve(__dirname, '../charts/kubernetes-external-secrets/crds/kubernetes-client.io_externalsecrets_crd.yaml'), 'utf8'))
-customResourceManifest.metadata.annotations['app.kubernetes.io/managed-by'] = 'custom-resource-manager'
 
 const kubeconfig = new kube.KubeConfig()
 kubeconfig.loadFromDefault()
@@ -41,13 +41,9 @@ const logger = pino({
     level (label, number) {
       return { level: envConfig.useHumanReadableLogLevels ? label : number }
     }
-  }
-})
-
-const customResourceManager = new CustomResourceManager({
-  kubeClient,
-  logger,
-  disabled: envConfig.customResourceManagerDisabled
+  },
+  nestedKey: 'payload',
+  timestamp: () => `,"message_time":"${new Date(Date.now()).toISOString()}"`
 })
 
 const secretsManagerBackend = new SecretsManagerBackend({
@@ -76,13 +72,21 @@ if (envConfig.vaultNamespace) {
     'X-VAULT-NAMESPACE': envConfig.vaultNamespace
   }
 }
-const vaultClient = vault(vaultOptions)
+const vaultFactory = () => vault(vaultOptions)
+
 // The Vault token is renewed only during polling, not asynchronously. The default tokenRenewThreshold
 // is three times larger than the pollerInterval so that the token is renewed before it
 // expires and with at least one remaining poll opportunty to retry renewal if it fails.
 const vaultTokenRenewThreshold = envConfig.vaultTokenRenewThreshold
   ? Number(envConfig.vaultTokenRenewThreshold) : 3 * envConfig.pollerIntervalMilliseconds / 1000
-const vaultBackend = new VaultBackend({ client: vaultClient, tokenRenewThreshold: vaultTokenRenewThreshold, logger })
+
+const vaultBackend = new VaultBackend({
+  vaultFactory: vaultFactory,
+  tokenRenewThreshold: vaultTokenRenewThreshold,
+  logger: logger,
+  defaultVaultMountPoint: envConfig.defaultVaultMountPoint,
+  defaultVaultRole: envConfig.defaultVaultRole
+})
 const azureKeyVaultBackend = new AzureKeyVaultBackend({
   credential: azureConfig.azureKeyVault(),
   logger
@@ -95,6 +99,11 @@ const alicloudSecretsManagerBackend = new AliCloudSecretsManagerBackend({
   credential: alicloudConfig.credential,
   logger
 })
+const ibmcloudSecretsManagerBackend = new IbmCloudSecretsManagerBackend({
+  credential: ibmcloudConfig.credential,
+  logger
+})
+
 const backends = {
   // when adding a new backend, make sure to change the CRD property too
   secretsManager: secretsManagerBackend,
@@ -102,8 +111,8 @@ const backends = {
   vault: vaultBackend,
   azureKeyVault: azureKeyVaultBackend,
   gcpSecretsManager: gcpSecretsManagerBackend,
-  alicloudSecretsManager: alicloudSecretsManagerBackend
-
+  alicloudSecretsManager: alicloudSecretsManagerBackend,
+  ibmcloudSecretsManager: ibmcloudSecretsManagerBackend
 }
 
 // backwards compatibility
@@ -112,7 +121,6 @@ backends.secretManager = secretsManagerBackend
 module.exports = {
   awsConfig,
   backends,
-  customResourceManager,
   customResourceManifest,
   ...envConfig,
   kubeClient,

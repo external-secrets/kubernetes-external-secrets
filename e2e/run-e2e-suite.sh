@@ -14,11 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-DISABLE_CUSTOM_RESOURCE_MANAGER=${1:-true}
-HELM_VERSION=${2:-V3}
-
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
-KIND_LOGGING="--quiet"
+KIND_LOGGING=""
 if ! [ -z "$DEBUG" ]; then
     set -x
     KIND_LOGGING="--verbosity=4"
@@ -35,7 +32,7 @@ RED='\e[35m'
 NC='\e[0m'
 BGREEN='\e[32m'
 
-K8S_VERSION=${K8S_VERSION:-v1.15.11}
+K8S_VERSION=${K8S_VERSION:-v1.16.15}
 KIND_CLUSTER_NAME="external-secrets-dev"
 REGISTRY=external-secrets
 
@@ -47,12 +44,12 @@ echo -e "${BGREEN}[dev-env] creating Kubernetes cluster with kind${NC}"
 kind create cluster \
   ${KIND_LOGGING} \
   --name ${KIND_CLUSTER_NAME} \
-  --config ${DIR}/kind.yaml \
+  --config "${DIR}/kind.yaml" \
   --image "kindest/node:${K8S_VERSION}"
 
 echo -e "${BGREEN}building external-secrets images${NC}"
-docker build -t external-secrets:test -f $DIR/../Dockerfile $DIR/../
-docker build -t external-secrets-e2e:test -f $DIR/Dockerfile $DIR/../
+docker build -t external-secrets:test -f "$DIR/../Dockerfile" "$DIR/../"
+docker build -t external-secrets-e2e:test -f "$DIR/Dockerfile" "$DIR/../"
 kind load docker-image --name="${KIND_CLUSTER_NAME}" external-secrets-e2e:test
 kind load docker-image --name="${KIND_CLUSTER_NAME}" external-secrets:test
 
@@ -60,7 +57,7 @@ function cleanup {
   set +e
   kubectl delete pod e2e 2>/dev/null
   kubectl delete crd/externalsecrets.kubernetes-client.io 2>/dev/null
-  kubectl delete -f ${DIR}/localstack.deployment.yaml 2>/dev/null
+  kubectl delete -f "${DIR}/localstack.deployment.yaml" 2>/dev/null
   kind delete cluster \
     ${KIND_LOGGING} \
     --name ${KIND_CLUSTER_NAME}
@@ -71,26 +68,8 @@ trap cleanup EXIT
 kubectl apply -f ${DIR}/localstack.deployment.yaml
 
 CHART_DIR="$(dirname "$DIR")/charts/kubernetes-external-secrets"
-HELM_TEMPLATE_ARGS="e2e ${CHART_DIR}"
-HELM_TEMPLATE_EXTRA_ARGS="--include-crds --set customResourceManagerDisabled=true"
-E2E_EXTRA_ARGS="--env=DISABLE_CUSTOM_RESOURCE_MANAGER=true"
-if [[ "$HELM_VERSION" == "V3" ]]; then
-  if [[ "$DISABLE_CUSTOM_RESOURCE_MANAGER" == "false" ]]; then
-    HELM_TEMPLATE_EXTRA_ARGS="--skip-crds"
-    E2E_EXTRA_ARGS=""
-  fi
-else
-  HELM_TEMPLATE_ARGS="${CHART_DIR} --name e2e"
-  if [[ "$DISABLE_CUSTOM_RESOURCE_MANAGER" == "true" ]]; then
-    HELM_TEMPLATE_EXTRA_ARGS="--set crds.create=true --set customResourceManagerDisabled=true"
-  else
-    HELM_TEMPLATE_EXTRA_ARGS=""
-    E2E_EXTRA_ARGS=""
-  fi
-fi
 
-helm template ${HELM_TEMPLATE_ARGS} \
-  ${HELM_TEMPLATE_EXTRA_ARGS} \
+helm install e2e ${CHART_DIR} \
   --set image.repository=external-secrets \
   --set image.tag=test \
   --set env.LOG_LEVEL=debug \
@@ -102,7 +81,7 @@ helm template ${HELM_TEMPLATE_ARGS} \
   --set env.AWS_DEFAULT_REGION=us-east-1 \
   --set env.AWS_REGION=us-east-1 \
   --set env.POLLER_INTERVAL_MILLISECONDS=1000 \
-  --set env.LOCALSTACK_STS_URL=http://sts | kubectl apply -f -
+  --set env.LOCALSTACK_STS_URL=http://sts
 
 echo -e "${BGREEN}Granting permissions to external-secrets e2e service account...${NC}"
 kubectl create serviceaccount external-secrets-e2e || true
@@ -132,7 +111,6 @@ kubectl run \
   --env="AWS_DEFAULT_REGION=us-east-1" \
   --env="AWS_REGION=us-east-1" \
   --env="LOCALSTACK_STS_URL=http://sts" \
-  ${E2E_EXTRA_ARGS} \
   --generator=run-pod/v1 \
   --overrides='{ "apiVersion": "v1", "spec":{"serviceAccountName": "external-secrets-e2e"}}' \
   e2e --image=external-secrets-e2e:test

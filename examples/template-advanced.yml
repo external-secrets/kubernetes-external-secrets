@@ -1,0 +1,23 @@
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: template-advanced
+spec:
+  backendType: vault
+  vaultMountPoint: my-kubernetes-vault-mount-point
+  vaultRole: my-vault-role
+  kvVersion: 2
+  data:
+    - key: kv/data/test/secret1
+      name: s1
+    - key: kv/data/test/secret2
+      name: s2
+  template:
+    metadata:
+      labels:
+        world: <% let content = JSON.parse(data.s1) %><%= content.f2.f22 %>
+    stringData:
+      file.yaml: |
+        <%= yaml.dump(JSON.parse(data.s1)) %>
+        <% let s2 = JSON.parse(data.s2) %><% s2.arr.forEach((e, i) => { %>arr_<%= i %>: <%= e %>
+        <% }) %>

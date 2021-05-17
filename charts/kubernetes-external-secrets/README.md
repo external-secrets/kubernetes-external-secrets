@@ -1,60 +1,32 @@
 # 💂 Kubernetes External Secrets
 
-[Kubernetes External Secrets](https://github.com/godaddy/kubernetes-external-secrets) allows you to use external secret management systems (*e.g.*, [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)) to securely add secrets in Kubernetes. Read more about the design and motivation for Kubernetes External Secrets on the [GoDaddy Engineering Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
+[Kubernetes External Secrets](https://github.com/external-secrets/kubernetes-external-secrets) allows you to use external secret management systems (*e.g.*, [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)) to securely add secrets in Kubernetes. Read more about the design and motivation for Kubernetes External Secrets on the [GoDaddy Engineering Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
 
 ## TL;DR;
 
-Assumes you are using Helm V3:
-
 ```bash
-$ helm repo add external-secrets https://godaddy.github.io/kubernetes-external-secrets/
-$ helm install kubernetes-external-secrets external-secrets/kubernetes-external-secrets --skip-crds
+$ helm repo add external-secrets https://external-secrets.github.io/kubernetes-external-secrets/
+$ helm install [RELEASE_NAME] external-secrets/kubernetes-external-secrets
 ```
 
 See below for [Helm V2 considerations](#helm-v2-considerations) when installing the chart.
 
 ## Prerequisites
 
-* Kubernetes 1.12+
+* Kubernetes 1.16+
 
 ## Installing the Chart
 
 To install the chart with the release named `my-release`:
 
 ```bash
-$ helm install my-release external-secrets/kubernetes-external-secrets --skip-crds
+$ helm install my-release external-secrets/kubernetes-external-secrets
 ```
-
-> **Tip:** A namespace can be specified by the `Helm` option '`--namespace kube-external-secrets`', however know this will not [autocreate a namespace](https://helm.sh/docs/faq/#automatically-creating-namespaces) like in Helm V2. To do that, also add the `--create-namespace` flag.
-
-> **Note**: `--skip-crds` is required in order to ensure the custom resource manager is used and will work for backwards compatibility. In future 4.x releases, this will not be required. See below for how to [disable the custom resource manager](#installing-the-crd) via the chart.
 
 To install the chart with [AWS IAM Roles for Service Accounts](https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts.html):
 
 ```bash
-$ helm install my-release external-secrets/kubernetes-external-secrets --skip-crds --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME'
-```
-
-### Installing the CRD
-
-To install the `ExternalSecret` CRD via the chart and disable the custom resource manager, you can omit `--skip-crds` and set `customResourceManagerDisabled`:
-
-```bash
-$ helm install external-secrets/kubernetes-external-secrets --name my-release --set customResourceManagerDisabled=true
-```
-
-### Helm V2 Considerations
-
-For Helm V2, `--skip-crds` is not needed, but `--name` is in order to set the release name:
-
-```bash
-$ helm install external-secrets/kubernetes-external-secrets --name my-release
-```
-
-If you wish to disable the custom resource manager and install the CRD via Helm V2, then `crds.create` must also be set:
-
-```bash
-$ helm install external-secrets/kubernetes-external-secrets --name my-release --set customResourceManagerDisabled=true --set crds.create=true
+$ helm install my-release external-secrets/kubernetes-external-secrets --set securityContext.fsGroup=65534 --set serviceAccount.annotations."eks\.amazonaws\.com/role-arn"='arn:aws:iam::111111111111:role/ROLENAME'
 ```
 
 ## Uninstalling the Chart
@@ -71,15 +43,18 @@ The following table lists the configurable parameters of the `kubernetes-externa
 
 | Parameter                                 | Description                                                                                                                       | Default                               |
 | ----------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------- |
-| `crds.create`                             | For Helm V2 installations of the chart to install the CRD, for V3 installations use `--skip-crds` appropriately                   | `false`                               |
-| `customResourceManagedDisabled`           | Disables the custom resource manager, requiring the CRD be installed via the chart or other means                                 | `false`                               |
 | `env.AWS_REGION`                          | Set AWS_REGION in Deployment Pod                                                                                                  | `us-west-2`                           |
+| `env.AWS_INTERMEDIATE_ROLE_ARN`           | Specifies a role to be assumed before assuming role arn specified in external secrets                                             |                                       |
 | `env.LOG_LEVEL`                           | Set the application log level                                                                                                     | `info`                                |
+| `env.LOG_MESSAGE_KEY`                     | Set the key for log messages log text, for example when running on GCP it might be nice to set to `message`                       | `msg`                                 |
+| `env.USE_HUMAN_READABLE_LOG_LEVELS`       | Sets log levels as string instead of ints eg `info` instead of `30`, setting this to any value will switch                        | `nil`                                 |
 | `env.METRICS_PORT`                        | Specify the port for the prometheus metrics server                                                                                | `3001`                                |
 | `env.ROLE_PERMITTED_ANNOTATION`           | Specify the annotation key where to lookup the role arn permission boundaries                                                     | `iam.amazonaws.com/permitted`         |
 | `env.POLLER_INTERVAL_MILLISECONDS`        | Set POLLER_INTERVAL_MILLISECONDS in Deployment Pod                                                                                | `10000`                               |
 | `env.VAULT_ADDR`                          | Endpoint for the Vault backend, if using Vault                                                                                    | `http://127.0.0.1:8200`                |
 | `env.DISABLE_POLLING`                     | Disables backend polling and only updates secrets when ExternalSecret is modified, setting this to any value will disable polling | `nil`                                 |
+| `env.WATCH_TIMEOUT`                     | Restarts the external secrets resource watcher if no events have been seen in this time period (miliseconds) | `60000`                                 |
+| `env.WATCHED_NAMESPACES`                     | Limits which namespaces the controller will watch, by default all namespaces will be watched. Comma separated list `qa,stage` | `''`                                 |
 | `envVarsFromSecret.AWS_ACCESS_KEY_ID`     | Set AWS_ACCESS_KEY_ID (from a secret) in Deployment Pod                                                                           |                                       |
 | `envVarsFromSecret.AWS_SECRET_ACCESS_KEY` | Set AWS_SECRET_ACCESS_KEY (from a secret) in Deployment Pod                                                                       |                                       |
 | `envVarsFromSecret.AZURE_TENANT_ID`       | Set AZURE_TENANT_ID (from a secret) in Deployment Pod                                                                             |                                       |
@@ -88,8 +63,10 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `envVarsFromSecret.ALICLOUD_ENDPOINT`     | Set ALICLOUD_ENDPOINT for KMS Service in Deployment Pod                                                                           |                                       |
 | `envVarsFromSecret.ALICLOUD_ACCESS_KEY_ID`     | Set ALICLOUD_ACCESS_KEY_ID (from a secret) in Deployment Pod                                                                 |                                       |
 | `envVarsFromSecret.ALICLOUD_ACCESS_KEY_SECRET` | Set ALICLOUD_ACCESS_KEY_SECRET (from a secret) in Deployment Pod                                                             |                                       |
+| `envVarsFromConfigMap.*` | Set any of the environment variables as `envVarsFromSecret` does but from a `configMap` in Deployment Pod                                                             |                                       |
+| `envFrom` | Enables the [`envFrom` block](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) on the Deployment pod                                                              |                                       |
 | `image.repository`                        | kubernetes-external-secrets Image name                                                                                            | `godaddy/kubernetes-external-secrets` |
-| `image.tag`                               | kubernetes-external-secrets Image tag                                                                                             | `3.2.0`                               |
+| `image.tag`                               | kubernetes-external-secrets Image tag                                                                                             | `8.0.1`                               |
 | `image.pullPolicy`                        | Image pull policy                                                                                                                 | `IfNotPresent`                        |
 | `nameOverride`                            | Override the name of app                                                                                                          | `nil`                                 |
 | `fullnameOverride`                        | Override the full name of app                                                                                                     | `nil`                                 |
@@ -100,6 +77,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `serviceAccount.annotations`              | Annotations to be added to service account                                                                                        | `nil`                                 |
 | `podAnnotations`                          | Annotations to be added to pods                                                                                                   | `{}`                                  |
 | `podLabels`                               | Additional labels to be added to pods                                                                                             | `{}`                                  |
+| `priorityClassName`                       | Priority class to be assigned to pods
 | `replicaCount`                            | Number of replicas                                                                                                                | `1`                                   |
 | `nodeSelector`                            | node labels for pod assignment                                                                                                    | `{}`                                  |
 | `tolerations`                             | List of node taints to tolerate (requires Kubernetes >= 1.6)                                                                      | `[]`                                  |
@@ -107,6 +85,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `resources`                               | Pod resource requests & limits                                                                                                    | `{}`                                  |
 | `dnsConfig`                               | Dns Config for pod.                                                                                                   | `{}`                                  |
 | `imagePullSecrets`                        | Reference to one or more secrets to be used when pulling images                                                                   | `[]`                                  |
+| `podDisruptionBudget`                     | PodDisruptionBudget for pod.                                                                                                      | `{}`                                  |
 | `serviceMonitor.enabled`                  | Enable the creation of a serviceMonitor object for the Prometheus operator                                                        | `false`                               |
 | `serviceMonitor.interval`                 | The interval the Prometheus endpoint is scraped                                                                                   | `30s`                                 |
 | `serviceMonitor.namespace`                | The namespace where the serviceMonitor object has to be created                                                                   | `nil`                                 |
@@ -115,7 +94,6 @@ Specify each parameter using the `--set key=value[,key=value]` argument to `helm
 
 ```bash
 helm install my-release external-secrets/kubernetes-external-secrets \
---set customResourceManagerDisabled=true
 --set env.POLLER_INTERVAL_MILLISECONDS='300000' \
 --set podAnnotations."iam\.amazonaws\.com/role"='Name-Of-IAM-Role-With-SecretManager-Access'
 ```
@@ -126,7 +104,7 @@ Alternatively, a YAML file that specifies the values for the parameters can be p
 helm install my-release external-secrets/kubernetes-external-secrets -f values.yaml
 ```
 
-> **Tip**: You can use the default [values.yaml](https://github.com/godaddy/kubernetes-external-secrets/blob/master/charts/kubernetes-external-secrets/values.yaml)
+> **Tip**: You can use the default [values.yaml](https://github.com/external-secrets/kubernetes-external-secrets/blob/master/charts/kubernetes-external-secrets/values.yaml)
 
 ## Add a secret
 
@@ -176,4 +154,4 @@ data:
 
 ## Further Information
 
-For more in-depth documentation of usage, please see the [Kubernetes External Secrets repo](https://github.com/godaddy/kubernetes-external-secrets)
+For more in-depth documentation of usage, please see the [Kubernetes External Secrets repo](https://github.com/external-secrets/kubernetes-external-secrets)

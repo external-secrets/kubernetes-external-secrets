@@ -21,7 +21,7 @@ To better understand how they are being run take a look at `run-e2e-suite.sh`.
 kind create cluster \
   --name es-dev-cluster \
   --config ./kind.yaml \
-  --image "kindest/node:v1.15.3"
+  --image "kindest/node:v1.16.15"
 
 export KUBECONFIG="$(kind get kubeconfig-path --name="es-dev-cluster")"
 
@@ -33,7 +33,7 @@ kind load docker-image --name="es-dev-cluster" external-secrets:test
 kubectl apply -f ./localstack.deployment.yaml
 
 # deploy external secrets
-helm template ../charts/kubernetes-external-secrets \
+helm template e2e ../charts/kubernetes-external-secrets \
   --set image.repository=external-secrets \
   --set image.tag=test \
   --set env.LOG_LEVEL=debug \

@@ -58,4 +58,8 @@ typings/
 .next
 
 # e2e test stuff
-e2e/.kubeconfig
+e2e/**/.kubeconfig
+
+# IDE
+.idea/
+.vscode/

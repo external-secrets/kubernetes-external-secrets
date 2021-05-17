@@ -17,7 +17,6 @@ const PollerFactory = require('../lib/poller-factory')
 const {
   backends,
   kubeClient,
-  customResourceManager,
   customResourceManifest,
   logger,
   metricsPort,
@@ -26,19 +25,25 @@ const {
   rolePermittedAnnotation,
   namingPermittedAnnotation,
   enforceNamespaceAnnotation,
-  pollInternalSecrets
+  pollInternalSecrets,
+  watchTimeout,
+  watchedNamespaces,
+  instanceId
 } = require('../config')
 
 async function main () {
   logger.info('loading kube specs')
   await kubeClient.loadSpec()
   logger.info('successfully loaded kube specs')
-  await customResourceManager.manageCrd({ customResourceManifest })
+
+  kubeClient.addCustomResourceDefinition(customResourceManifest)
 
   const externalSecretEvents = getExternalSecretEvents({
     kubeClient,
+    watchedNamespaces,
     customResourceManifest,
-    logger
+    logger,
+    watchTimeout
   })
 
   const registry = Prometheus.register
@@ -61,7 +66,8 @@ async function main () {
   const daemon = new Daemon({
     externalSecretEvents,
     logger,
-    pollerFactory
+    pollerFactory,
+    instanceId
   })
 
   const metricsServer = new MetricsServer({

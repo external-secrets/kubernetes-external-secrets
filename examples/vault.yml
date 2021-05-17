@@ -1,7 +1,7 @@
 apiVersion: 'kubernetes-client.io/v1'
 kind: ExternalSecret
 metadata:
-  name: hello-service
+  name: vault
 spec:
   backendType: vault
   vaultMountPoint: my-kubernetes-vault-mount-point
@@ -11,3 +11,7 @@ spec:
     - name: password
       key: secret/data/hello-service/password
       property: password
+    - name: cert.p12
+      key: secret/data/hello-service/certificates
+      property: cert.p12
+      isBinary: true # defaults to false

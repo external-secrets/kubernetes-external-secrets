@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "kubernetes-external-secrets.fullname" . }}
+  namespace: {{ .Release.Namespace | quote }}
   labels:
     app.kubernetes.io/name: {{ include "kubernetes-external-secrets.name" . }}
     helm.sh/chart: {{ include "kubernetes-external-secrets.chart" . }}
@@ -31,6 +32,9 @@ spec:
       imagePullSecrets:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
       {{- end }}
+      {{- if .Values.deploymentInitContainers }}
+      {{- toYaml .Values.deploymentInitContainers | nindent 6 }}
+      {{- end }}
       containers:
         - name: {{ .Chart.Name }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
@@ -41,10 +45,6 @@ spec:
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           env:
-          {{- if .Values.customResourceManagerDisabled }}
-          - name: DISABLE_CUSTOM_RESOURCE_MANAGER
-            value: "true"
-          {{- end }}
           {{- range $name, $value := .Values.env }}
           {{- if not (empty $value) }}
           - name: {{ $name | quote }}
@@ -59,12 +59,28 @@ spec:
                 name: {{ $value.secretKeyRef | quote }}
                 key: {{ $value.key | quote }}
           {{- end }}
-          {{- with .Values.filesFromSecret }}
+          {{- range $key, $value := .Values.envVarsFromConfigMap }}
+          - name: {{ $key }}
+            valueFrom:
+              configMapKeyRef:
+                name: {{ $value.configMapKeyRef | quote }}
+                key: {{ $value.key | quote }}
+          {{- end }}
+          {{- if .Values.envFrom }}
+          envFrom:
+          {{- .Values.envFrom | toYaml | nindent 12 }}
+          {{- end }}
+          {{- if or .Values.filesFromSecret .Values.extraVolumeMounts }}
           volumeMounts:
+          {{- if .Values.extraVolumeMounts }}
+          {{- toYaml .Values.extraVolumeMounts | nindent 12 }}
+          {{- end }}
+          {{- with .Values.filesFromSecret }}
           {{- range $key, $value := . }}
           - name: {{ $key }}
             mountPath: {{ $value.mountPath }}
             readOnly: true
+          {{- end }}
           {{- end }}
           {{- end }}
       {{- with .Values.dnsConfig }}
@@ -74,6 +90,9 @@ spec:
       {{- with .Values.securityContext }}
       securityContext:
         {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- if .Values.priorityClassName }}
+      priorityClassName: {{ .Values.priorityClassName }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
@@ -87,11 +106,16 @@ spec:
       tolerations:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      {{- with .Values.filesFromSecret }}
+      {{- if or .Values.filesFromSecret .Values.extraVolumes }}
       volumes:
+      {{- if .Values.extraVolumes }}
+      {{- toYaml .Values.extraVolumes | nindent 8 }}
+      {{- end }}
+      {{- with .Values.filesFromSecret }}
       {{- range $key, $value := . }}
       - name: {{ $key }}
         secret:
           secretName: {{ $value.secret }}
+      {{- end }}
       {{- end }}
       {{- end }}

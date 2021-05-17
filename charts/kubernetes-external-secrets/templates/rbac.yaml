@@ -1,5 +1,9 @@
 {{- if .Values.rbac.create -}}
+  {{- if semverCompare ">=1.17.0-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: rbac.authorization.k8s.io/v1
+  {{- else -}}
 apiVersion: rbac.authorization.k8s.io/v1beta1
+  {{- end }}
 kind: ClusterRole
 metadata:
   name: {{ include "kubernetes-external-secrets.fullname" . }}
@@ -25,13 +29,15 @@ rules:
   - apiGroups: ["kubernetes-client.io"]
     resources: ["externalsecrets/status"]
     verbs: ["get", "update"]
- {{- if .Values.customResourceManagerDisabled | not }}
-  - apiGroups: ["apiextensions.k8s.io"]
-    resources: ["customresourcedefinitions"]
-    verbs: ["create"]
+  {{- if .Values.customClusterRoles }}
+  {{- toYaml .Values.customClusterRoles | nindent 2 }}
   {{- end }}
 ---
+{{ if semverCompare ">=1.17.0-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: rbac.authorization.k8s.io/v1
+{{- else -}}
 apiVersion: rbac.authorization.k8s.io/v1beta1
+{{- end }}
 kind: ClusterRoleBinding
 metadata:
   name: {{ include "kubernetes-external-secrets.fullname" . }}
@@ -49,7 +55,11 @@ subjects:
     namespace: {{ .Release.Namespace | quote }}
     kind: ServiceAccount
 ---
+{{ if semverCompare ">=1.17.0-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: rbac.authorization.k8s.io/v1
+{{- else -}}
 apiVersion: rbac.authorization.k8s.io/v1beta1
+{{- end }}
 kind: ClusterRoleBinding
 metadata:
   name: {{ include "kubernetes-external-secrets.fullname" . }}-auth

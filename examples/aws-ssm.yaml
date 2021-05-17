@@ -1,0 +1,19 @@
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: aws-ssm
+spec:
+  backendType: systemManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: us-west-2
+  data:
+    # Can either be key+name or all keys from a given path or even both
+    # Order below is important. Values are fetched from SSM in the same order you put them here (top to bottom)
+    # This means that if a given key is found duplicate, the last value found has precedence
+    - key: /foo/name
+      name: variable-name
+    - path: /bar/
+      # optional: choose whether to scrape all child paths or not. Default is false
+      recursive: false

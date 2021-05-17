@@ -5,8 +5,7 @@ const { expect } = require('chai')
 
 const {
   kubeClient,
-  customResourceManifest,
-  customResourceManagerDisabled
+  customResourceManifest
 } = require('../../config')
 
 const {
@@ -17,22 +16,18 @@ describe('CRD', () => {
   it('ensure CRD is managed correctly', async () => {
     const res = await kubeClient
       .apis['apiextensions.k8s.io']
-      .v1beta1
+      .v1
       .customresourcedefinitions(customResourceManifest.metadata.name)
       .get()
 
-    let managedBy = 'custom-resource-manager'
-    if (customResourceManagerDisabled) {
-      managedBy = 'helm'
-    }
-
+    const managedBy = 'helm'
     expect(res).to.not.equal(undefined)
     expect(res.statusCode).to.equal(200)
     expect(res.body.metadata.annotations['app.kubernetes.io/managed-by']).to.equal(managedBy)
   })
 
   it('should reject invalid ExternalSecret manifests', async () => {
-    kubeClient
+    return kubeClient
       .apis[customResourceManifest.spec.group]
       .v1.namespaces('default')[customResourceManifest.spec.names.plural]
       .post({
@@ -53,6 +48,7 @@ describe('CRD', () => {
           }
         }
       })
-      .catch(err => expect(err).to.be.an('error'))
+      .then(() => { throw new Error('was not supposed to succeed') })
+      .catch((err) => expect(err).to.match(/spec: Required value/))
   })
 })

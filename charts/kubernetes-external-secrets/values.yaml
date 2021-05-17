@@ -2,30 +2,30 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-# Determines whether the Helm chart or kubernetes-external-secrets
-# will handle the ExternalSecret CRD
-customResourceManagerDisabled: false
-
-crds:
-  # only needed for helm v2, leave this disabled for helm v3
-  create: false
-
 # Environment variables to set on deployment pod
 env:
   AWS_REGION: us-west-2
   AWS_DEFAULT_REGION: us-west-2
   POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
+  WATCH_TIMEOUT: 60000
+  WATCHED_NAMESPACES: ""  # Comma separated list of namespaces, empty or unset means ALL namespaces.
   LOG_LEVEL: info
-  LOG_MESSAGE_KEY: 'msg'
+  LOG_MESSAGE_KEY: "msg"
   # Print logs level as string ("info") rather than integer (30)
   # USE_HUMAN_READABLE_LOG_LEVELS: true
   METRICS_PORT: 3001
   VAULT_ADDR: http://127.0.0.1:8200
-# POLL_INTERNAL_SECRETS: "true"
-#  GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
+  # POLL_INTERNAL_SECRETS: "true"
+  # Set a role to be used when assuming roles specified in external secret (AWS only)
+  # AWS_INTERMEDIATE_ROLE_ARN:
+  # GOOGLE_APPLICATION_CREDENTIALS: /app/gcp-creds/gcp-creds.json
+  # Use custom endpoints for FIPS compliance
+  # AWS_STS_ENDPOINT: https://sts-fips.us-east-1.amazonaws.com
+  # AWS_SSM_ENDPOINT: http://ssm-fips.us-east-1.amazonaws.com
+  # AWS_SM_ENDPOINT: http://secretsmanager-fips.us-east-1.amazonaws.com
 
 # Create environment variables from existing k8s secrets
-# envVarsFromSecret:
+envVarsFromSecret: {}
 #  AWS_ACCESS_KEY_ID:
 #    secretKeyRef: aws-credentials
 #    key: id
@@ -51,6 +51,47 @@ env:
 #    secretKeyRef: azure-credentials
 #    key: clientsecret
 
+# Create environment variables from existing k8s secrets
+envVarsFromConfigMap: {}
+#  AWS_ACCESS_KEY_ID:
+#    configMapKeyRef: aws-credentials
+#    key: id
+#  AWS_SECRET_ACCESS_KEY:
+#    configMapKeyRef: aws-credentials
+#    key: key
+#  ALICLOUD_ENDPOINT:
+#    configMapKeyRef: alicloud-credentials
+#    key: endpoint
+#  ALICLOUD_ACCESS_KEY_ID:
+#    configMapKeyRef: alicloud-credentials
+#    key: id
+#  ALICLOUD_ACCESS_KEY_SECRET:
+#    configMapKeyRef: alicloud-credentials
+#    key: secret
+#  AZURE_TENANT_ID:
+#    configMapKeyRef: azure-credentials
+#    key: tenantid
+#  AZURE_CLIENT_ID:
+#    configMapKeyRef: azure-credentials
+#    key: clientid
+#  AZURE_CLIENT_SECRET:
+#    configMapKeyRef: azure-credentials
+#    key: clientsecret
+
+
+# List of sources to populate environment variables in the container.
+# The keys defined within a source must be a C_IDENTIFIER. All invalid keys
+# will be reported as an event when the container is starting. When a key
+# exists in multiple sources, the value associated with the last source will
+# take precedence. Values defined by an Env with a duplicate key will take precedence.
+# https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables
+envFrom: {}
+# - configMapRef:
+#     name: special-config
+# - secretRef:
+#     name: special-config
+
+
 # Create files from existing k8s secrets
 # filesFromSecret:
 #   gcp-creds:
@@ -70,19 +111,24 @@ serviceAccount:
   # If not set and create is true, a name is generated using the fullname template
   name:
 
+# Using multiple replicas is not recommended as there is no coordination between replicas.
+# Replicas will try to create and update secrets concurrently which might lead to race conditions.
 replicaCount: 1
 
 image:
-  repository: godaddy/kubernetes-external-secrets
-  tag: 5.1.0
+  repository: ghcr.io/external-secrets/kubernetes-external-secrets
+  tag: 8.0.1
   pullPolicy: IfNotPresent
-  imagePullSecrets: []
+
+imagePullSecrets: []
 
 nameOverride: ""
 fullnameOverride: ""
 
 podAnnotations: {}
 podLabels: {}
+
+priorityClassName: ""
 
 dnsConfig: {}
 
@@ -91,7 +137,8 @@ securityContext:
   # Required for use of IRSA, see https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts-technical-overview.html
   # fsGroup: 65534
 
-resources: {}
+resources:
+  {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
   # resources, such as Minikube. If you do want to specify resources, uncomment the following
@@ -109,7 +156,25 @@ tolerations: []
 
 affinity: {}
 
+podDisruptionBudget: {}
+
 serviceMonitor:
   enabled: false
   interval: "30s"
   namespace:
+
+deploymentInitContainers: {}
+
+# Add in additional named volumes and volume mounts to the deployment
+#
+extraVolumes: []
+#  - name: namedVolume
+#    emptyDir: {}
+#
+extraVolumeMounts: []
+#  - name: namedVolume
+#    mountPath: /usr/path
+#    readOnly: false
+
+# Add additional RBAC rules to the ClusterRole granted to the service account
+customClusterRoles: {}

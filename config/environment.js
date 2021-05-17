@@ -16,10 +16,16 @@ if (environment === 'development') {
   require('dotenv').config()
 }
 
+// The name of this KES instance which used to scope access of ExternalSecrets.
+// This is needed in case there is more than a KES controller instances within the cluster.
+const instanceId = process.env.INSTANCE_ID || ''
+
 const vaultEndpoint = process.env.VAULT_ADDR || 'http://127.0.0.1:8200'
 // Grab the vault namespace from the environment
 const vaultNamespace = process.env.VAULT_NAMESPACE || null
 const vaultTokenRenewThreshold = process.env.VAULT_TOKEN_RENEW_THRESHOLD || null
+const defaultVaultMountPoint = process.env.DEFAULT_VAULT_MOUNT_POINT || null
+const defaultVaultRole = process.env.DEFAULT_VAULT_ROLE || null
 
 const pollerIntervalMilliseconds = process.env.POLLER_INTERVAL_MILLISECONDS
   ? Number(process.env.POLLER_INTERVAL_MILLISECONDS) : 10000
@@ -36,14 +42,28 @@ const enforceNamespaceAnnotation = 'ENFORCE_NAMESPACE_ANNOTATIONS' in process.en
 
 const metricsPort = process.env.METRICS_PORT || 3001
 
-const customResourceManagerDisabled = 'DISABLE_CUSTOM_RESOURCE_MANAGER' in process.env
+const watchTimeout = process.env.WATCH_TIMEOUT ? parseInt(process.env.WATCH_TIMEOUT) : 60000
+
+// A comma-separated list of watched namespaces. If set, only ExternalSecrets in those namespaces will be handled.
+let watchedNamespaces = process.env.WATCHED_NAMESPACES || ''
+
+// Return an array after splitting the watched namespaces string and clean up user input.
+watchedNamespaces = watchedNamespaces
+  .split(',')
+  // Remove any extra spaces.
+  .map(namespace => { return namespace.trim() })
+  // Remove empty values (in case there is a tailing comma).
+  .filter(namespace => namespace)
 
 const pollInternalSecrets = 'POLL_INTERNAL_SECRETS' in process.env
 
 module.exports = {
+  instanceId,
   vaultEndpoint,
   vaultNamespace,
   vaultTokenRenewThreshold,
+  defaultVaultMountPoint,
+  defaultVaultRole,
   environment,
   pollerIntervalMilliseconds,
   metricsPort,
@@ -52,8 +72,9 @@ module.exports = {
   enforceNamespaceAnnotation,
   pollingDisabled,
   logLevel,
-  customResourceManagerDisabled,
   useHumanReadableLogLevels,
   logMessageKey,
-  pollInternalSecrets
+  pollInternalSecrets,
+  watchTimeout,
+  watchedNamespaces
 }
