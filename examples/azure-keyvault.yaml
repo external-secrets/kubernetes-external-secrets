@@ -1,7 +1,7 @@
 apiVersion: kubernetes-client.io/v1
 kind: ExternalSecret
 metadata:
-  name: keyvault-example
+  name: azure-keyvault
 spec:
   backendType: azureKeyVault
   keyVaultName: hello-world

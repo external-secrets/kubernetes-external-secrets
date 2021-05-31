@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.0.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.0.0...8.0.1) (2021-05-13)
+
+
+### Bug Fixes
+
+* add observedGeneration to CRD status fields ([#747](https://github.com/external-secrets/kubernetes-external-secrets/issues/747)) ([d8abea3](https://github.com/external-secrets/kubernetes-external-secrets/commit/d8abea3f184d43cd2806a7b2b6ee32df6bfe9f27))
+
+## [8.0.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.2.1...8.0.0) (2021-05-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Drops support for kubernetes versions <1.16. This _shouldn't_ be a breaking change if you have followed earlier deprecation's (like using `spec` instead of `secretDescriptor`. The updated CRD complies with the new structural validation and should validate all fields, any fields missing in the validation will be dropped from your ExternalSecret resource.
+
+### Bug Fixes
+
+* update crd to apiextensions.k8s.io/v1 ([#681](https://github.com/external-secrets/kubernetes-external-secrets/issues/681)) ([73aeaef](https://github.com/external-secrets/kubernetes-external-secrets/commit/73aeaef3f725ae2f3011ff24d9b7243716f639c9))
+
 ### [7.2.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/7.2.0...7.2.1) (2021-04-26)
 
 
