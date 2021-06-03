@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.0.2](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.0.1...8.0.2) (2021-06-03)
+
+
+### Bug Fixes
+
+* **crd:** remove unnecessary empty properties in oneOf validation ([#758](https://github.com/external-secrets/kubernetes-external-secrets/issues/758)) ([fa54f54](https://github.com/external-secrets/kubernetes-external-secrets/commit/fa54f54dd6d684f3a7b87e212da2e09329338fe6)), closes [#753](https://github.com/external-secrets/kubernetes-external-secrets/issues/753)
+* **watcher:** ensure that the restart timer is always started regardless of whether there are events or not ([#765](https://github.com/external-secrets/kubernetes-external-secrets/issues/765)) ([1de5432](https://github.com/external-secrets/kubernetes-external-secrets/commit/1de5432255425332a738db9308b7a137b5f41f73))
+
 ### [8.0.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.0.0...8.0.1) (2021-05-13)
 
 
