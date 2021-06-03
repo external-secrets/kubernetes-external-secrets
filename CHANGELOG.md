@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.1.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.0.2...8.1.0) (2021-06-03)
+
+
+### Features
+
+* Akeyless backend ([#767](https://github.com/external-secrets/kubernetes-external-secrets/issues/767)) ([dad820a](https://github.com/external-secrets/kubernetes-external-secrets/commit/dad820a22c730d78602a680fc4a22efcfd10d8bd))
+
 ### [8.0.2](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.0.1...8.0.2) (2021-06-03)
 
 
