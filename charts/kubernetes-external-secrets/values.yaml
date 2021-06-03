@@ -11,6 +11,16 @@ env:
   WATCHED_NAMESPACES: ""  # Comma separated list of namespaces, empty or unset means ALL namespaces.
   LOG_LEVEL: info
   LOG_MESSAGE_KEY: "msg"
+
+  #Akeyless rest-v2 endpoint 
+  AKEYLESS_API_ENDPOINT:  https://api.akeyless.io 
+  AKEYLESS_ACCESS_ID:
+  #AKEYLESS_ACCESS_TYPE can be one of the following: aws_iam/azure_ad/gcp/access_key
+  AKEYLESS_ACCESS_TYPE:
+  #AKEYLESS_ACCESS_TYPE_PARAM can be one of the following: gcp-audience/azure-obj-id/access-key
+  #AKEYLESS_ACCESS_TYPE_PARAM: 
+  
+
   # Print logs level as string ("info") rather than integer (30)
   # USE_HUMAN_READABLE_LOG_LEVELS: true
   METRICS_PORT: 3001

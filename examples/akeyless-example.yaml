@@ -1,0 +1,21 @@
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-secret
+spec:
+  backendType: akeyless
+  data:
+    - key: secret-name
+      name: creds
+
+---
+
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-dynamic-secret
+spec:
+  backendType: akeyless
+  data:
+    - key: dynamic-secret-name
+      name: creds

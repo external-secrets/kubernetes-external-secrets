@@ -445,7 +445,7 @@ A few properties have changed name overtime, we still maintain backwards compatb
 
 ## Backends
 
-kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Hashicorp Vault, Azure Key Vault, Google Secret Manager and Alibaba Cloud KMS Secret Manager.
+kubernetes-external-secrets supports AWS Secrets Manager, AWS System Manager, Akeyless, Hashicorp Vault, Azure Key Vault, Google Secret Manager and Alibaba Cloud KMS Secret Manager.
 
 ### AWS Secrets Manager
 
@@ -555,6 +555,37 @@ spec:
       name: fooName
     - path: /extra-people/
       recursive: false
+```
+### Akeyless Vault
+
+kubernetes-external-secrets supports fetching secrets from [Akeyless Vault](https://www.akeyless.io/), .
+You will need to set the following environment variables: 
+
+```yml
+env:
+  #akeyless rest-v2 endpoint 
+  AKEYLESS_API_ENDPOINT:  https://api.akeyless.io 
+  AKEYLESS_ACCESS_ID: 
+  #AKEYLESS_ACCESS_TYPE can be one of the following: aws_iam/azure_ad/gcp/access_key
+  AKEYLESS_ACCESS_TYPE: 
+  #AKEYLESS_ACCESS_TYPE_PARAM can be one of the following: gcp-audience/azure-obj-id/access-key
+  #AKEYLESS_ACCESS_TYPE_PARAM:
+
+```
+
+Once you have kubernetes-external-secrets installed, you can create an external secret with YAML like the following:
+
+```yml
+apiVersion: 'kubernetes-client.io/v1'
+kind: ExternalSecret
+metadata:
+  name: hello-secret
+spec:
+  backendType: akeyless
+  data:
+    - key: path/secret-name
+      name: password
+
 ```
 
 ### Hashicorp Vault
