@@ -37,6 +37,16 @@ async function main () {
 
   kubeClient.addCustomResourceDefinition(customResourceManifest)
 
+  try {
+    logger.info('verifiying CRD is installed')
+    await kubeClient
+      .apis[customResourceManifest.spec.group]
+      .v1[customResourceManifest.spec.names.plural].get()
+  } catch (err) {
+    logger.error('CRD installation check failed, statusCode: %s', err.statusCode)
+    process.exit(1)
+  }
+
   const externalSecretEvents = getExternalSecretEvents({
     kubeClient,
     watchedNamespaces,
