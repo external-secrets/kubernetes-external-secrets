@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.1.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.1.0...8.1.1) (2021-06-03)
+
+
+### Bug Fixes
+
+* verify CRD is available on startup ([182e224](https://github.com/external-secrets/kubernetes-external-secrets/commit/182e2244ffbe24cee2ee160a65d89aa5839df72d))
+
 ## [8.1.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.0.2...8.1.0) (2021-06-03)
 
 
