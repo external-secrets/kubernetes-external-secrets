@@ -126,7 +126,7 @@ replicaCount: 1
 
 image:
   repository: ghcr.io/external-secrets/kubernetes-external-secrets
-  tag: 8.1.1
+  tag: 8.1.2
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
