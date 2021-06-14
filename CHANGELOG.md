@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.1.3](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.1.2...8.1.3) (2021-06-14)
+
+
+### Bug Fixes
+
+* remove preserveUnknownFields ([#774](https://github.com/external-secrets/kubernetes-external-secrets/issues/774)) ([4957339](https://github.com/external-secrets/kubernetes-external-secrets/commit/4957339708a316888143fac8891440ee0d25ee0f))
+
 ### [8.1.2](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.1.1...8.1.2) (2021-06-05)
 
 
