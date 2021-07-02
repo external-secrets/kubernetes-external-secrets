@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.2.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.2.0...8.2.1) (2021-07-02)
+
+
+### Bug Fixes
+
+* update transitive dependencies to resolve CVE-2020-28469, CVE-2021-33502 ([fcd353f](https://github.com/external-secrets/kubernetes-external-secrets/commit/fcd353f005c235594c9e849a464b8027a98da497))
+
 ## [8.2.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.1.3...8.2.0) (2021-07-02)
 
 
