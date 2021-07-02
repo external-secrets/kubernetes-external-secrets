@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.2.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.1.3...8.2.0) (2021-07-02)
+
+
+### Features
+
+* **chart:** add securityContext settings for pod container ([#780](https://github.com/external-secrets/kubernetes-external-secrets/issues/780)) ([28ce1a8](https://github.com/external-secrets/kubernetes-external-secrets/commit/28ce1a86f0f6b7a0468eb7d55ee4b1876ab546fd))
+* Upsert secrets only when needed ([#782](https://github.com/external-secrets/kubernetes-external-secrets/issues/782)) ([48db901](https://github.com/external-secrets/kubernetes-external-secrets/commit/48db9014fcd4c1be2324f856635bb7ccd0fe389c))
+
 ### [8.1.3](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.1.2...8.1.3) (2021-06-14)
 
 
