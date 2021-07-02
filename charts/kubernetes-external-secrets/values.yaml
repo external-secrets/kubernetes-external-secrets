@@ -12,14 +12,14 @@ env:
   LOG_LEVEL: info
   LOG_MESSAGE_KEY: "msg"
 
-  #Akeyless rest-v2 endpoint 
-  AKEYLESS_API_ENDPOINT:  https://api.akeyless.io 
+  #Akeyless rest-v2 endpoint
+  AKEYLESS_API_ENDPOINT:  https://api.akeyless.io
   AKEYLESS_ACCESS_ID:
   #AKEYLESS_ACCESS_TYPE can be one of the following: aws_iam/azure_ad/gcp/access_key
   AKEYLESS_ACCESS_TYPE:
   #AKEYLESS_ACCESS_TYPE_PARAM can be one of the following: gcp-audience/azure-obj-id/access-key
-  #AKEYLESS_ACCESS_TYPE_PARAM: 
-  
+  #AKEYLESS_ACCESS_TYPE_PARAM:
+
 
   # Print logs level as string ("info") rather than integer (30)
   # USE_HUMAN_READABLE_LOG_LEVELS: true
@@ -145,6 +145,12 @@ securityContext:
   runAsNonRoot: true
   # Required for use of IRSA, see https://docs.aws.amazon.com/eks/latest/userguide/iam-roles-for-service-accounts-technical-overview.html
   # fsGroup: 65534
+
+# A security context defines privilege and access control settings for a Pod or Container.
+# ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
+containerSecurityContext: {}
+  # allowPrivilegeEscalation: false
+  # privileged: false
 
 resources:
   {}
