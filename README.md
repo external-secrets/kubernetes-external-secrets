@@ -810,6 +810,41 @@ Uncomment `GOOGLE_APPLICATION_CREDENTIALS` in the values file as well as the fol
 
 This will mount the secret at `/app/gcp-creds/gcp-creds.json` and make it available via the `GOOGLE_APPLICATION_CREDENTIALS` environment variable.
 
+#### Usage
+
+Once you have kubernetes-external-secrets installed, you can create an external secret with YAML like the following:
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: gcp-secrets-manager-example # name of the k8s external secret and the k8s secret
+spec:
+  backendType: gcpSecretsManager
+  projectId: my-gsm-secret-project
+  data:
+    - key: my-gsm-secret-name # name of the GCP secret
+      name: my-kubernetes-secret-name # key name in the k8s secret
+      version: latest # version of the GCP secret
+      property: value # name of the field in the GCP secret
+```
+
+The field "key" is the name of the secret in Google Secret Manager. The field "name" is the name of the Kubernetes secret this external secret will generate. The metadata "name" field is the name of the external secret in Kubernetes.
+
+To retrieve external secrets, you can use the following command:
+
+    kubectl get externalsecrets -n $NAMESPACE
+
+To retrieve the secrets themselves, you can use the regular:
+
+    kubectl get secrets -n $NAMESPACE
+
+To retrieve an individual secret's content, use the following where "mysecret" is the key to the secret content under the "data" field:
+
+    kubectl get secret my-secret -o 'go-template={{index .data "mysecret"}}' | base64 -D
+
+The secrets will persist even if the helm installation is removed, although they will no longer sync to Google Secret Manager.
+
 ### IBM Cloud Secrets Manager
 
 kubernetes-external-secrets supports fetching secrets from [IBM Cloud Secrets Manager](https://cloud.ibm.com/catalog/services/secrets-manager)
@@ -845,41 +880,6 @@ spec:
       property: username 
       secretType: username_password
 ```
-
-#### Usage
-
-Once you have kubernetes-external-secrets installed, you can create an external secret with YAML like the following:
-
-```yml
-apiVersion: kubernetes-client.io/v1
-kind: ExternalSecret
-metadata:
-  name: gcp-secrets-manager-example # name of the k8s external secret and the k8s secret
-spec:
-  backendType: gcpSecretsManager
-  projectId: my-gsm-secret-project
-  data:
-    - key: my-gsm-secret-name # name of the GCP secret
-      name: my-kubernetes-secret-name # key name in the k8s secret
-      version: latest # version of the GCP secret
-      property: value # name of the field in the GCP secret
-```
-
-The field "key" is the name of the secret in Google Secret Manager. The field "name" is the name of the Kubernetes secret this external secret will generate. The metadata "name" field is the name of the external secret in Kubernetes.
-
-To retrieve external secrets, you can use the following command:
-
-    kubectl get externalsecrets -n $NAMESPACE
-
-To retrieve the secrets themselves, you can use the regular:
-
-    kubectl get secrets -n $NAMESPACE
-
-To retrieve an individual secret's content, use the following where "mysecret" is the key to the secret content under the "data" field:
-
-    kubectl get secret my-secret -o 'go-template={{index .data "mysecret"}}' | base64 -D
-
-The secrets will persist even if the helm installation is removed, although they will no longer sync to Google Secret Manager.
 
 ## Binary Secrets
 
