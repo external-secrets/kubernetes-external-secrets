@@ -300,6 +300,9 @@ spec:
       name: s1
     - key: kv/data/extsec/secret2
       name: s2
+  dataFromLiteral:
+    - name: s3
+      value: non-sensitive
   kvVersion: 2
   template:
     data:
@@ -309,6 +312,7 @@ spec:
       labels:
         label1: <%= JSON.parse(data.s1).intKey %>
         label2: <%= JSON.parse(data.s1).objKey.strKey.replace(" ", "-") %>
+        label3: <%= JSON.parse(data.s3).objKey.strKey.replace(" ", "-") %>
     stringData:
       file.yaml: |
         <%= yaml.dump(JSON.parse(data.s1)) %>
@@ -327,12 +331,14 @@ data:
   file.yaml: aW50S2V5OiAxMQpvYmpLZXk6CiAgc3RyS2V5OiBoZWxsbyB3b3JsZAoKYXJyXzA6IDEKYXJyXzE6IDIKYXJyXzI6IDMKYAo=
   s1: eyJpbnRLZXkiOjExLCJvYmpLZXkiOnsic3RyS2V5IjoiaGVsbG8gd29ybGQifX0=
   s2: eyJhcnJLZXkiOlsxLDIsM119
+  s3: bm9uLXNlbnNpdGl2ZQ==
 kind: Secret
 metadata:
   name: tmpl-ext-sec
   labels:
     label1: "11"
     label2: hello-world
+    label3: non-sensitive
 type: Opaque
 ```
 
@@ -344,6 +350,9 @@ $ kubectl get secret/tmpl-ext-sec -ogo-template='{{ index .data "s1" | base64dec
 
 $ kubectl get secret/tmpl-ext-sec -ogo-template='{{ index .data "s2" | base64decode }}'
 {"arrKey":[1,2,3]}
+
+$ kubectl get secret/tmpl-ext-sec -ogo-template='{{ index .data "s3" | base64decode }}'
+non-sensitive
 
 $ kubectl get secret/tmpl-ext-sec -ogo-template='{{ index .data "file.txt" | base64decode }}'
 {"strKey":"hello world"}
@@ -358,7 +367,7 @@ arr_1: 2
 arr_2: 3
 
 $ kubectl get secret/tmpl-ext-sec -ogo-template='{{ .metadata.labels }}'
-map[label1:11 label2:hello-world]
+map[label1:11 label2:hello-world label3:non-sensitive]
 ```
 
 ## Scoping access
@@ -512,7 +521,7 @@ spec:
     - hello-service/credentials
 ```
 
-`data` and `dataFrom` can of course be combined, any naming conflicts will use the last defined, with `data` overriding `dataFrom`
+also, you can use `dataFromLiteral` with any backend type for *non-sensitive*, key-value pairs which will be available in the Secret template:
 
 ```yml
 apiVersion: kubernetes-client.io/v1
@@ -525,6 +534,30 @@ spec:
   roleArn: arn:aws:iam::123456789012:role/test-role
   # optional: specify region
   region: us-east-1
+  dataFromLiteral:
+    - name: env
+      value: dev
+    - name: locale
+      value: GMT
+
+```
+
+`data`, `dataFrom`, and `dataFromLiteral` can of course be combined, any naming conflicts will use the last defined, with `data` overriding `dataFrom` which overrides `dataFromLiteral`
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: us-east-1
+  dataFromLiteral:
+    - name: locale
+      value: GMT
   dataFrom:
     - hello-service/credentials
   data:
