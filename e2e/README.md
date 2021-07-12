@@ -42,7 +42,6 @@ helm template e2e ../charts/kubernetes-external-secrets \
   --set env.LOCALSTACK_SM_URL=http://secretsmanager \
   --set env.AWS_ACCESS_KEY_ID=foobar \
   --set env.AWS_SECRET_ACCESS_KEY=foobar \
-  --set env.AWS_DEFAULT_REGION=us-east-1 \
   --set env.AWS_REGION=us-east-1 \
   --set env.POLLER_INTERVAL_MILLISECONDS=1000 \
   --set env.LOCALSTACK_STS_URL=http://sts | kubectl apply -f -
@@ -74,7 +73,6 @@ kubectl run \
   --env="LOCALSTACK_SM_URL=http://secretsmanager" \
   --env="AWS_ACCESS_KEY_ID=foobar" \
   --env="AWS_SECRET_ACCESS_KEY=foobar" \
-  --env="AWS_DEFAULT_REGION=us-east-1" \
   --env="AWS_REGION=us-east-1" \
   --env="LOCALSTACK_STS_URL=http://sts" \
   --generator=run-pod/v1 \

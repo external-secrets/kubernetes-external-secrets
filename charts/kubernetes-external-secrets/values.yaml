@@ -5,7 +5,6 @@
 # Environment variables to set on deployment pod
 env:
   AWS_REGION: us-west-2
-  AWS_DEFAULT_REGION: us-west-2
   POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
   WATCH_TIMEOUT: 60000
   WATCHED_NAMESPACES: ""  # Comma separated list of namespaces, empty or unset means ALL namespaces.
