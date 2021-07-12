@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.2.2](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.2.1...8.2.2) (2021-07-12)
+
+
+### Bug Fixes
+
+* **IBM:** correctly extract secret data for IBM IAM credentials type secrets ([#792](https://github.com/external-secrets/kubernetes-external-secrets/issues/792)) ([2f16714](https://github.com/external-secrets/kubernetes-external-secrets/commit/2f16714d13b22ff0eb450d0d0f0bf62bbd4ced25))
+
 ### [8.2.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.2.0...8.2.1) (2021-07-02)
 
 
