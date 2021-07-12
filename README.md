@@ -854,9 +854,12 @@ The cli option is illustrated below:
 
 ```bash
 # you need to configure ibm cloud cli with a valid endpoint 
-export IBM_CLOUD_SECRETS_MANAGER_API_URL=https://{instanceid}.{region}.secrets-manager.appdomain.cloud
-ibmcloud secrets-manager secret-create --secret-type username_password \ 
---metadata '{"collection_type": "application/vnd.ibm.secrets-manager.secret+json", "collection_total": 1}' \ 
+# If you're using plug-in version 0.0.8 or later, export the following variable.
+export SECRETS_MANAGER_URL=https://{instanceid}.{region}.secrets-manager.appdomain.cloud
+# If you're using plug-in version 0.0.6 or earlier, export the following variable.
+export IBM_CLOUD_SECRETS_MANAGER_API_URL=https://{instance_ID}.{region}.secrets-manager.appdomain.cloud
+ibmcloud secrets-manager secret-create --secret-type username_password \
+--metadata '{"collection_type": "application/vnd.ibm.secrets-manager.secret+json", "collection_total": 1}' \
 --resources '[{"name": "example-username-password-secret","description": "Extended description for my secret.","username": "user123","password": "cloudy-rainy-coffee-book"}]'
 ```
 
