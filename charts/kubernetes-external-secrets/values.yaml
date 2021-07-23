@@ -32,6 +32,10 @@ env:
   # AWS_STS_ENDPOINT: https://sts-fips.us-east-1.amazonaws.com
   # AWS_SSM_ENDPOINT: http://ssm-fips.us-east-1.amazonaws.com
   # AWS_SM_ENDPOINT: http://secretsmanager-fips.us-east-1.amazonaws.com
+  # TENCENTCLOUD_REGION:
+  # TENCENTCLOUD_METADATA_HOST: metadata.tencentyun.com
+  # TENCENTCLOUD_METADATA_PATH: latest/meta-data/cam/security-credentials
+  # TENCENTCLOUD_SSM_ENDPOINT: ssm.tencentcloudapi.com
 
 # Create environment variables from existing k8s secrets
 envVarsFromSecret: {}
@@ -59,6 +63,12 @@ envVarsFromSecret: {}
 #  AZURE_CLIENT_SECRET:
 #    secretKeyRef: azure-credentials
 #    key: clientsecret
+#  TENCENTCLOUD_SECRET_ID:
+#    secretKeyRef: tencent-cloud-credential
+#    key: id
+#  TENCENTCLOUD_SECRET_KEY:
+#    secretKeyRef: tencent-cloud-credential
+#    key: key
 
 # Create environment variables from existing k8s secrets
 envVarsFromConfigMap: {}

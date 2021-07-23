@@ -884,6 +884,51 @@ spec:
       secretType: username_password
 ```
 
+
+### Tencent Cloud Secrets Manager
+
+kubernetes-external-secrets supports fetching secrets from [Tencent Cloud Secrets Manager](https://intl.cloud.tencent.com/product/ssm)
+
+create secret by using the [tencentcloud-cli](https://github.com/TencentCloud/tencentcloud-cli) command below:
+
+```bash
+# you need to configure tencentcloud-cli with a valid CAM user and proper permission
+tccli ssm CreateSecret --SecretName test_secret VersionId v1.0 --Description 'test create secret' --SecretString test
+```
+
+You will need to set these env vars in the deployment of kubernetes-external-secrets:
+
+- `TENCENTCLOUD_SECRET_ID`
+- `TENCENTCLOUD_SECRET_KEY`
+- `TENCENTCLOUD_REGION`
+- `TENCENTCLOUD_METADATA_HOST` - optional, default value is <metadata.tencentyun.com>
+- `TENCENTCLOUD_METADATA_PATH` - optional, default value is "latest/meta-data/cam/security-credentials"
+- `TENCENTCLOUD_SSM_ENDPOINT` - optional, default value is ssm.tencentcloudapi.com
+
+```bash
+# you could provide environment values as below
+
+helm install [RELEASE_NAME] external-secrets/kubernetes-external-secrets --set env.TENCENTCLOUD_REGION='<the-region-id>' --set envVarsFromSecret.TENCENTCLOUD_SECRET_ID.key=id --set envVarsFromSecret.TENCENTCLOUD_SECRET_ID.secretKeyRef='the-secret-with-credential' --set envVarsFromSecret.TENCENTCLOUD_SECRET_KEY.key=key --set envVarsFromSecret.TENCENTCLOUD_SECRET_KEY.secretKeyRef='the-secret-with-credential'
+```
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: tencentcloudSecretsManager
+  # optional: specify roleName to assume (CVM attached role)
+  roleName: demoRole
+  data:
+    - key: secretName01
+      name: mappingKeyInSecret01
+      versionId: v0.0.2
+    - key: secretName02
+      name: mappingKeyInSecret02
+      versionId: v0.1
+```
+
 ## Binary Secrets
 
 Most backends do not treat binary secrets any differently than text secrets. Since you typically store a binary secret as a base64-encoded string in the backend, you need to explicitly let the ExternalSecret know that the secret is binary, otherwise it will be encoded in base64 again.

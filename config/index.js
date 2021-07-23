@@ -14,6 +14,7 @@ const alicloudConfig = require('./alicloud-config')
 const gcpConfig = require('./gcp-config')
 const ibmcloudConfig = require('./ibmcloud-config')
 const akeylessConfig = require('./akeyless-config')
+const tencentcloudConfig = require('./tencentcloud-config')
 const envConfig = require('./environment')
 const SecretsManagerBackend = require('../lib/backends/secrets-manager-backend')
 const SystemManagerBackend = require('../lib/backends/system-manager-backend')
@@ -23,6 +24,7 @@ const GCPSecretsManagerBackend = require('../lib/backends/gcp-secrets-manager-ba
 const AliCloudSecretsManagerBackend = require('../lib/backends/alicloud-secrets-manager-backend')
 const IbmCloudSecretsManagerBackend = require('../lib/backends/ibmcloud-secrets-manager-backend')
 const AkeylessBackend = require('../lib/backends/akeyless-backend')
+const TencentCloudSecretsManagerBackend = require('../lib/backends/tencentcloud-secrets-manager-backend')
 
 // Get document, or throw exception on error
 // eslint-disable-next-line security/detect-non-literal-fs-filename
@@ -109,6 +111,10 @@ const akeylessBackend = new AkeylessBackend({
   credential: akeylessConfig.credential,
   logger
 })
+const tencentcloudSecretsManagerBackend = new TencentCloudSecretsManagerBackend({
+  credential: tencentcloudConfig.credential,
+  logger
+})
 
 const backends = {
   // when adding a new backend, make sure to change the CRD property too
@@ -119,7 +125,8 @@ const backends = {
   gcpSecretsManager: gcpSecretsManagerBackend,
   alicloudSecretsManager: alicloudSecretsManagerBackend,
   ibmcloudSecretsManager: ibmcloudSecretsManagerBackend,
-  akeyless: akeylessBackend
+  akeyless: akeylessBackend,
+  tencentcloudSecretsManager: tencentcloudSecretsManagerBackend
 }
 
 // backwards compatibility
