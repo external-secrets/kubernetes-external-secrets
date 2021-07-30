@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.2.3](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.2.2...8.2.3) (2021-07-30)
+
+
+### Bug Fixes
+
+* **core:** verify data items with path attribute when using naming conventions. ([#800](https://github.com/external-secrets/kubernetes-external-secrets/issues/800)) ([129a518](https://github.com/external-secrets/kubernetes-external-secrets/commit/129a5188493d2520c03d4fe0af0ef35738432266))
+
 ### [8.2.2](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.2.1...8.2.2) (2021-07-12)
 
 
