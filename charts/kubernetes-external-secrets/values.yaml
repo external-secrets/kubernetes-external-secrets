@@ -134,6 +134,9 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
+# All label values must be strings
+deploymentLabels: {}
+
 podAnnotations: {}
 podLabels: {}
 
