@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.3.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.2.3...8.3.0) (2021-08-05)
+
+
+### Features
+
+* **chart:** Add optional deployment labels value to charts ([#814](https://github.com/external-secrets/kubernetes-external-secrets/issues/814)) ([43eb046](https://github.com/external-secrets/kubernetes-external-secrets/commit/43eb04649ec3975e2f64cb6448aac2ee0b1f3b5c))
+
+
+### Bug Fixes
+
+* stop using deprecated/removed --generator flag in e2e tests ([#819](https://github.com/external-secrets/kubernetes-external-secrets/issues/819)) ([6347182](https://github.com/external-secrets/kubernetes-external-secrets/commit/63471824b9bf8a75704a92d07b57085ac00f0828))
+
 ### [8.2.3](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.2.2...8.2.3) (2021-07-30)
 
 
