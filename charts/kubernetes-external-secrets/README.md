@@ -79,6 +79,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `serviceAccount.create`                   | Whether a new service account name should be created.                                                                             | `true`                                |
 | `serviceAccount.name`                     | Service account to be used.                                                                                                       | automatically generated               |
 | `serviceAccount.annotations`              | Annotations to be added to service account                                                                                        | `nil`                                 |
+| `deploymentLabels`                        | Additional labels to be added the deployment                                                                                      | `{}`                                  |
 | `podAnnotations`                          | Annotations to be added to pods                                                                                                   | `{}`                                  |
 | `podLabels`                               | Additional labels to be added to pods                                                                                             | `{}`                                  |
 | `priorityClassName`                       | Priority class to be assigned to pods
