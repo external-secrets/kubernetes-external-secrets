@@ -23,4 +23,9 @@ jobs:
     name: E2E
     steps:
       - uses: actions/checkout@v2
+      - name: versions
+        run: |
+          kind version
+          kubectl version --client
+          helm version --client
       - run: ./e2e/run-e2e-suite.sh

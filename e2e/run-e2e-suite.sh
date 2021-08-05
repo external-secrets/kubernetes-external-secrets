@@ -111,6 +111,5 @@ kubectl run \
   --env="AWS_DEFAULT_REGION=us-east-1" \
   --env="AWS_REGION=us-east-1" \
   --env="LOCALSTACK_STS_URL=http://sts" \
-  --generator=run-pod/v1 \
   --overrides='{ "apiVersion": "v1", "spec":{"serviceAccountName": "external-secrets-e2e"}}' \
   e2e --image=external-secrets-e2e:test
