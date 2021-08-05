@@ -533,7 +533,7 @@ spec:
       property: password
 ```
 
-# AWS SSM Parameter Store
+### AWS SSM Parameter Store
 
 You can scrape values from SSM Parameter Store individually or by providing a path to fetch all keys inside.
 
