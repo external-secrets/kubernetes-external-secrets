@@ -47,7 +47,7 @@
     "node-vault": "^0.9.18",
     "pino": "^6.4.1",
     "prom-client": "^12.0.0",
-    "proxy-agent": "^4.0.1"
+    "proxy-agent": "^5.0.0"
   },
   "devDependencies": {
     "chai": "4.2.0",
