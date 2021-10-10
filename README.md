@@ -847,20 +847,22 @@ The secrets will persist even if the helm installation is removed, although they
 
 ### IBM Cloud Secrets Manager
 
-kubernetes-external-secrets supports fetching secrets from [IBM Cloud Secrets Manager](https://cloud.ibm.com/catalog/services/secrets-manager)
+kubernetes-external-secrets supports fetching secrets from [IBM Cloud Secrets Manager](https://cloud.ibm.com/catalog/services/secrets-manager).
 
-create username_password secret by using the [ui, cli or API](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-user-credentials).
-The cli option is illustrated below:
+Create username_password secret by using the [UI, CLI or API](https://cloud.ibm.com/docs/secrets-manager?topic=secrets-manager-user-credentials).
+The CLI option is illustrated below:
 
 ```bash
-# you need to configure ibm cloud cli with a valid endpoint 
+# You need to configure ibm cloud cli with a valid endpoint.
 # If you're using plug-in version 0.0.8 or later, export the following variable.
 export SECRETS_MANAGER_URL=https://{instanceid}.{region}.secrets-manager.appdomain.cloud
+
 # If you're using plug-in version 0.0.6 or earlier, export the following variable.
 export IBM_CLOUD_SECRETS_MANAGER_API_URL=https://{instance_ID}.{region}.secrets-manager.appdomain.cloud
+
 ibmcloud secrets-manager secret-create --secret-type username_password \
---metadata '{"collection_type": "application/vnd.ibm.secrets-manager.secret+json", "collection_total": 1}' \
---resources '[{"name": "example-username-password-secret","description": "Extended description for my secret.","username": "user123","password": "cloudy-rainy-coffee-book"}]'
+  --metadata '{"collection_type": "application/vnd.ibm.secrets-manager.secret+json", "collection_total": 1}' \
+  --resources '[{"name": "example-username-password-secret","description": "Extended description for my secret.","username": "user123","password": "cloudy-rainy-coffee-book"}]'
 ```
 
 You will need to set these env vars in the deployment of kubernetes-external-secrets:
@@ -880,7 +882,27 @@ spec:
     # The guid id of the secret
     - key: <guid>
       name: username
-      property: username 
+      property: username
+      secretType: username_password
+```
+
+
+Alternately, you can use `keyByName` on the spec to interpret keys as secret names, instead of IDs.
+Using names is slightly less efficient than using IDs, but it makes your ExternalSecrets more robust, as they are not tied to a particular instance of a secret in a particular instance of Secrets Manager:
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: ibmcloud-secrets-manager-example
+spec:
+  backendType: ibmcloudSecretsManager
+  keyByName: true
+  data:
+    # The name of the secret
+    - key: my-creds
+      name: username
+      property: username
       secretType: username_password
 ```
 
