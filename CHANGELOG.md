@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.3.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.3.0...8.3.1) (2021-10-19)
+
+
+### Bug Fixes
+
+* fixes naming convention permission check for data items with path attribute only. ([#830](https://github.com/external-secrets/kubernetes-external-secrets/issues/830)) ([a7d8c6c](https://github.com/external-secrets/kubernetes-external-secrets/commit/a7d8c6c4bff197084c0f4f85cf6e1d801f7be562))
+* package.json & package-lock.json to reduce vulnerabilities ([#825](https://github.com/external-secrets/kubernetes-external-secrets/issues/825)) ([946f692](https://github.com/external-secrets/kubernetes-external-secrets/commit/946f6927177b67cbbc7e8843b2dbb2b3ec2abf99))
+* remove AWS_DEFAULT_REGION ([#794](https://github.com/external-secrets/kubernetes-external-secrets/issues/794)) ([45e8948](https://github.com/external-secrets/kubernetes-external-secrets/commit/45e894895c009f724f342e9860768f54d7e4552f))
+* update runtime to node 14, update all transitive dependencies, update dev dependencies ([#854](https://github.com/external-secrets/kubernetes-external-secrets/issues/854)) ([7a178d0](https://github.com/external-secrets/kubernetes-external-secrets/commit/7a178d062fc5a01065fb81af55ec64775866fa9d))
+
 ## [8.3.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.2.3...8.3.0) (2021-08-05)
 
 
