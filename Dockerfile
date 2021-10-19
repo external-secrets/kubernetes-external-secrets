@@ -1,4 +1,4 @@
-FROM node:12-alpine
+FROM node:14-alpine
 
 ENV NODE_ENV production
 ENV NPM_CONFIG_LOGLEVEL warn
