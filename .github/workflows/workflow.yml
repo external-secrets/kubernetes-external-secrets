@@ -9,13 +9,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    name: Node 12
+    name: Node 14
     steps:
       - uses: actions/checkout@v2
       - name: Setup node
         uses: actions/setup-node@v2.4.1
         with:
-          node-version: 12
+          node-version: 14
       - run: npm install
       - run: npm test
   test-e2e:
