@@ -37,6 +37,7 @@ const logger = pino({
   serializers: {
     err: pino.stdSerializers.err
   },
+  redact: ['err.options.headers', 'err.options.json.jwt'],
   messageKey: envConfig.logMessageKey || 'msg',
   level: envConfig.logLevel,
   formatters: {

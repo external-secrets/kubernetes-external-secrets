@@ -45,7 +45,7 @@
     "lodash": "^4.17.21",
     "make-promises-safe": "^5.1.0",
     "node-vault": "^0.9.18",
-    "pino": "^6.4.1",
+    "pino": "^7.0.5",
     "prom-client": "^12.0.0",
     "proxy-agent": "^5.0.0"
   },
