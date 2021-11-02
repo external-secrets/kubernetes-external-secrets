@@ -14,7 +14,7 @@ External Secrets on the [GoDaddy Engineering
 Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
 
 The community and maintainers of this project and related Kubernetes
-secret management projects use
+secret management projects use the
 [`#external-secrets`](https://kubernetes.slack.com/archives/C017BF84G2Y)
 channel on the Kubernetes slack for discussion and brainstorming.
 
@@ -25,10 +25,10 @@ The project extends the Kubernetes API by adding an `ExternalSecrets` object usi
 An `ExternalSecret` declares how to fetch the secret data, while the controller converts all `ExternalSecrets` to `Secrets`.
 The conversion is completely transparent to `Pods` that can access `Secrets` normally.
 
-By default `Secrets` are not encrypted at rest and are open to attack, either via the etcd server or via backups of etcd data.
+By default `Secrets` are not encrypted at rest and are open to attack, either via the `etcd` server or via backups of `etcd` data.
 To mitigate this risk, use an
 [external secret management system with a KMS plugin](https://kubernetes.io/docs/tasks/administer-cluster/kms-provider/)
-to encrypt `Secrets` stored in etcd.
+to encrypt `Secrets` stored in `etcd`.
 
 ## System architecture
 
@@ -937,7 +937,7 @@ npm run nodemon
 
 [Localstack](https://github.com/localstack/localstack) mocks AWS services locally so you can test without connecting to AWS.
 
-Run localstack in a seperate terminal window
+Run localstack in a separate terminal window
 
 ```sh
 npm run localstack
