@@ -40,6 +40,7 @@ const logger = pino({
   redact: ['err.options.headers', 'err.options.json.jwt'],
   messageKey: envConfig.logMessageKey || 'msg',
   level: envConfig.logLevel,
+  base: envConfig.logBase,
   formatters: {
     level (label, number) {
       return { level: envConfig.useHumanReadableLogLevels ? label : number }
