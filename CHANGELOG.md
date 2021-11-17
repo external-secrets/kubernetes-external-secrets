@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.4.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.3.2...8.4.0) (2021-11-17)
+
+
+### Features
+
+* ✨ Introduce dataFromWithOptions ([#846](https://github.com/external-secrets/kubernetes-external-secrets/issues/846)) ([4dbb6dd](https://github.com/external-secrets/kubernetes-external-secrets/commit/4dbb6dd323629d5fef6de40bb4a722c6420a2f9d))
+* **ibm:** add spec option keyByName to support the use of a name, instead of id, as the key ([#850](https://github.com/external-secrets/kubernetes-external-secrets/issues/850)) ([20496ab](https://github.com/external-secrets/kubernetes-external-secrets/commit/20496ab1969fb698700e9f4822e2055d43b2601e))
+* Log base w/ configurable pid and hostname keys ([#868](https://github.com/external-secrets/kubernetes-external-secrets/issues/868)) ([ca549f5](https://github.com/external-secrets/kubernetes-external-secrets/commit/ca549f590184abfa1df49551479329a972a8b556))
+
+
+### Bug Fixes
+
+* redact sensitive information from logs ([#859](https://github.com/external-secrets/kubernetes-external-secrets/issues/859)) ([79da8cb](https://github.com/external-secrets/kubernetes-external-secrets/commit/79da8cb3c815c74f97c6ee776d520745fb9627ab))
+
 ### [8.3.2](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.3.1...8.3.2) (2021-10-19)
 
 
