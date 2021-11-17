@@ -31,6 +31,10 @@ const pollerIntervalMilliseconds = process.env.POLLER_INTERVAL_MILLISECONDS
   ? Number(process.env.POLLER_INTERVAL_MILLISECONDS) : 10000
 
 const logLevel = process.env.LOG_LEVEL || 'info'
+const os = require('os')
+const logBasePidKey = process.env.LOG_BASE_PID_KEY || 'pid'
+const logBaseHostnameKey = process.env.LOG_BASE_HOSTNAME_KEY || 'hostname'
+const logBase = { [logBasePidKey]: process.pid, [logBaseHostnameKey]: os.hostname() }
 const useHumanReadableLogLevels = 'USE_HUMAN_READABLE_LOG_LEVELS' in process.env
 const logMessageKey = process.env.LOG_MESSAGE_KEY || 'msg'
 
@@ -70,6 +74,7 @@ module.exports = {
   enforceNamespaceAnnotation,
   pollingDisabled,
   logLevel,
+  logBase,
   useHumanReadableLogLevels,
   logMessageKey,
   watchTimeout,
