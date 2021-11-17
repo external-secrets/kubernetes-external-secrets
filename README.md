@@ -512,7 +512,28 @@ spec:
     - hello-service/credentials
 ```
 
-`data` and `dataFrom` can of course be combined, any naming conflicts will use the last defined, with `data` overriding `dataFrom`
+`dataFrom` by default retrieves the latest (`AWSCURRENT`) version of the backend secret, if you want to get values in bulk of a specific version, you can use `dataFromWithOptions`:
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: secretsManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: us-east-1
+  dataFromWithOptions:
+    - key: hello-service/credentials
+      versionStage: AWSPREVIOUS
+    - key: hello-service/credentials
+      versionId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
+```
+
+`data`, `dataFrom` and `dataFromWithOptions` can of course be combined, any naming conflicts will use the last defined.   
+In the below example `data` takes precedence over `dataFromWithOptions` and `dataFrom`.
 
 ```yml
 apiVersion: kubernetes-client.io/v1
@@ -527,6 +548,9 @@ spec:
   region: us-east-1
   dataFrom:
     - hello-service/credentials
+  dataFromWithOptions:
+    - key: hello-service/credentials
+      versionId: xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx
   data:
     - key: hello-service/migration-credentials
       name: password
