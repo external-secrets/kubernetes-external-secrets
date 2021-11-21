@@ -7,18 +7,17 @@ const { DefaultAzureCredential, AzureAuthorityHosts } = require('@azure/identity
 // - AZURE_CLIENT_SECRET: The client secret for the registered application
 // An optional environment variable AZURE_ENVIRONMENT may be provided to specify cloud environment
 
-const authorityHostMap = new Map();
-authorityHostMap.set("AzureCloud", AzureAuthorityHosts.AzurePublicCloud);
-authorityHostMap.set("AzureChinaCloud", AzureAuthorityHosts.AzureChina);
-authorityHostMap.set("AzureGermanCloud", AzureAuthorityHosts.AzureGermany);
-authorityHostMap.set("AzureUSGovernment", AzureAuthorityHosts.AzureGovernment);
+const authorityHostMap = new Map()
+authorityHostMap.set('AzureCloud', AzureAuthorityHosts.AzurePublicCloud)
+authorityHostMap.set('AzureChinaCloud', AzureAuthorityHosts.AzureChina)
+authorityHostMap.set('AzureGermanCloud', AzureAuthorityHosts.AzureGermany)
+authorityHostMap.set('AzureUSGovernment', AzureAuthorityHosts.AzureGovernment)
 
 module.exports = {
   azureKeyVault: () => {
-
     var env = process.env.AZURE_ENVIRONMENT
     if (!env) {
-      env = "AzureCloud" // default
+      env = 'AzureCloud' // default
     }
     var host = authorityHostMap.get(env)
     const credential = new DefaultAzureCredential({ authorityHost: host })
