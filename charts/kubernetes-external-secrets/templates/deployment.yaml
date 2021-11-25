@@ -8,9 +8,16 @@ metadata:
     helm.sh/chart: {{ include "kubernetes-external-secrets.chart" . }}
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/managed-by: {{ .Release.Service }}
-  {{- if .Values.deploymentLabels }}
-      {{- toYaml .Values.deploymentLabels | nindent 4 }}
-  {{- end }}
+    {{- if .Values.deploymentLabels }}
+        {{- toYaml .Values.deploymentLabels | nindent 4 }}
+    {{- end }}
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -23,11 +30,11 @@ spec:
         app.kubernetes.io/name: {{ include "kubernetes-external-secrets.name" . }}
         app.kubernetes.io/instance: {{ .Release.Name }}
       {{- if .Values.podLabels }}
-          {{- toYaml .Values.podLabels | nindent 8 }}
+          {{- include "common.tplvalues.render" (dict "value" .Values.podLabels "context" $) | nindent 8 }}
       {{- end }}
       {{- if .Values.podAnnotations }}
       annotations:
-        {{- toYaml .Values.podAnnotations | nindent 8 }}
+        {{- include "common.tplvalues.render" (dict "value" .Values.podAnnotations "context" $) | nindent 8 }}
       {{- end }}
     spec:
       serviceAccountName: {{ template "kubernetes-external-secrets.serviceAccountName" . }}

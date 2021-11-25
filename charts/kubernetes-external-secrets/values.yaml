@@ -5,20 +5,19 @@
 # Environment variables to set on deployment pod
 env:
   AWS_REGION: us-west-2
-  POLLER_INTERVAL_MILLISECONDS: 10000  # Caution, setting this frequency may incur additional charges on some platforms
+  POLLER_INTERVAL_MILLISECONDS: 10000 # Caution, setting this frequency may incur additional charges on some platforms
   WATCH_TIMEOUT: 60000
-  WATCHED_NAMESPACES: ""  # Comma separated list of namespaces, empty or unset means ALL namespaces.
+  WATCHED_NAMESPACES: "" # Comma separated list of namespaces, empty or unset means ALL namespaces.
   LOG_LEVEL: info
   LOG_MESSAGE_KEY: "msg"
 
   #Akeyless rest-v2 endpoint
-  AKEYLESS_API_ENDPOINT:  https://api.akeyless.io
+  AKEYLESS_API_ENDPOINT: https://api.akeyless.io
   AKEYLESS_ACCESS_ID:
   #AKEYLESS_ACCESS_TYPE can be one of the following: aws_iam/azure_ad/gcp/access_key
   AKEYLESS_ACCESS_TYPE:
   #AKEYLESS_ACCESS_TYPE_PARAM can be one of the following: gcp-audience/azure-obj-id/access-key
   #AKEYLESS_ACCESS_TYPE_PARAM:
-
 
   # Print logs level as string ("info") rather than integer (30)
   # USE_HUMAN_READABLE_LOG_LEVELS: true
@@ -86,7 +85,6 @@ envVarsFromConfigMap: {}
 #    configMapKeyRef: azure-credentials
 #    key: clientsecret
 
-
 # List of sources to populate environment variables in the container.
 # The keys defined within a source must be a C_IDENTIFIER. All invalid keys
 # will be reported as an event when the container is starting. When a key
@@ -98,7 +96,6 @@ envFrom: {}
 #     name: special-config
 # - secretRef:
 #     name: special-config
-
 
 # Create files from existing k8s secrets
 # filesFromSecret:
@@ -136,8 +133,21 @@ fullnameOverride: ""
 # All label values must be strings
 deploymentLabels: {}
 
-podAnnotations: {}
+## @param commonLabels Labels to add to all deployed objects
+##
+commonLabels: {}
+## @param commonAnnotations Annotations to add to all deployed objects
+##
+commonAnnotations: {}
+
+## @param podLabels Extra labels for OAuth2 Proxy pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/
+##
 podLabels: {}
+## @param podAnnotations Annotations for OAuth2 Proxy pods
+## ref: https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/
+##
+podAnnotations: {}
 
 priorityClassName: ""
 
@@ -150,7 +160,8 @@ securityContext:
 
 # A security context defines privilege and access control settings for a Pod or Container.
 # ref: https://kubernetes.io/docs/tasks/configure-pod-container/security-context/
-containerSecurityContext: {}
+containerSecurityContext:
+  {}
   # allowPrivilegeEscalation: false
   # privileged: false
 

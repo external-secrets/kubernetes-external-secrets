@@ -9,6 +9,13 @@ metadata:
     helm.sh/chart: {{ include "kubernetes-external-secrets.chart" . }}
     app.kubernetes.io/instance: "{{ .Release.Name }}"
     app.kubernetes.io/managed-by: "{{ .Release.Service }}"
+    {{- if .Values.commonLabels }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonLabels "context" $ ) | nindent 4 }}
+    {{- end }}
+  annotations:
+    {{- if .Values.commonAnnotations }}
+    {{- include "common.tplvalues.render" ( dict "value" .Values.commonAnnotations "context" $ ) | nindent 4 }}
+    {{- end }}
 spec:
   selector:
     matchLabels:
