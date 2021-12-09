@@ -56,6 +56,7 @@ async function main () {
   })
 
   const registry = Prometheus.register
+  Prometheus.collectDefaultMetrics({ register: registry })
   const metrics = new Metrics({ registry })
 
   const pollerFactory = new PollerFactory({
