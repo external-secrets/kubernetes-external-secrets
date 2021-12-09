@@ -684,7 +684,7 @@ You will need to set these env vars in the deployment of kubernetes-external-sec
 - `AZURE_CLIENT_ID`
 - `AZURE_CLIENT_SECRET`
   
-The SP configured will require get and list access policies on the `AZURE_KEYVAULT_NAME`.
+The SP configured will require `Get` permissions on the `AZURE_KEYVAULT_NAME`'s access policy.
 
 ```yml
 apiVersion: kubernetes-client.io/v1
@@ -698,6 +698,19 @@ spec:
     - key: hello-service/credentials
       name: password
 ```
+You can also use the `secrets` path in order to fetch all available secrets. In this scenario the keys will be mapped to those in Azure KeyVault automatically. Note that the SP will need `List` and `Get` permissions on the `AZURE_KEYVAULT_NAME`'s access policy.
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-keyvault-service
+spec:
+  backendType: azureKeyVault
+  keyVaultName: hello-world
+  data:
+    - path: secrets
+```
+
 
 ### Alibaba Cloud KMS Secret Manager
 
