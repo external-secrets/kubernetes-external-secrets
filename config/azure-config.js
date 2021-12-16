@@ -15,10 +15,7 @@ authorityHostMap.set('AzureUSGovernment', AzureAuthorityHosts.AzureGovernment)
 
 module.exports = {
   azureKeyVault: () => {
-    let env = process.env.AZURE_ENVIRONMENT
-    if (!env) {
-      env = 'AzureCloud' // default
-    }
+    const env = process.env.AZURE_ENVIRONMENT || 'AzureCloud'
     const host = authorityHostMap.get(env)
     const credential = new DefaultAzureCredential({ authorityHost: host })
     return credential
