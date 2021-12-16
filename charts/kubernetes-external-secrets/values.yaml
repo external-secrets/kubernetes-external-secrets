@@ -32,6 +32,10 @@ env:
   # AWS_SSM_ENDPOINT: http://ssm-fips.us-east-1.amazonaws.com
   # AWS_SM_ENDPOINT: http://secretsmanager-fips.us-east-1.amazonaws.com
 
+  # Use Azure Environment-oriented KeyVault endpoints
+  # AZURE_ENVIRONMENT: AzureUSGovernment
+  # AZURE_KEY_VAULT_DNS_SUFFIX: vault.usgovcloudapi.net
+
 # Create environment variables from existing k8s secrets
 envVarsFromSecret: {}
 #  AWS_ACCESS_KEY_ID:
