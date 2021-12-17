@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [8.5.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.4.0...8.5.0) (2021-12-17)
+
+
+### Features
+
+* add runtime metrics ([#877](https://github.com/external-secrets/kubernetes-external-secrets/issues/877)) ([8ff5aa0](https://github.com/external-secrets/kubernetes-external-secrets/commit/8ff5aa09155d36b2a27899e78e3f1c1b03fd15b1))
+* **azure:** Support Azure sovereign cloud environments ([#871](https://github.com/external-secrets/kubernetes-external-secrets/issues/871)) ([148e5ce](https://github.com/external-secrets/kubernetes-external-secrets/commit/148e5ce8ca163092ea4271b1ff2c5998fe938683))
+
 ## [8.4.0](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.3.2...8.4.0) (2021-11-17)
 
 
