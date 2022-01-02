@@ -32,7 +32,7 @@
   },
   "dependencies": {
     "@alicloud/kms20160120": "^1.1.0",
-    "@azure/identity": "^1.0.3",
+    "@azure/identity": "^1.5.2",
     "@azure/keyvault-secrets": "^4.0.4",
     "@google-cloud/secret-manager": "^3.2.3",
     "@ibm-cloud/secrets-manager": "^0.1.0",
@@ -59,7 +59,7 @@
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-security": "1.4.0",
     "eslint-plugin-standard": "4.1.0",
-    "mocha": "8.4.0",
+    "mocha": "9.1.3",
     "nodemon": "2.0.13",
     "nyc": "15.1.0",
     "sinon": "9.2.4",
