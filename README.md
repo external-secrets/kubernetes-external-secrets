@@ -561,7 +561,7 @@ spec:
 
 You can scrape values from SSM Parameter Store individually or by providing a path to fetch all keys inside.
 
-Additionally you can also scrape all sub paths (child paths) if you need to. The default is not to scrape child paths
+When fetching all keys by path, you can also scrape all sub paths (child paths) if you need to. The default is not to scrape child paths.
 
 ```yml
 apiVersion: kubernetes-client.io/v1
@@ -580,6 +580,27 @@ spec:
     - path: /extra-people/
       recursive: false
 ```
+
+`data` and `dataFrom` retrieve the latest version of the parameter by default, if you want to get values for a specific version you can use append the version number to the key:
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: systemManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: us-east-1
+  dataFrom:
+    - hello-service/credentials:3
+  data:
+    - key: /foo/name
+      name: fooName:5
+```
+
 ### Akeyless Vault
 
 kubernetes-external-secrets supports fetching secrets from [Akeyless Vault](https://www.akeyless.io/), .
