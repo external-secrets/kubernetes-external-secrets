@@ -581,7 +581,7 @@ spec:
       recursive: false
 ```
 
-`data` and `dataFrom` retrieve the latest version of the parameter by default, if you want to get values for a specific version you can use append the version number to the key:
+`data` and `dataFrom` retrieve the latest version of the parameter by default. If you want to get values for a specific version, you can append the version number to the key:
 
 ```yml
 apiVersion: kubernetes-client.io/v1
