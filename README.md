@@ -561,7 +561,7 @@ spec:
 
 You can scrape values from SSM Parameter Store individually or by providing a path to fetch all keys inside.
 
-When fetching all keys by path, you can also scrape all sub paths (child paths) if you need to. The default is not to scrape child paths.
+When fetching all keys by path, you can also recursively scrape all the sub paths (child paths) if you need to. The default is not to scrape child paths.
 
 ```yml
 apiVersion: kubernetes-client.io/v1
