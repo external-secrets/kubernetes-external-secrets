@@ -11,7 +11,7 @@ const authorityHostMap = new Map()
 authorityHostMap.set('AzureCloud', AzureAuthorityHosts.AzurePublicCloud)
 authorityHostMap.set('AzureChinaCloud', AzureAuthorityHosts.AzureChina)
 authorityHostMap.set('AzureGermanCloud', AzureAuthorityHosts.AzureGermany)
-authorityHostMap.set('AzureUSGovernment', AzureAuthorityHosts.AzureGovernment)
+authorityHostMap.set('AzureUSGovernmentCloud', AzureAuthorityHosts.AzureGovernment)
 
 module.exports = {
   azureKeyVault: () => {
