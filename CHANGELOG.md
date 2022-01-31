@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.5.2](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.5.1...8.5.2) (2022-01-31)
+
+
+### Bug Fixes
+
+* **azure:** AzureUSGovernment -> AzureUSGovernmentCloud ([#901](https://github.com/external-secrets/kubernetes-external-secrets/issues/901)) ([fa09c72](https://github.com/external-secrets/kubernetes-external-secrets/commit/fa09c7286ad3a16f6af85ac05df75ff3b18260a1))
+* **azure:** bump @azure/identity and @azure/keyvault-secrets dependencies due to audit warnings ([d89bb84](https://github.com/external-secrets/kubernetes-external-secrets/commit/d89bb84d97a4fa49915e9dc2a96f9233100422e7))
+* **deps:** CVE-2022-0155 bump follow-redirects from 1.14.4 to 1.14.7 ([#900](https://github.com/external-secrets/kubernetes-external-secrets/issues/900)) ([561faf2](https://github.com/external-secrets/kubernetes-external-secrets/commit/561faf27cd0051be9fdf234cd6b783d9941f7b13))
+* **deps:** GHSA-64g7-mvw6-v9qj bump shelljs from 0.8.4 to 0.8.5 ([#899](https://github.com/external-secrets/kubernetes-external-secrets/issues/899)) ([4e3f068](https://github.com/external-secrets/kubernetes-external-secrets/commit/4e3f068dfb5e9e957817be72ad78d922f6eab991))
+* **security:** npm audit fix, bump security alerted dependencies ([6fcbb56](https://github.com/external-secrets/kubernetes-external-secrets/commit/6fcbb565b3b7f6f5e21d56dc6fa3e0966981fb53))
+
 ### [8.5.1](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.5.0...8.5.1) (2022-01-02)
 
 
