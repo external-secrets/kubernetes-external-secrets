@@ -1,3 +1,8 @@
+# Deprecated
+
+This project has been [deprecated](https://github.com/external-secrets/kubernetes-external-secrets/issues/864). 
+Please take a look at ESO (External Secrets Operator) instead https://github.com/external-secrets/external-secrets 
+
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/external-secrets)](https://artifacthub.io/packages/search?repo=external-secrets) [![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/external-secrets/kubernetes-external-secrets)](https://lgtm.com/projects/g/external-secrets/kubernetes-external-secrets)
 
 ## History
