@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.5.3](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.5.2...8.5.3) (2022-02-15)
+
+
+### Bug Fixes
+
+* **chart:** add deprecation notice ([264de92](https://github.com/external-secrets/kubernetes-external-secrets/commit/264de92e6b9ea905e3973b5b4d5fcc62b121a07d))
+
 ### [8.5.2](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.5.1...8.5.2) (2022-01-31)
 
 
