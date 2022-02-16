@@ -2,6 +2,25 @@ apiVersion: v1
 entries:
   kubernetes-external-secrets:
   - apiVersion: v2
+    appVersion: 8.5.4
+    created: "2022-02-16T08:12:46.365331825+01:00"
+    deprecated: true
+    description: 'Deprecated: Kubernetes External Secrets CustomResourceDefinition'
+    digest: c3868e8c0f09331b56c60ae5966e03867805ac28e9e30beef0276b38dd97e79b
+    home: https://github.com/external-secrets/kubernetes-external-secrets
+    keywords:
+    - kubernetes-external-secrets
+    - secrets
+    maintainers:
+    - name: external-secrets
+      url: https://github.com/external-secrets
+    name: kubernetes-external-secrets
+    sources:
+    - https://github.com/external-secrets/kubernetes-external-secrets
+    urls:
+    - kubernetes-external-secrets-8.5.4.tgz
+    version: 8.5.4
+  - apiVersion: v2
     appVersion: 8.5.3
     created: "2022-02-15T23:04:33.654912038+01:00"
     deprecated: true
@@ -846,4 +865,4 @@ entries:
     urls:
     - kubernetes-external-secrets-1.0.1.tgz
     version: 1.0.1
-generated: "2022-02-15T23:04:33.654291408+01:00"
+generated: "2022-02-16T08:12:46.364191375+01:00"

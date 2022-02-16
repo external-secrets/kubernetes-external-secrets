@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [8.5.4](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.5.3...8.5.4) (2022-02-16)
+
+
+### Bug Fixes
+
+* **deps:** bump follow-redirects from 1.14.7 to 1.14.8 ([#907](https://github.com/external-secrets/kubernetes-external-secrets/issues/907)) ([a65b4f2](https://github.com/external-secrets/kubernetes-external-secrets/commit/a65b4f260abbdc1cdeb58b9ea165f48085905056))
+* **deps:** CVE-2021-23555 bump vm2 from 3.9.5 to 3.9.7 ([#908](https://github.com/external-secrets/kubernetes-external-secrets/issues/908)) (see 2642fed) ([ce06c7b](https://github.com/external-secrets/kubernetes-external-secrets/commit/ce06c7bddf0792cb64cac95cad4714ed09309553))
+
 ### [8.5.3](https://github.com/external-secrets/kubernetes-external-secrets/compare/8.5.2...8.5.3) (2022-02-15)
 
 

@@ -1,7 +1,7 @@
 apiVersion: v2
 name: kubernetes-external-secrets
-version: 8.5.3
-appVersion: 8.5.3
+version: 8.5.4
+appVersion: 8.5.4
 description: "Deprecated: Kubernetes External Secrets CustomResourceDefinition"
 keywords:
   - kubernetes-external-secrets
