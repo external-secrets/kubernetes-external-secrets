@@ -1,8 +1,13 @@
+# Deprecated
+
+This project has been [deprecated](https://github.com/external-secrets/kubernetes-external-secrets/issues/864). 
+Please take a look at ESO (External Secrets Operator) instead https://github.com/external-secrets/external-secrets 
+
 [![Artifact HUB](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/external-secrets)](https://artifacthub.io/packages/search?repo=external-secrets) [![LGTM Alerts](https://img.shields.io/lgtm/alerts/github/external-secrets/kubernetes-external-secrets)](https://lgtm.com/projects/g/external-secrets/kubernetes-external-secrets)
 
-## Repository moved to external-secrets
+## History
 
-This project was moved from the [GoDaddy](https://github.com/godaddy) to the [external-secrets](https://github.com/external-secrets/kubernetes-external-secrets) GitHub organization in an effort to consolidate different projects with the same objective. More information [here](https://github.com/external-secrets/kubernetes-external-secrets/issues/554#issuecomment-728984416).
+This project was moved from the [GoDaddy](https://github.com/godaddy) to the [external-secrets](https://github.com/external-secrets) GitHub organization in an effort to consolidate different projects with the same objective. More information [here](https://github.com/external-secrets/kubernetes-external-secrets/issues/554#issuecomment-728984416).
 
 # Kubernetes External Secrets
 
@@ -561,7 +566,7 @@ spec:
 
 You can scrape values from SSM Parameter Store individually or by providing a path to fetch all keys inside.
 
-Additionally you can also scrape all sub paths (child paths) if you need to. The default is not to scrape child paths
+When fetching all keys by path, you can also recursively scrape all the sub paths (child paths) if you need to. The default is not to scrape child paths.
 
 ```yml
 apiVersion: kubernetes-client.io/v1
@@ -580,6 +585,27 @@ spec:
     - path: /extra-people/
       recursive: false
 ```
+
+`data` and `dataFrom` retrieve the latest version of the parameter by default. If you want to get values for a specific version, you can append the version number to the key:
+
+```yml
+apiVersion: kubernetes-client.io/v1
+kind: ExternalSecret
+metadata:
+  name: hello-service
+spec:
+  backendType: systemManager
+  # optional: specify role to assume when retrieving the data
+  roleArn: arn:aws:iam::123456789012:role/test-role
+  # optional: specify region
+  region: us-east-1
+  dataFrom:
+    - hello-service/credentials:3
+  data:
+    - key: /foo/name
+      name: fooName:5
+```
+
 ### Akeyless Vault
 
 kubernetes-external-secrets supports fetching secrets from [Akeyless Vault](https://www.akeyless.io/), .

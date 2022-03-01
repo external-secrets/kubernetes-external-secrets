@@ -1,3 +1,8 @@
+# ⚠️ Deprecated
+
+This project has been [deprecated](https://github.com/external-secrets/kubernetes-external-secrets/issues/864).
+Please take a look at ESO (External Secrets Operator) instead https://github.com/external-secrets/external-secrets
+
 # 💂 Kubernetes External Secrets
 
 [Kubernetes External Secrets](https://github.com/external-secrets/kubernetes-external-secrets) allows you to use external secret management systems (*e.g.*, [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/)) to securely add secrets in Kubernetes. Read more about the design and motivation for Kubernetes External Secrets on the [GoDaddy Engineering Blog](https://godaddy.github.io/2019/04/16/kubernetes-external-secrets/).
@@ -72,7 +77,7 @@ The following table lists the configurable parameters of the `kubernetes-externa
 | `envVarsFromConfigMap.*` | Set any of the environment variables as `envVarsFromSecret` does but from a `configMap` in Deployment Pod                                                             |                                       |
 | `envFrom` | Enables the [`envFrom` block](https://kubernetes.io/docs/tasks/configure-pod-container/configure-pod-configmap/#configure-all-key-value-pairs-in-a-configmap-as-container-environment-variables) on the Deployment pod                                                              |                                       |
 | `image.repository`                        | kubernetes-external-secrets Image name                                                                                            | `godaddy/kubernetes-external-secrets` |
-| `image.tag`                               | kubernetes-external-secrets Image tag                                                                                             | `8.4.0`                               |
+| `image.tag`                               | kubernetes-external-secrets Image tag                                                                                             | `8.5.4`                               |
 | `image.pullPolicy`                        | Image pull policy                                                                                                                 | `IfNotPresent`                        |
 | `nameOverride`                            | Override the name of app                                                                                                          | `nil`                                 |
 | `fullnameOverride`                        | Override the full name of app                                                                                                     | `nil`                                 |

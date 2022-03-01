@@ -1,6 +1,6 @@
 {
   "name": "kubernetes-external-secrets",
-  "version": "8.4.0",
+  "version": "8.5.4",
   "description": "Kubernetes external secrets",
   "main": "bin/daemon.js",
   "scripts": {
@@ -32,8 +32,8 @@
   },
   "dependencies": {
     "@alicloud/kms20160120": "^1.1.0",
-    "@azure/identity": "^1.0.3",
-    "@azure/keyvault-secrets": "^4.0.4",
+    "@azure/identity": "^2.0.1",
+    "@azure/keyvault-secrets": "^4.3.0",
     "@google-cloud/secret-manager": "^3.2.3",
     "@ibm-cloud/secrets-manager": "^0.1.0",
     "akeyless": "^2.0.15",
@@ -59,7 +59,7 @@
     "eslint-plugin-promise": "5.1.0",
     "eslint-plugin-security": "1.4.0",
     "eslint-plugin-standard": "4.1.0",
-    "mocha": "8.4.0",
+    "mocha": "^9.2.0",
     "nodemon": "2.0.13",
     "nyc": "15.1.0",
     "sinon": "9.2.4",
