@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     name: Node 14
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Setup node
         uses: actions/setup-node@v2.5.1
         with:
@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     name: E2E
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: versions
         run: |
           kind version
