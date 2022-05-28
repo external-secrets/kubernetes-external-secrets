@@ -45,7 +45,7 @@ jobs:
 
       - name: Docker meta
         id: docker_meta
-        uses: docker/metadata-action@v3
+        uses: docker/metadata-action@v4
         with:
           images: ${{ steps.image_name.outputs.image }}
           tags: |
